@@ -34,19 +34,18 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
   },
-  divInput: { marginBottom: 10, alignItems: 'flex-start', width: '100%' },
+  divInput: { marginVertical: 10, alignItems: 'flex-start', width: '100%' },
   label: {
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Roboto-Bold',
     fontSize: 16,
     lineHeight: 18,
     marginLeft: 3,
     color: '#fff',
-    marginBottom: 5,
+    marginBottom: 10,
   },
   input: {
     width: '100%',
     paddingHorizontal: 10,
-    borderWidth: 1,
     borderRadius: 10,
     backgroundColor: 'rgba(0,0,0, 0.5)',
     color: '#fff',
@@ -75,8 +74,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  textButtonPrimary: { fontFamily: 'Roboto-Regular', fontSize: 16, lineHeight: 18, color: '#fff' },
-  textButtonSecundary: { fontFamily: 'Roboto-Regular', fontSize: 16, lineHeight: 18, color: '#000' },
+  textButtonPrimary: { fontFamily: 'Roboto-Bold', fontSize: 16, lineHeight: 18, color: '#fff' },
+  textButtonSecundary: { fontFamily: 'Roboto-Bold', fontSize: 16, lineHeight: 18, color: '#000' },
 });
 
 export default styles;

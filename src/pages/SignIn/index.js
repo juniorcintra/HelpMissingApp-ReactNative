@@ -16,16 +16,17 @@ const SignIn = () => {
         </View>
         <View style={styles.divInputs}>
           <View style={styles.divInput}>
-            <Text style={styles.label}>E-mail:</Text>
+            <Text style={styles.label}>E-mail</Text>
             <TextInput
               onChangeText={() => {}}
-              placeholder='E-mail'
+              placeholder='email@example.com'
+              keyboardType='email-address'
               placeholderTextColor={'#fff'}
               style={styles.input}
             />
           </View>
           <View style={styles.divInput}>
-            <Text style={styles.label}>Senha:</Text>
+            <Text style={styles.label}>Senha</Text>
             <TextInput
               onChangeText={() => {}}
               secureTextEntry={true}
