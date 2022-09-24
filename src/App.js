@@ -4,7 +4,7 @@ import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { Provider as ReduxProvider } from 'react-redux';
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import reducers from './store/slices';
 import thunk from 'redux-thunk';
 
@@ -14,7 +14,7 @@ const App = () => {
   const store = configureStore({
     reducer: reducers,
     devTools: true,
-    middleware: [...getDefaultMiddleware(), thunk],
+    middleware: [thunk],
   });
 
   return (
