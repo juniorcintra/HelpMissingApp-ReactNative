@@ -1,6 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Image, ImageBackground, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import PagerView from 'react-native-pager-view';
+import { useDispatch } from 'react-redux';
+
+import { login } from '../../store/middleware';
+import ForgotPage from '../ForgotPage';
+
 import SignUpPage from '../SignUpPage';
 
 import styles from './styles';
@@ -10,10 +15,26 @@ const imageLogo = require('../../../assets/images/logo_help.png');
 
 const LoginPage = () => {
   const viewPager = useRef(null);
+  const dispatch = useDispatch();
+
+  const [loginUser, setLoginUser] = useState('');
+  const [senhaUser, setSenhaUser] = useState('');
+
+  const handleLogin = async () => {
+    await dispatch(
+      login({
+        senha: senhaUser,
+        login: loginUser,
+      }),
+    );
+  };
 
   return (
-    <PagerView style={styles.container} initialPage={0} scrollEnabled={false} ref={viewPager}>
+    <PagerView style={styles.container} initialPage={1} scrollEnabled={false} ref={viewPager}>
       <View key='1'>
+        <ForgotPage onPress={() => viewPager.current.setPage(1)} />
+      </View>
+      <View key='2'>
         <ImageBackground source={imageBG} resizeMode='cover' style={styles.image}>
           <View style={styles.divLogo}>
             <Image source={imageLogo} style={styles.logo} />
@@ -21,11 +42,10 @@ const LoginPage = () => {
           </View>
           <View style={styles.divInputs}>
             <View style={styles.divInput}>
-              <Text style={styles.label}>E-mail</Text>
+              <Text style={styles.label}>Login</Text>
               <TextInput
-                onChangeText={() => {}}
-                placeholder='email@example.com'
-                keyboardType='email-address'
+                onChangeText={setLoginUser}
+                value={loginUser}
                 placeholderTextColor={'rgba(255, 255, 255, 0.5)'}
                 style={styles.input}
               />
@@ -33,9 +53,9 @@ const LoginPage = () => {
             <View style={styles.divInput}>
               <Text style={styles.label}>Senha</Text>
               <TextInput
-                onChangeText={() => {}}
+                onChangeText={setSenhaUser}
+                value={senhaUser}
                 secureTextEntry={true}
-                placeholder='********'
                 placeholderTextColor={'rgba(255, 255, 255, 0.5)'}
                 style={styles.input}
               />
@@ -43,22 +63,22 @@ const LoginPage = () => {
           </View>
           <View style={styles.divForgot}>
             <Text style={styles.labelForgot}>Esqueceu sua senha?</Text>
-            <TouchableOpacity style={styles.buttonTransparent}>
+            <TouchableOpacity style={styles.buttonTransparent} onPress={() => viewPager.current.setPage(0)}>
               <Text style={styles.textbuttonTransparent}>Clique aqui</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.divButtons}>
-            <TouchableOpacity style={styles.buttonPrimary}>
+            <TouchableOpacity style={styles.buttonPrimary} onPress={() => handleLogin()}>
               <Text style={styles.textButtonPrimary}>Login</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonSecundary} onPress={() => viewPager.current.setPage(1)}>
+            <TouchableOpacity style={styles.buttonSecundary} onPress={() => viewPager.current.setPage(2)}>
               <Text style={styles.textButtonSecundary}>Criar conta</Text>
             </TouchableOpacity>
           </View>
         </ImageBackground>
       </View>
-      <View key='2'>
-        <SignUpPage onPress={() => viewPager.current.setPage(0)} />
+      <View key='3'>
+        <SignUpPage onPress={() => viewPager.current.setPage(1)} />
       </View>
     </PagerView>
   );
