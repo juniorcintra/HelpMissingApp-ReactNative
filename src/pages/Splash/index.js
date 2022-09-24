@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Image, ImageBackground, Text, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -11,7 +11,7 @@ const Splash = ({ navigation }) => {
   const getUser = async () => {
     const asyncStrg = await AsyncStorage.getItem('user');
     const data = JSON.parse(asyncStrg);
-    if (data?.user !== null) {
+    if (data?.user === null) {
       setTimeout(() => {
         navigation.navigate('MainDrawer', { screen: 'Home' });
       }, 3000);

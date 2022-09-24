@@ -19,13 +19,7 @@ const MainStack = () => {
       <Screen name='Login' component={LoginPage} />
       <Screen name='SignUp' component={SignUpPage} />
       <Screen name='Splash' component={Splash} />
-      <Screen
-        name='MainDrawer'
-        component={MainDrawer}
-        options={({ route }) => ({
-          headerTitle: getHeaderTitle(route),
-        })}
-      />
+      <Screen name='MainDrawer' component={MainDrawer} />
     </Navigator>
   );
 };

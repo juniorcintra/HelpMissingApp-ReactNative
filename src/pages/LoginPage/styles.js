@@ -26,13 +26,13 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   divInputs: {
-    marginBottom: 30,
     justifyContent: 'center',
     alignItems: 'center',
     width: '80%',
     backgroundColor: 'rgba(0,0,0, 0.2)',
     padding: 15,
-    borderRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
   divInput: { marginVertical: 10, alignItems: 'flex-start', width: '100%' },
   label: {
@@ -76,6 +76,33 @@ const styles = StyleSheet.create({
   },
   textButtonPrimary: { fontFamily: 'Roboto-Bold', fontSize: 16, lineHeight: 18, color: '#fff' },
   textButtonSecundary: { fontFamily: 'Roboto-Bold', fontSize: 16, lineHeight: 18, color: '#000' },
+  divForgot: {
+    backgroundColor: 'rgba(0,0,0, 0.5)',
+    marginBottom: 30,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    width: '80%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+  },
+  labelForgot: {
+    color: '#fff',
+    fontSize: 14,
+    fontFamily: 'Roboto-Regular',
+  },
+  buttonTransparent: {
+    width: 90,
+    height: 30,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  textbuttonTransparent: { fontFamily: 'Roboto-Bold', fontSize: 15, lineHeight: 16, color: '#fff' },
 });
 
 export default styles;
