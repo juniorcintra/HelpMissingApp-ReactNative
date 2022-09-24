@@ -1,12 +1,13 @@
 import React from 'react';
 import { Image, ImageBackground, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import styles from './styles';
 
 const imageBG = require('../../../assets/images/background_login.jpg');
 const imageLogo = require('../../../assets/images/logo_help.png');
 
-const SignIn = () => {
+const LoginPage = () => {
   return (
     <View style={styles.container}>
       <ImageBackground source={imageBG} resizeMode='cover' style={styles.image}>
@@ -16,7 +17,9 @@ const SignIn = () => {
         </View>
         <View style={styles.divInputs}>
           <View style={styles.divInput}>
-            <Text style={styles.label}>E-mail</Text>
+            <Text style={styles.label}>
+              E-mail <Icon name='alternate_email' size={60} color='#fff' />
+            </Text>
             <TextInput
               onChangeText={() => {}}
               placeholder='email@example.com'
@@ -49,4 +52,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default LoginPage;
