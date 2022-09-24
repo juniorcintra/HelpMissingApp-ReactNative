@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  textbuttonTransparent: { fontFamily: 'Roboto-Bold', fontSize: 15, lineHeight: 16, color: '#fff' },
+  textbuttonTransparent: { fontFamily: 'Roboto-Bold', fontSize: 16, lineHeight: 18, color: '#fff' },
 });
 
 export default styles;

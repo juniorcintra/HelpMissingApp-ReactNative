@@ -11,15 +11,16 @@ const Splash = ({ navigation }) => {
   const getUser = async () => {
     const asyncStrg = await AsyncStorage.getItem('user');
     const data = JSON.parse(asyncStrg);
-    if (data?.user === null) {
-      setTimeout(() => {
-        navigation.navigate('MainDrawer', { screen: 'Home' });
-      }, 3000);
-    } else {
-      setTimeout(() => {
-        navigation.navigate('Login');
-      }, 3000);
-    }
+    navigation.navigate('MainDrawer', { screen: 'Home' });
+    // if (data?.user === null) {
+    //   setTimeout(() => {
+    //     navigation.navigate('MainDrawer', { screen: 'Home' });
+    //   }, 3000);
+    // } else {
+    //   setTimeout(() => {
+    //     navigation.navigate('Login');
+    //   }, 3000);
+    // }
   };
 
   useEffect(() => {
