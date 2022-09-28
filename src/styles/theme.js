@@ -2,6 +2,7 @@ const colors = {
   primary: 'black',
   primary_200: 'rgba(0,0,0, 0.2)',
   primary_500: 'rgba(0,0,0, 0.5)',
+  primary_800: 'rgba(0,0,0, 0.8)',
   primary_900: 'rgba(0,0,0, 0.9)',
 
   secondary: 'white',
@@ -10,6 +11,7 @@ const colors = {
   danger: 'red',
   infor: 'blue',
   sucess: 'green',
+  white: 'white',
 };
 
 const fonts = {
