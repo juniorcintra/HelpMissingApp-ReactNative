@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react';
-import { Image, ImageBackground, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, ImageBackground, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import PagerView from 'react-native-pager-view';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import Loading from '../../components/loading';
 
 import { login } from '../../store/middleware';
 import ForgotPage from '../ForgotPage';
@@ -20,7 +21,10 @@ const LoginPage = ({ navigation }) => {
   const [loginUser, setLoginUser] = useState('');
   const [senhaUser, setSenhaUser] = useState('');
 
+  const { loading } = useSelector(state => state.genericReducer);
+
   const handleLogin = async () => {
+    Keyboard.dismiss();
     const res = await dispatch(
       login({
         senha: senhaUser,
@@ -84,6 +88,7 @@ const LoginPage = ({ navigation }) => {
       <View key='3'>
         <SignUpPage onPress={() => viewPager.current.setPage(1)} />
       </View>
+      <Loading show={loading} />
     </PagerView>
   );
 };

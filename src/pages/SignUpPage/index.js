@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Image, ImageBackground, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { Image, ImageBackground, Keyboard, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import Loading from '../../components/loading';
 import { registerUser } from '../../store/middleware';
 
 import styles from './styles';
@@ -18,8 +19,10 @@ const SignUpPage = ({ onPress }) => {
   const [senha2User, setSenha2User] = useState('');
 
   const dispatch = useDispatch();
+  const { loading } = useSelector(state => state.genericReducer);
 
   const handleRegister = async () => {
+    Keyboard.dismiss();
     await dispatch(
       registerUser({
         nome_completo: nameUser,
@@ -123,6 +126,7 @@ const SignUpPage = ({ onPress }) => {
             <Text style={styles.textButtonPrimary}>Cadastrar</Text>
           </TouchableOpacity>
         </View>
+        <Loading show={loading} />
       </ImageBackground>
     </View>
   );
