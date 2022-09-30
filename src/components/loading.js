@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, ActivityIndicator, View } from 'react-native';
+import { colors } from '../styles/theme';
 
 export default ({ show }) => {
   return (
@@ -9,7 +10,7 @@ export default ({ show }) => {
           height: '100%',
           width: '100%',
           flex: 1,
-          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+          backgroundColor: colors.primary_500,
           justifyContent: 'center',
           alignItems: 'center',
         }}>
