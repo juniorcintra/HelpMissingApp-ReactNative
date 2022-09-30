@@ -13,7 +13,7 @@ import styles from './styles';
 const imageBG = require('../../../assets/images/background_login.jpg');
 const imageLogo = require('../../../assets/images/logo_help.png');
 
-const LoginPage = () => {
+const LoginPage = ({ navigation }) => {
   const viewPager = useRef(null);
   const dispatch = useDispatch();
 
@@ -21,12 +21,16 @@ const LoginPage = () => {
   const [senhaUser, setSenhaUser] = useState('');
 
   const handleLogin = async () => {
-    await dispatch(
+    const res = await dispatch(
       login({
         senha: senhaUser,
         login: loginUser,
       }),
     );
+
+    if (res) {
+      navigation.navigate('MainDrawer', { screen: 'Home' });
+    }
   };
 
   return (

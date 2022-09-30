@@ -34,6 +34,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 5,
   },
+  rowInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    justifyContent: 'space-between',
+  },
   rowText: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -41,7 +47,7 @@ const styles = StyleSheet.create({
   nameUser: {
     fontSize: fonts.textLogo,
     fontFamily: 'Roboto-Bold',
-    paddingRight: 10
+    paddingRight: 10,
   },
   ageUser: {
     fontSize: 18,
@@ -56,15 +62,14 @@ const styles = StyleSheet.create({
     width: '90%',
     fontSize: fonts.text,
     fontFamily: 'Roboto-Regular',
-    textAlign: 'justify'
+    textAlign: 'justify',
   },
   wrapperButton: {
     flexDirection: 'row',
-    alignContent: 'center',
+    alignItems: 'center',
     justifyContent: 'center',
     borderTopWidth: 1,
     borderTopColor: colors.secondary,
-    backgroundColor: colors.primary_800,
   },
   button: {
     padding: 8,
@@ -75,7 +80,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   danger: { borderColor: colors.danger },
-  infor: { borderColor: colors.infor },
+  infor: { borderColor: colors.infor, width: 50, height: 50 },
   sucess: { borderColor: colors.sucess },
 });
 

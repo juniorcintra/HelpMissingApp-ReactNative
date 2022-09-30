@@ -89,9 +89,14 @@ const HomePage = () => {
       </AnimatedPager>
 
       <View style={styles.wrapperInfo}>
-        <View style={styles.rowText}>
-          <Text style={styles.nameUser}>Nome</Text>
-          <Text style={styles.ageUser}>26</Text>
+        <View style={styles.rowInfo}>
+          <View style={styles.rowText}>
+            <Text style={styles.nameUser}>Nome</Text>
+            <Text style={styles.ageUser}>26</Text>
+          </View>
+          <TouchableOpacity activeOpacity={0.6} style={{}} onPress={() => {}}>
+            <Icon name='info' color={'#000'} size={25} />
+          </TouchableOpacity>
         </View>
 
         <View style={styles.rowView}>
@@ -99,9 +104,6 @@ const HomePage = () => {
             Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo
             utilizado desde o século XVI.
           </Text>
-          <TouchableOpacity activeOpacity={0.6} style={{}} onPress={() => {}}>
-            <Icon name='info' color={'#000'} size={25} />
-          </TouchableOpacity>
         </View>
       </View>
 
@@ -110,7 +112,7 @@ const HomePage = () => {
           <Icon name='close' color={colors.danger} size={45} />
         </TouchableOpacity>
         <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.infor]} onPress={handleInfo}>
-          <Icon name='priority-high' color={colors.infor} size={45} />
+          <Icon name='priority-high' color={colors.infor} size={30} />
         </TouchableOpacity>
         <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.sucess]} onPress={handleSucess}>
           <Icon name='done' color={colors.sucess} size={45} />
