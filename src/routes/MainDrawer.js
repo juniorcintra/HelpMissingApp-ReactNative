@@ -11,12 +11,14 @@ const MainDrawer = () => {
   return (
     <Navigator>
       <Screen name='Home' component={HomePage} options={{ headerTitleAlign: 'center' }} />
+      <Screen name='Cadastrar Desaparecido' component={HomePage} options={{ headerTitleAlign: 'center' }} />
+      <Screen name='Perfil' component={HomePage} options={{ headerTitleAlign: 'center' }} />
       <Screen
         name='Sair'
         component={Sair}
         listeners={({ navigation }) => ({
           state: e => {
-            if (e.data.state.index === 1) {
+            if (e.data.state.index === 3) {
               AsyncStorage.clear();
               navigation.navigate('Login');
             }
