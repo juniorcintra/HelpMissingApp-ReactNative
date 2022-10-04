@@ -6,9 +6,9 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import Animated, { useHandler, useEvent } from 'react-native-reanimated';
 
 import { colors } from '../../styles/theme';
-import styles from './styles';
+import Logo from '../../components/logo';
 
-const imageLogo = require('../../../assets/images/logo_help.png');
+import styles from './styles';
 
 const HomePage = () => {
   const { setOptions } = useNavigation();
@@ -69,12 +69,7 @@ const HomePage = () => {
   //Header
   useLayoutEffect(() => {
     setOptions({
-      headerTitle: () => (
-        <View style={styles.header}>
-          <Image source={imageLogo} style={styles.headerLogo} />
-          <Text style={styles.headerTitle}>Help Missing!</Text>
-        </View>
-      ),
+      headerTitle: () => <Logo />
     });
   }, []);
 
@@ -95,7 +90,7 @@ const HomePage = () => {
             <Text style={styles.ageUser}>26</Text>
           </View>
           <TouchableOpacity activeOpacity={0.6} style={{}} onPress={() => {}}>
-            <Icon name='info' color={'#000'} size={25} />
+            <Icon name='info' color={colors.primary} size={25} />
           </TouchableOpacity>
         </View>
 
