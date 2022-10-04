@@ -51,11 +51,11 @@ const MainDrawer = () => {
       />
 
       <Screen
-        name='Estou em Dúvida'
+        name='Histórico'
         component={HomePage}
         options={{
           headerTitleAlign: 'center',
-          drawerIcon: ({ _, color, size }) => <Icon name='help-outline' size={size} color={color} />,
+          drawerIcon: ({ _, color, size }) => <Icon name='restore' size={size} color={color} />,
         }}
       />
 
@@ -76,8 +76,8 @@ const MainDrawer = () => {
         }}
         listeners={({ navigation }) => ({
           state: e => {
-            if (e.data.state.index === 3) {
-              AsyncStorage.clear();
+            if (e.data.state.index === 5) {
+              AsyncStorage.removeItem('user');
               navigation.navigate('Login');
             }
           },
