@@ -79,7 +79,9 @@ const MainDrawer = () => {
           state: e => {
             if (e.data.state.index === 5) {
               AsyncStorage.removeItem('user');
-              navigation.navigate('Login');
+              navigation.reset({
+                routes: [{ name: 'Login' }],
+              });
             }
           },
         })}
