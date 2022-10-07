@@ -8,6 +8,7 @@ import Logo from '../components/logo';
 import Sair from '../components/sair';
 import HomePage from '../pages/HomePage';
 import PerfilPage from '../pages/PerfilPage';
+import MissingRegister from '../pages/MissingRegister';
 
 const { Navigator, Screen } = createDrawerNavigator();
 
@@ -35,7 +36,7 @@ const MainDrawer = () => {
 
       <Screen
         name='Cadastrar Desaparecido'
-        component={HomePage}
+        component={MissingRegister}
         options={{
           headerTitleAlign: 'center',
           drawerIcon: ({ _, color, size }) => <Icon name='app-registration' size={size} color={color} />,

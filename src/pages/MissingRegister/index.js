@@ -10,7 +10,7 @@ import Logo from '../../components/logo';
 
 import styles from './styles';
 
-const HomePage = () => {
+const MissingRegister = () => {
   const { setOptions } = useNavigation();
   const AnimatedPager = Animated.createAnimatedComponent(PagerView);
 
@@ -75,49 +75,28 @@ const HomePage = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.card}>
-        <AnimatedPager style={styles.wrapperPhoto} initialPage={0} onPageScroll={handler}>
-          {photos.map(item => (
-            <View key={item.id} style={styles.wrapperPhoto}>
-              <Image style={styles.photo} source={{ uri: item.url }} />
-            </View>
-          ))}
-        </AnimatedPager>
-        <View style={styles.wrapperInfo}>
-          <View style={styles.rowInfo}>
-            <View style={styles.rowText}>
-              <Text style={styles.nameUser}>Fabricio</Text>
-              <Text style={styles.ageUser}>26</Text>
-            </View>
-            <View style={styles.rowInfo}>
-              <Text style={[styles.data, { fontWeight: 'bold' }]}>
-                Desaparecido em:
-                <Text style={[styles.data, { fontWeight: '400' }]}> 10/09/2022 às 19:32</Text>
-              </Text>
-              <Text style={[styles.data, { fontWeight: 'bold' }]}>
-                Local:
-                <Text style={[styles.data, { fontWeight: '400' }]}> São José - SC</Text>
-              </Text>
-            </View>
-          </View>
-          <TouchableOpacity activeOpacity={0.6} style={styles.buttonInfo} onPress={() => {}}>
-            <Icon name='info' color={colors.primary} size={28} />
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View style={styles.wrapperButton}>
-        <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.danger]} onPress={handleClose}>
-          <Icon name='close' color={colors.danger} size={45} />
+      <View style={styles.viewUpload}>
+        <TouchableOpacity style={styles.buttonUpload}>
+          <Text style={styles.textUpload}>+</Text>
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.infor]} onPress={handleInfo}>
-          <Text style={styles.inforText}>Pular</Text>
+        <TouchableOpacity style={styles.buttonUpload}>
+          <Text style={styles.textUpload}>+</Text>
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.sucess]} onPress={handleSucess}>
-          <Icon name='done' color={colors.sucess} size={45} />
+        <TouchableOpacity style={styles.buttonUpload}>
+          <Text style={styles.textUpload}>+</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonUpload}>
+          <Text style={styles.textUpload}>+</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonUpload}>
+          <Text style={styles.textUpload}>+</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonUpload}>
+          <Text style={styles.textUpload}>+</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
 
-export default HomePage;
+export default MissingRegister;

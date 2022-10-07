@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
   rowText: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginVertical: 7,
   },
   nameUser: {
     fontSize: fonts.textLogo,
