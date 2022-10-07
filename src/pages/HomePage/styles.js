@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   header: {
     flexDirection: 'row',
@@ -22,22 +23,33 @@ const styles = StyleSheet.create({
     height: 35,
     marginBottom: 10,
   },
+  card: {
+    borderRadius: 10,
+    borderWidth: 1,
+    width: '97%',
+    borderColor: '#ccc',
+  },
   wrapperPhoto: {
-    flex: 1,
+    height: 450,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
   },
   photo: {
     flex: 1,
     resizeMode: 'cover',
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
   },
   wrapperInfo: {
     width: '100%',
     paddingHorizontal: 15,
     paddingVertical: 5,
+    flexDirection: 'row',
   },
   rowInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '100%',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    width: '90%',
     justifyContent: 'space-between',
   },
   rowText: {
@@ -52,11 +64,6 @@ const styles = StyleSheet.create({
   ageUser: {
     fontSize: 18,
     fontFamily: 'Roboto-Regular',
-  },
-  rowView: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
   },
   description: {
     width: '90%',
@@ -80,8 +87,23 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   danger: { borderColor: colors.danger },
-  infor: { borderColor: colors.infor, width: 50, height: 50 },
+  infor: {
+    borderColor: colors.infor,
+    width: 100,
+    height: 50,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inforText: { color: colors.infor },
   sucess: { borderColor: colors.sucess },
+  buttonInfo: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 export default styles;

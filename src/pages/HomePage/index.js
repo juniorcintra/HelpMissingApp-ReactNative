@@ -69,45 +69,44 @@ const HomePage = () => {
   //Header
   useLayoutEffect(() => {
     setOptions({
-      headerTitle: () => <Logo />
+      headerTitle: () => <Logo />,
     });
   }, []);
 
   return (
     <View style={styles.container}>
-      <AnimatedPager style={styles.wrapperPhoto} initialPage={0} onPageScroll={handler}>
-        {photos.map(item => (
-          <View key={item.id} style={styles.wrapperPhoto}>
-            <Image style={styles.photo} source={{ uri: item.url }} />
+      <View style={styles.card}>
+        <AnimatedPager style={styles.wrapperPhoto} initialPage={0} onPageScroll={handler}>
+          {photos.map(item => (
+            <View key={item.id} style={styles.wrapperPhoto}>
+              <Image style={styles.photo} source={{ uri: item.url }} />
+            </View>
+          ))}
+        </AnimatedPager>
+        <View style={styles.wrapperInfo}>
+          <View style={styles.rowInfo}>
+            <View style={styles.rowText}>
+              <Text style={styles.nameUser}>Nome</Text>
+              <Text style={styles.ageUser}>26</Text>
+            </View>
+            <View style={styles.rowInfo}>
+              <Text style={styles.data}>
+                Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo
+                utilizado desde o século XVI.
+              </Text>
+            </View>
           </View>
-        ))}
-      </AnimatedPager>
-
-      <View style={styles.wrapperInfo}>
-        <View style={styles.rowInfo}>
-          <View style={styles.rowText}>
-            <Text style={styles.nameUser}>Nome</Text>
-            <Text style={styles.ageUser}>26</Text>
-          </View>
-          <TouchableOpacity activeOpacity={0.6} style={{}} onPress={() => {}}>
-            <Icon name='info' color={colors.primary} size={25} />
+          <TouchableOpacity activeOpacity={0.6} style={styles.buttonInfo} onPress={() => {}}>
+            <Icon name='info' color={colors.primary} size={28} />
           </TouchableOpacity>
         </View>
-
-        <View style={styles.rowView}>
-          <Text style={styles.description}>
-            Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo
-            utilizado desde o século XVI.
-          </Text>
-        </View>
       </View>
-
       <View style={styles.wrapperButton}>
         <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.danger]} onPress={handleClose}>
           <Icon name='close' color={colors.danger} size={45} />
         </TouchableOpacity>
         <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.infor]} onPress={handleInfo}>
-          <Icon name='priority-high' color={colors.infor} size={30} />
+          <Text style={styles.inforText}>Pular</Text>
         </TouchableOpacity>
         <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.sucess]} onPress={handleSucess}>
           <Icon name='done' color={colors.sucess} size={45} />
