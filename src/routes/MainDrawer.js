@@ -4,9 +4,10 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer';
 
-import HomePage from '../pages/HomePage';
 import Logo from '../components/logo';
 import Sair from '../components/sair';
+import HomePage from '../pages/HomePage';
+import PerfilPage from '../pages/PerfilPage';
 
 const { Navigator, Screen } = createDrawerNavigator();
 
@@ -22,7 +23,7 @@ const MainDrawer = () => {
   );
 
   return (
-    <Navigator drawerContent={props => CustomDrawer(props)}>
+    <Navigator drawerContent={props => CustomDrawer(props)} initialRouteName='Home'>
       <Screen
         name='Home'
         component={HomePage}
@@ -61,7 +62,7 @@ const MainDrawer = () => {
 
       <Screen
         name='Perfil'
-        component={HomePage}
+        component={PerfilPage}
         options={{
           headerTitleAlign: 'center',
           drawerIcon: ({ _, color, size }) => <Icon name='person' size={size} color={color} />,
