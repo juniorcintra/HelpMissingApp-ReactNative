@@ -9,7 +9,6 @@ export const registerUser = userData => {
     try {
       let response = await api.post('/usuarios/cadastro', userData);
       if (response.status === 200 || response.status === 201) {
-        dispatch(setUser({ user: response.data }));
         dispatch(unsetError());
         dispatch(
           setSuccess({
@@ -37,10 +36,12 @@ export const login = userData => {
   return async dispatch => {
     dispatch(initLoading());
     try {
-      let response = await api.post('/usuarios/login', userData);
-      if (response.status === 200 || response.status === 201) {
-        await AsyncStorage.setItem('user', JSON.stringify({ user: true }));
-        dispatch(setUser({ user: response.data }));
+      let {
+        status,
+        data: { success },
+      } = await api.post('/usuarios/login', userData);
+      if (status === 200 || status === 201) {
+        await AsyncStorage.setItem('user', JSON.stringify({ user: success.data }));
         dispatch(unsetError());
         dispatch(
           setSuccess({
@@ -72,7 +73,6 @@ export const sendForgot = userData => {
     try {
       let response = await api.post('/usuarios/remember', userData);
       if (response.status === 200 || response.status === 201) {
-        dispatch(setUser({ user: response.data }));
         dispatch(unsetError());
         dispatch(
           setSuccess({
