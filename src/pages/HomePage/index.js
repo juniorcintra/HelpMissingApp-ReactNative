@@ -109,9 +109,9 @@ const HomePage = () => {
         <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.danger]} onPress={handleClose}>
           <Icon name='close' color={colors.danger} size={45} />
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.infor]} onPress={handleInfo}>
+        {/* <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.infor]} onPress={handleInfo}>
           <Text style={styles.inforText}>Pular</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.sucess]} onPress={handleSucess}>
           <Icon name='done' color={colors.sucess} size={45} />
         </TouchableOpacity>

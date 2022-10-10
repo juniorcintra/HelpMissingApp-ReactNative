@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     width: '90%',
     height: 300,
     borderWidth: 1,
-    borderColor: colors.primary,
+    borderColor: '#9f9f9f',
     borderRadius: 7,
     marginTop: 20,
     padding: 12,
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     width: 90,
     height: 120,
     borderWidth: 2,
-    borderColor: colors.primary,
+    borderColor: '#9f9f9f',
     borderRadius: 5,
     marginVertical: 5,
     display: 'flex',
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   textUpload: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: colors.primary,
+    color: '#9f9f9f',
   },
 });
 
