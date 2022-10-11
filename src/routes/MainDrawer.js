@@ -2,10 +2,9 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 
 import Logo from '../components/logo';
-import Sair from '../components/sair';
 import HomePage from '../pages/HomePage';
 import PerfilPage from '../pages/PerfilPage';
 import MissingRegister from '../pages/MissingRegister';
@@ -20,6 +19,17 @@ const MainDrawer = () => {
       </View>
 
       <DrawerItemList {...props} />
+
+      <DrawerItem
+        label='Sair'
+        icon={({ _, color, size }) => <Icon name='exit-to-app' size={size} color={color} />}
+        onPress={() => {
+          AsyncStorage.removeItem('user');
+          props.navigation.reset({
+            routes: [{ name: 'Login' }],
+          });
+        }}
+      />
     </View>
   );
 
@@ -73,24 +83,6 @@ const MainDrawer = () => {
           headerTitle: () => <Logo />,
           drawerIcon: ({ _, color, size }) => <Icon name='person' size={size} color={color} />,
         }}
-      />
-
-      <Screen
-        name='Sair'
-        component={Sair}
-        options={{
-          drawerIcon: ({ _, color, size }) => <Icon name='exit-to-app' size={size} color={color} />,
-        }}
-        listeners={({ navigation }) => ({
-          state: e => {
-            if (e.data.state.index === 5) {
-              AsyncStorage.removeItem('user');
-              navigation.reset({
-                routes: [{ name: 'Login' }],
-              });
-            }
-          },
-        })}
       />
     </Navigator>
   );
