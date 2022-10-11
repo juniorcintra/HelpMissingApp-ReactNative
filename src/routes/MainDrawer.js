@@ -30,7 +30,8 @@ const MainDrawer = () => {
         component={HomePage}
         options={{
           headerTitleAlign: 'center',
-          drawerIcon: ({ focused, color, size }) => <Icon name='home' size={size} color={color} />,
+          headerTitle: () => <Logo />,
+          drawerIcon: ({ _, color, size }) => <Icon name='home' size={size} color={color} />,
         }}
       />
 
@@ -39,6 +40,7 @@ const MainDrawer = () => {
         component={MissingRegister}
         options={{
           headerTitleAlign: 'center',
+          headerTitle: () => <Logo />,
           drawerIcon: ({ _, color, size }) => <Icon name='app-registration' size={size} color={color} />,
         }}
       />
@@ -48,6 +50,7 @@ const MainDrawer = () => {
         component={HomePage}
         options={{
           headerTitleAlign: 'center',
+          headerTitle: () => <Logo />,
           drawerIcon: ({ _, color, size }) => <Icon name='done' size={size} color={color} />,
         }}
       />
@@ -57,6 +60,7 @@ const MainDrawer = () => {
         component={HomePage}
         options={{
           headerTitleAlign: 'center',
+          headerTitle: () => <Logo />,
           drawerIcon: ({ _, color, size }) => <Icon name='restore' size={size} color={color} />,
         }}
       />
@@ -66,6 +70,7 @@ const MainDrawer = () => {
         component={PerfilPage}
         options={{
           headerTitleAlign: 'center',
+          headerTitle: () => <Logo />,
           drawerIcon: ({ _, color, size }) => <Icon name='person' size={size} color={color} />,
         }}
       />
