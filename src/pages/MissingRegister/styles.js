@@ -36,11 +36,59 @@ const styles = StyleSheet.create({
   textUpload: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#9f9f9f',
+    color: colors.primary_500,
   },
   form: {
     width: '90%',
     marginTop: 4,
+  },
+  scrollFeatures: {
+    
+  },
+  wrapperButtomFeatures: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginTop: 5,
+  }, 
+  buttomFeatures: {
+    height: 36,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 12,
+    borderRadius: 30,
+    paddingHorizontal: 20,
+    backgroundColor: '#FBAD40',
+  },
+  buttomTextFeatures: {
+    fontSize: 16,
+    fontFamily: 'Roboto-Bold',
+    color: colors.primary,
+  },
+  wrapperClothing: {
+    width: '100%',
+    marginTop: 12,
+  },
+  rowClothing: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 3
+  },
+  iconClothing: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginLeft: 5,
+    marginRight: 20,
+    backgroundColor: colors.primary,
+  },
+  textClothing: {
+    fontSize: 16,
+    fontFamily: 'Roboto-Regular',
+    color: colors.primary_500,
   },
   divButtons: {
     marginTop: 32,
