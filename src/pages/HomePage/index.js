@@ -1,17 +1,13 @@
-import React, { useLayoutEffect } from 'react';
+import React from 'react';
 import PagerView from 'react-native-pager-view';
-import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import Animated, { useHandler, useEvent } from 'react-native-reanimated';
 
 import { colors } from '../../styles/theme';
-import Logo from '../../components/logo';
-
 import styles from './styles';
 
 const HomePage = () => {
-  const { setOptions } = useNavigation();
   const AnimatedPager = Animated.createAnimatedComponent(PagerView);
 
   const photos = [
@@ -65,13 +61,6 @@ const HomePage = () => {
   const handleInfo = () => {};
 
   const handleSucess = () => {};
-
-  //Header
-  useLayoutEffect(() => {
-    setOptions({
-      headerTitle: () => <Logo />,
-    });
-  }, []);
 
   return (
     <View style={styles.container}>
