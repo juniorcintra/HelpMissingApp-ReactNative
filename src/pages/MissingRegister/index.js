@@ -3,8 +3,8 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 
 import { handleConvertImage } from '../../utils/functions';
 
-import { colors } from '../../styles/theme';
 import Input from '../../components/Input';
+import Button from '../../components/Button';
 
 import styles from './styles';
 
@@ -94,14 +94,9 @@ const MissingRegister = () => {
             onChangeText={setClothingDisappearance}
             placeholder="Escreva aqui os vestimentos"
           />
+
           <View style={styles.divButtons}>
-            <TouchableOpacity 
-              activeOpacity={0.6} 
-              onPress={handleRegister}
-              style={styles.buttonPrimary}
-            >
-              <Text style={styles.textButtonPrimary}>Cadastrar</Text>
-            </TouchableOpacity>
+            <Button type='primary' title='Cadastrar' onPress={handleRegister} />
           </View>
         </View>
       </View>
