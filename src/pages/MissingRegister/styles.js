@@ -3,8 +3,6 @@ import { colors, fonts } from '../../styles/theme';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: colors.secondary,
   },
@@ -40,6 +38,24 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#9f9f9f',
   },
+  form: {
+    width: '90%',
+    marginTop: 4,
+  },
+  divButtons: {
+    marginTop: 32,
+  },
+  buttonPrimary: {
+    width: '100%',
+    height: 60,
+    backgroundColor: '#000',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textButtonPrimary: { fontFamily: 'Roboto-Bold', fontSize: 16, lineHeight: 18, color: '#fff' },
 });
 
 export default styles;
