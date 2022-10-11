@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Image, ImageBackground, Keyboard, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, ImageBackground, Keyboard, ScrollView, Text, TextInput, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+
+import Button from '../../components/Button';
 import Loading from '../../components/loading';
 import { registerUser } from '../../store/middleware';
 
@@ -122,9 +124,7 @@ const SignUpPage = ({ onPress }) => {
           </View>
         </ScrollView>
         <View style={styles.divButtons}>
-          <TouchableOpacity style={styles.buttonPrimary} onPress={() => handleRegister()}>
-            <Text style={styles.textButtonPrimary}>Cadastrar</Text>
-          </TouchableOpacity>
+          <Button type='primary' title='Cadastrar' onPress={handleRegister} />
         </View>
         <Loading show={loading} />
       </ImageBackground>

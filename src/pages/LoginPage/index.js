@@ -2,11 +2,12 @@ import React, { useRef, useState } from 'react';
 import { Image, ImageBackground, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import { useDispatch, useSelector } from 'react-redux';
+
 import Loading from '../../components/loading';
+import Button from '../../components/Button';
 
 import { login } from '../../store/middleware';
 import ForgotPage from '../ForgotPage';
-
 import SignUpPage from '../SignUpPage';
 
 import styles from './styles';
@@ -35,6 +36,9 @@ const LoginPage = ({ navigation }) => {
     if (res) {
       navigation.navigate('MainDrawer', { screen: 'Home' });
     }
+
+    setLoginUser('');
+    setSenhaUser('');
   };
 
   return (
@@ -76,12 +80,8 @@ const LoginPage = ({ navigation }) => {
             </TouchableOpacity>
           </View>
           <View style={styles.divButtons}>
-            <TouchableOpacity style={styles.buttonPrimary} onPress={() => handleLogin()}>
-              <Text style={styles.textButtonPrimary}>Login</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonSecundary} onPress={() => viewPager.current.setPage(2)}>
-              <Text style={styles.textButtonSecundary}>Criar conta</Text>
-            </TouchableOpacity>
+            <Button type='primary' title='Login' onPress={handleLogin} />
+            <Button type='secundary' title='Criar conta' onPress={() => viewPager.current.setPage(2)} />
           </View>
         </ImageBackground>
       </View>
