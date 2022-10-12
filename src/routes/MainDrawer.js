@@ -7,6 +7,7 @@ import { createDrawerNavigator, DrawerItemList, DrawerItem } from '@react-naviga
 import Logo from '../components/logo';
 import HomePage from '../pages/HomePage';
 import PerfilPage from '../pages/PerfilPage';
+import PeopleFound from '../pages/PeopleFound';
 import MissingRegister from '../pages/MissingRegister';
 
 const { Navigator, Screen } = createDrawerNavigator();
@@ -57,7 +58,7 @@ const MainDrawer = () => {
 
       <Screen
         name='Pessoas Encontradas'
-        component={HomePage}
+        component={PeopleFound}
         options={{
           headerTitleAlign: 'center',
           headerTitle: () => <Logo />,
