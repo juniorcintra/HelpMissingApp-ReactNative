@@ -17,7 +17,7 @@ const Input = props => {
             activeOpacity={0.6}
             style={styles.ButtonIcon}
           >
-            <Icon name='check-circle-outline' size={25} color='#000' />
+            <Icon name={props.icon} size={25} color='#000' />
           </TouchableOpacity>
         )}
       </View>
