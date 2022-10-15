@@ -57,6 +57,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 7,
   },
+  rowTextBold: {
+    fontFamily: 'Roboto-Bold',
+  },
+  rowTextRegular: {
+    fontFamily: 'Roboto-Regular',
+  },
   nameUser: {
     fontSize: fonts.textLogo,
     fontFamily: 'Roboto-Bold',
@@ -104,6 +110,41 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  contentModal: {
+    width: '80%',
+    borderRadius: 15,
+    paddingHorizontal: 20,
+    paddingVertical: 32,
+    backgroundColor: colors.white,
+  },
+  TitleModal: {
+    fontSize: 20,
+    fontFamily: 'Roboto-Bold',
+    textAlign: 'center',
+    color: '#000',
+  },
+  labelTextArea: {
+    fontFamily: 'Roboto-Bold',
+    fontSize: 16,
+    color: '#000',
+    marginTop: 16,
+    paddingBottom: 10
+  },
+  textInputArea: {
+    width: '100%',
+    minHeight: 84,
+    paddingHorizontal: 8,
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: 'rgba(0, 0, 0,0.4)',
+
+    fontSize: 16,
+    color: colors.primary,
+  },
+  wrapperButtonModal: {
+    paddingTop: 18,
+    marginBottom: -20,
   },
 });
 

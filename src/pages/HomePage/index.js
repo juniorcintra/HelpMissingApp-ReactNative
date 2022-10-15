@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PagerView from 'react-native-pager-view';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
 import Animated, { useHandler, useEvent } from 'react-native-reanimated';
+import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native';
 
+import Modal from '../../components/Modal';
+import Input from '../../components/Input';
+import Button from '../../components/Button';
 import { colors } from '../../styles/theme';
+
 import styles from './styles';
 
 const HomePage = () => {
+  const [place, setPlace] = useState('');
+  const [dateTime, setDateTime] = useState('');
+  const [showModal, setShowModal] = useState(true);
+  const [description, setDescription] = useState('');
+
   const AnimatedPager = Animated.createAnimatedComponent(PagerView);
 
   const photos = [
@@ -58,54 +67,93 @@ const HomePage = () => {
 
   const handleClose = () => {};
 
-  const handleInfo = () => {};
+  const handleSucess = () => {
+    setShowModal(true);
+  };
 
-  const handleSucess = () => {};
+  const handleSendModal = () => {
+    setShowModal(false);
+  };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.card}>
-        <AnimatedPager style={styles.wrapperPhoto} initialPage={0} onPageScroll={handler}>
-          {photos.map(item => (
-            <View key={item.id} style={styles.wrapperPhoto}>
-              <Image style={styles.photo} source={{ uri: item.url }} />
-            </View>
-          ))}
-        </AnimatedPager>
-        <View style={styles.wrapperInfo}>
-          <View style={styles.rowInfo}>
-            <View style={styles.rowText}>
-              <Text style={styles.nameUser}>Fabricio</Text>
-              <Text style={styles.ageUser}>26</Text>
-            </View>
+    <>
+      <View style={styles.container}>
+        <View style={styles.card}>
+          <AnimatedPager style={styles.wrapperPhoto} initialPage={0} onPageScroll={handler}>
+            {photos.map(item => (
+              <View key={item.id} style={styles.wrapperPhoto}>
+                <Image style={styles.photo} source={{ uri: item.url }} />
+              </View>
+            ))}
+          </AnimatedPager>
+
+          <View style={styles.wrapperInfo}>
             <View style={styles.rowInfo}>
-              <Text style={[styles.data, { fontWeight: 'bold' }]}>
-                Desaparecido em:
-                <Text style={[styles.data, { fontWeight: '400' }]}> 10/09/2022 às 19:32</Text>
-              </Text>
-              <Text style={[styles.data, { fontWeight: 'bold' }]}>
-                Local:
-                <Text style={[styles.data, { fontWeight: '400' }]}> São José - SC</Text>
-              </Text>
+              <View style={styles.rowText}>
+                <Text style={styles.nameUser}>Fabricio</Text>
+                <Text style={styles.ageUser}>26</Text>
+              </View>
+              <View style={styles.rowInfo}>
+                <Text style={styles.rowTextBold}>
+                  Desaparecido em:
+                  <Text style={styles.rowTextRegular}> 10/09/2022 às 19:32</Text>
+                </Text>
+                <Text style={styles.rowTextBold}>
+                  Local:
+                  <Text style={styles.rowTextRegular}> São José - SC</Text>
+                </Text>
+              </View>
             </View>
+            <TouchableOpacity activeOpacity={0.6} style={styles.buttonInfo} onPress={() => {}}>
+              <Icon name='info' color={colors.primary} size={28} />
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity activeOpacity={0.6} style={styles.buttonInfo} onPress={() => {}}>
-            <Icon name='info' color={colors.primary} size={28} />
+        </View>
+
+        <View style={styles.wrapperButton}>
+          <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.danger]} onPress={handleClose}>
+            <Icon name='close' color={colors.danger} size={45} />
+          </TouchableOpacity>
+          {/* <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.infor]} onPress={handleInfo}>
+            <Text style={styles.inforText}>Pular</Text>
+          </TouchableOpacity> */}
+          <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.sucess]} onPress={handleSucess}>
+            <Icon name='done' color={colors.sucess} size={45} />
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.wrapperButton}>
-        <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.danger]} onPress={handleClose}>
-          <Icon name='close' color={colors.danger} size={45} />
-        </TouchableOpacity>
-        {/* <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.infor]} onPress={handleInfo}>
-          <Text style={styles.inforText}>Pular</Text>
-        </TouchableOpacity> */}
-        <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.sucess]} onPress={handleSucess}>
-          <Icon name='done' color={colors.sucess} size={45} />
-        </TouchableOpacity>
-      </View>
-    </View>
+
+      <Modal show={showModal}>
+        <View style={styles.contentModal}>
+          <Text style={styles.TitleModal}>Descreva aqui o que você viu!</Text>
+          <Input
+            label='Data/Hora' 
+            value={dateTime}
+            onChangeText={setDateTime}
+            placeholder='xx/xx/xxxx xx:xx' 
+          />
+          <Input
+            label='Local' 
+            value={place}
+            onChangeText={setPlace}
+            placeholder='local que voce viu...' 
+          />
+          
+          <Text style={styles.labelTextArea}>Descrição</Text>
+          <TextInput 
+            multiline
+            value={description}
+            placeholder='descrição...' 
+            style={styles.textInputArea}
+            onChangeText={setDescription}
+          />
+
+          <View style={styles.wrapperButtonModal}>
+            <Button title='Enviar' onPress={handleSendModal} />
+          </View>
+        </View>
+      </Modal>
+    </>
   );
 };
 
