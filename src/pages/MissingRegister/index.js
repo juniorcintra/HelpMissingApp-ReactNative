@@ -84,7 +84,7 @@ const MissingRegister = () => {
             onChangeText={setDisappearanceDate}
           />
           <Input
-            icon
+            icon='check-circle-outline'
             label="Contatos"
             value={contacts}
             keyboardType='number-pad'
@@ -92,7 +92,7 @@ const MissingRegister = () => {
             placeholder="(xx) xxxxx-xxxx"
           />
           <Input
-            icon
+            icon='check-circle-outline'
             value={features}
             label="Características"
             onChangeText={setFeatures}
@@ -112,7 +112,7 @@ const MissingRegister = () => {
           )}
 
           <Input
-            icon
+            icon='check-circle-outline'
             value={clothingDisappearance}
             label="Vestimenta do Desaparecimento"
             onChangeText={setClothingDisappearance}
