@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { format } from 'date-fns';
 import PagerView from 'react-native-pager-view';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Animated, { useHandler, useEvent } from 'react-native-reanimated';
+import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native';
 
 import Modal from '../../components/Modal';
@@ -13,8 +15,8 @@ import styles from './styles';
 
 const HomePage = () => {
   const [place, setPlace] = useState('');
-  const [dateTime, setDateTime] = useState('');
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [dateTime, setDateTime] = useState(new Date());
   const [description, setDescription] = useState('');
 
   const AnimatedPager = Animated.createAnimatedComponent(PagerView);
@@ -75,6 +77,26 @@ const HomePage = () => {
     setShowModal(false);
   };
 
+  const handleOpenCalendar = () => {
+    showMode('date');
+  };
+
+  const onChangeDateTime = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    console.log(selectedDate)
+    setDateTime(currentDate);
+  };
+
+  const showMode = (currentMode) => {
+    DateTimePickerAndroid.open({
+      value: dateTime,
+      onChange: onChangeDateTime,
+      maximumDate: new Date(),
+      mode: currentMode,
+      is24Hour: true,
+    });
+  };
+
   return (
     <>
       <View style={styles.container}>
@@ -129,6 +151,8 @@ const HomePage = () => {
           <Input
             label='Data/Hora' 
             value={dateTime}
+            icon='calendar-today'
+            onPress={handleOpenCalendar}
             onChangeText={setDateTime}
             placeholder='xx/xx/xxxx xx:xx' 
           />
