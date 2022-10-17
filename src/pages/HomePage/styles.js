@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
   textInputArea: {
     width: '100%',
     minHeight: 84,
+    textAlignVertical: 'top',
     paddingHorizontal: 8,
     borderWidth: 1,
     borderRadius: 5,

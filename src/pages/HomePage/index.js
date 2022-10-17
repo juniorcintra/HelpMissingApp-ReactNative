@@ -14,9 +14,9 @@ import { colors } from '../../styles/theme';
 import styles from './styles';
 
 const HomePage = () => {
-  const [place, setPlace] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [dateTime, setDateTime] = useState(new Date());
+  const [place, setPlace] = useState('');
   const [description, setDescription] = useState('');
 
   const AnimatedPager = Animated.createAnimatedComponent(PagerView);
@@ -69,31 +69,35 @@ const HomePage = () => {
 
   const handleClose = () => {};
 
-  const handleSucess = () => {
-    setShowModal(true);
-  };
-
   const handleSendModal = () => {
+  
+    const body = {
+      place,
+      description,
+      date: format(dateTime, 'yyyy-MM-dd'),
+    }
+
+    console.log('Object Modal',body);
+    
     setShowModal(false);
+    setPlace('');
+    setDescription('');
+    setDateTime(new Date());
   };
 
-  const handleOpenCalendar = () => {
-    showMode('date');
-  };
-
-  const onChangeDateTime = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    console.log(selectedDate)
-    setDateTime(currentDate);
-  };
-
-  const showMode = (currentMode) => {
+  const showCalendar = (currentMode) => {
     DateTimePickerAndroid.open({
       value: dateTime,
-      onChange: onChangeDateTime,
+      display: 'default',
       maximumDate: new Date(),
       mode: currentMode,
-      is24Hour: true,
+      onChange: (event, selectedDate) => {
+        if (event?.type === 'dismissed') {
+          setDateTime(dateTime);
+          return;
+        }
+        setDateTime(selectedDate);
+      },
     });
   };
 
@@ -139,7 +143,7 @@ const HomePage = () => {
           {/* <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.infor]} onPress={handleInfo}>
             <Text style={styles.inforText}>Pular</Text>
           </TouchableOpacity> */}
-          <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.sucess]} onPress={handleSucess}>
+          <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.sucess]} onPress={() => setShowModal(true)}>
             <Icon name='done' color={colors.sucess} size={45} />
           </TouchableOpacity>
         </View>
@@ -149,25 +153,25 @@ const HomePage = () => {
         <View style={styles.contentModal}>
           <Text style={styles.TitleModal}>Descreva aqui o que você viu!</Text>
           <Input
-            label='Data/Hora' 
-            value={dateTime}
+            editable={false}
+            label='Data' 
+            value={format(dateTime, 'dd/MM/yyyy')}
             icon='calendar-today'
-            onPress={handleOpenCalendar}
-            onChangeText={setDateTime}
-            placeholder='xx/xx/xxxx xx:xx' 
+            placeholder='xx/xx/xxxx' 
+            onPress={() => showCalendar('date')}
           />
           <Input
             label='Local' 
             value={place}
             onChangeText={setPlace}
-            placeholder='local que voce viu...' 
+            placeholder='Local que voce viu...' 
           />
           
           <Text style={styles.labelTextArea}>Descrição</Text>
           <TextInput 
             multiline
             value={description}
-            placeholder='descrição...' 
+            placeholder='Descrição...' 
             style={styles.textInputArea}
             onChangeText={setDescription}
           />
