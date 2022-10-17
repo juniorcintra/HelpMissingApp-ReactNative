@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { format } from 'date-fns';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 
 import { handleConvertImage } from '../../utils/functions';
 
@@ -10,8 +12,9 @@ import styles from './styles';
 
 const MissingRegister = () => {
   const [fullName, setFullName] = useState('');
-  const [birthDate, setBirthDate] = useState('');
-  const [disappearanceDate, setDisappearanceDate] = useState('');
+  const [birthDate, setBirthDate] = useState(new Date());
+  const [disappearanceDate, setDisappearanceDate] = useState(new Date());
+  const [disappearanceLocation, setDisappearanceLocation] = useState('');
   const [contacts, setContacts] = useState([]);
   const [features, setFeatures] = useState([
     {id: '1', feature: 'Cabelo preto'},
@@ -27,17 +30,51 @@ const MissingRegister = () => {
   ]);
 
   const handleRegister = () => {
-    const date = {
+    const body = {
+      fullName,
+      birthDate: format(birthDate, 'yyyy-MM-dd'),
+      disappearanceDate: format(disappearanceDate, 'yyyy-MM-dd'),
+      disappearanceLocation,
       contacts,
       features,
-      fullName,
-      birthDate,
-      disappearanceDate,
       clothingDisappearance,
     }
 
-    console.log('register', date);
+    console.log('register', body);
   }
+
+  const showBirthCalendar = mode => {
+    DateTimePickerAndroid.open({
+      value: birthDate,
+      display: 'spinner',
+      maximumDate: new Date(),
+      mode: mode,
+      onChange: (event, selectedDate) => {
+        if (event?.type === 'dismissed') {
+          setBirthDate(birthDate);
+          return;
+        }
+        setBirthDate(selectedDate);
+      },
+    });
+  };
+
+  const showDisappearanceCalendar = mode => {
+    DateTimePickerAndroid.open({
+      value: disappearanceDate,
+      display: 'spinner',
+      maximumDate: new Date(),
+      mode: mode,
+      onChange: (event, selectedDate) => {
+        if (event?.type === 'dismissed') {
+          setDisappearanceDate(disappearanceDate);
+          return;
+        }
+        setDisappearanceDate(selectedDate);
+      },
+    });
+  };
+
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -72,30 +109,42 @@ const MissingRegister = () => {
             onChangeText={setFullName}
           />
           <Input
-            value={birthDate}
+            editable={false}
+            icon='calendar-today'
             placeholder="xx/xx/xxxx"
             label="Data de Nascimento"
             onChangeText={setBirthDate}
+            value={format(birthDate, 'dd/MM/yyyy')}
+            onPress={() => showBirthCalendar('date')}
           />
           <Input
+            editable={false}
+            icon='calendar-today'
             placeholder="xx/xx/xxxx"
-            value={disappearanceDate}
             label="Data de Desaparecimento"
             onChangeText={setDisappearanceDate}
+            value={format(disappearanceDate, 'dd/MM/yyyy')}
+            onPress={() => showDisappearanceCalendar('date')}
           />
           <Input
-            icon='check-circle-outline'
+            placeholder="Endereço"
+            value={disappearanceLocation}
+            label="Local do Desaparecimento"
+            onChangeText={setDisappearanceLocation}
+          />
+          <Input
             label="Contatos"
             value={contacts}
             keyboardType='number-pad'
             onChangeText={setContacts}
+            icon='check-circle-outline'
             placeholder="(xx) xxxxx-xxxx"
           />
           <Input
-            icon='check-circle-outline'
             value={features}
             label="Características"
             onChangeText={setFeatures}
+            icon='check-circle-outline'
             placeholder="Escreva aqui as características"
           />
 
@@ -129,8 +178,6 @@ const MissingRegister = () => {
               ))}
             </View>
           )}
-
-
 
           <View style={styles.divButtons}>
             <Button type='primary' title='Cadastrar' onPress={handleRegister} />
