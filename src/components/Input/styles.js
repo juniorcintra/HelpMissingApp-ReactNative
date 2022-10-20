@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     borderBottomWidth: 1,
     borderColor: 'rgba(0, 0, 0,0.4)',
-
     fontSize: 16,
     color: colors.primary,
   },

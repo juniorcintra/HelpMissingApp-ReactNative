@@ -42,9 +42,7 @@ const styles = StyleSheet.create({
     width: '90%',
     marginTop: 4,
   },
-  scrollFeatures: {
-    
-  },
+  scrollFeatures: {},
   wrapperButtomFeatures: {
     width: '100%',
     flexDirection: 'row',
@@ -52,7 +50,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     marginTop: 5,
-  }, 
+  },
   buttomFeatures: {
     height: 36,
     alignItems: 'center',
@@ -75,7 +73,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 3
+    marginBottom: 3,
   },
   iconClothing: {
     width: 8,
@@ -92,6 +90,25 @@ const styles = StyleSheet.create({
   },
   divButtons: {
     marginTop: 32,
+  },
+  wrapperButtonModal: {
+    paddingTop: 18,
+    marginBottom: -20,
+  },
+  contentModal: {
+    width: '80%',
+    borderRadius: 15,
+    paddingHorizontal: 20,
+    paddingVertical: 32,
+    backgroundColor: colors.white,
+  },
+  photoUploaded: {
+    width: 90,
+    height: 120,
+    borderWidth: 2,
+    borderColor: '#9f9f9f',
+    borderRadius: 5,
+    marginVertical: 5,
   },
 });
 

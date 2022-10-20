@@ -5,7 +5,9 @@ import { colors } from '../../styles/theme';
 
 export default props => {
   return (
-    <Modal animationType='fade' transparent={true} visible={props.show} {...props}>
+    <Modal animationType='fade' transparent={true} visible={props.show} onRequestClose={() => {
+      props.setShowModal(false);
+    }}{...props} >
       <View style={styles.container}>{props.children}</View>
     </Modal>
   );

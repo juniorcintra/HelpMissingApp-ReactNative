@@ -147,6 +147,34 @@ const styles = StyleSheet.create({
     paddingTop: 18,
     marginBottom: -20,
   },
+  containerSelect: {
+    width: '100%',
+    alignItems: 'flex-start',
+    marginTop: 16,
+  },
+  labelSelect: {
+    fontFamily: 'Roboto-Bold',
+    fontSize: 16,
+    color: '#000',
+  },
+  rowSelect: {
+    width:"100%",
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor: 'rgba(0, 0, 0,0.4)',
+  },
+  textSelect:{
+    fontFamily: 'Roboto-Regular',
+    fontSize: 16,
+    color: '#000',
+    marginLeft: 5
+  },
+  rowItem:{
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 });
 
 export default styles;
