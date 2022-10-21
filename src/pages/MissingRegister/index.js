@@ -283,7 +283,7 @@ const MissingRegister = ({ navigation }) => {
           </View>
         </View>
       </View>
-      <Modal show={showModal} setShowModal={() => setShowModal()}>
+      <Modal show={showModal} setShowModal={setShowModal}>
         <View style={styles.contentModal}>
           <View style={styles.wrapperButtonModal}>
             <Button title='Tirar foto' onPress={() => handleSelectImage('camera')} />

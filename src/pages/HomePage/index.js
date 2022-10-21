@@ -140,9 +140,6 @@ const HomePage = () => {
           <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.danger]} onPress={handleClose}>
             <Icon name='close' color={colors.danger} size={45} />
           </TouchableOpacity>
-          {/* <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.infor]} onPress={handleInfo}>
-            <Text style={styles.inforText}>Pular</Text>
-          </TouchableOpacity> */}
           <TouchableOpacity
             activeOpacity={0.6}
             style={[styles.button, styles.sucess]}
@@ -152,7 +149,7 @@ const HomePage = () => {
         </View>
       </View>
 
-      <Modal show={showModal}>
+      <Modal show={showModal} setShowModal={setShowModal}>
         <View style={styles.contentModal}>
           <Text style={styles.TitleModal}>Descreva aqui o que você viu!</Text>
           <Input
@@ -167,7 +164,7 @@ const HomePage = () => {
           <View style={styles.containerSelect}>
             <Text style={styles.labelSelect}>Horário</Text>
 
-            <View style={styles.rowSelect}>
+            {/* <View style={styles.rowSelect}>
               <View style={styles.rowItem}>
                 <Picker
                   onChanged={setSelectedHour}
@@ -276,7 +273,7 @@ const HomePage = () => {
                 />
                 <Text style={styles.textSelect}>M</Text>
               </View>
-            </View>
+            </View> */}
           </View>
 
           <Text style={styles.labelTextArea}>Descrição</Text>
