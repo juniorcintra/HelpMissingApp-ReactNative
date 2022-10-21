@@ -32,14 +32,13 @@ const MissingRegister = ({ navigation }) => {
     { id: '4', clothing: 'Cordão prata' },
   ]);
   const [showModal, setShowModal] = useState(false);
-  const [tempPhotos, setTempPhotos] = useState([]);
   const [photos64, setPhotos64] = useState([]);
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     const body = {
       fullName,
-      birthDate: format(birthDate, 'yyyy-MM-dd'),
-      disappearanceDate: format(disappearanceDate, 'yyyy-MM-dd'),
+      birthDate: birthDate,
+      disappearanceDate: disappearanceDate,
       disappearanceLocation,
       contacts,
       features,
@@ -103,7 +102,7 @@ const MissingRegister = ({ navigation }) => {
           maxHeight: 500,
           quality: 0.5,
           includeBase64: true,
-          selectionLimit: 6,
+          selectionLimit: 1,
         },
         handleUploadPhotos,
       );
@@ -113,23 +112,24 @@ const MissingRegister = ({ navigation }) => {
   async function handleUploadPhotos(data) {
     console.log('teste', data);
 
-    data?.assets?.map(item => {
-      setTempPhotos([...tempPhotos, item.uri]);
+    await data?.assets?.map(item => {
       setPhotos64([...photos64, item.base64]);
     });
 
     setShowModal(false);
   }
 
+  console.log(photos64.length);
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         <View style={styles.viewUpload}>
-          {tempPhotos[0] ? (
+          {photos64[0] ? (
             <Image
               style={styles.photoUploaded}
               source={{
-                uri: tempPhotos[0],
+                uri: `data:image/jpeg;base64,${photos64[0]}`,
               }}
             />
           ) : (
@@ -137,11 +137,11 @@ const MissingRegister = ({ navigation }) => {
               <Text style={styles.textUpload}>+</Text>
             </TouchableOpacity>
           )}
-          {tempPhotos[1] ? (
+          {photos64[1] ? (
             <Image
               style={styles.photoUploaded}
               source={{
-                uri: tempPhotos[1],
+                uri: `data:image/jpeg;base64,${photos64[1]}`,
               }}
             />
           ) : (
@@ -149,11 +149,11 @@ const MissingRegister = ({ navigation }) => {
               <Text style={styles.textUpload}>+</Text>
             </TouchableOpacity>
           )}
-          {tempPhotos[2] ? (
+          {photos64[2] ? (
             <Image
               style={styles.photoUploaded}
               source={{
-                uri: tempPhotos[2],
+                uri: `data:image/jpeg;base64,${photos64[2]}`,
               }}
             />
           ) : (
@@ -161,11 +161,11 @@ const MissingRegister = ({ navigation }) => {
               <Text style={styles.textUpload}>+</Text>
             </TouchableOpacity>
           )}
-          {tempPhotos[3] ? (
+          {photos64[3] ? (
             <Image
               style={styles.photoUploaded}
               source={{
-                uri: tempPhotos[3],
+                uri: `data:image/jpeg;base64,${photos64[3]}`,
               }}
             />
           ) : (
@@ -173,11 +173,11 @@ const MissingRegister = ({ navigation }) => {
               <Text style={styles.textUpload}>+</Text>
             </TouchableOpacity>
           )}
-          {tempPhotos[3] ? (
+          {photos64[4] ? (
             <Image
               style={styles.photoUploaded}
               source={{
-                uri: tempPhotos[3],
+                uri: `data:image/jpeg;base64,${photos64[4]}`,
               }}
             />
           ) : (
@@ -185,11 +185,11 @@ const MissingRegister = ({ navigation }) => {
               <Text style={styles.textUpload}>+</Text>
             </TouchableOpacity>
           )}
-          {tempPhotos[3] ? (
+          {photos64[5] ? (
             <Image
               style={styles.photoUploaded}
               source={{
-                uri: tempPhotos[3],
+                uri: `data:image/jpeg;base64,${photos64[5]}`,
               }}
             />
           ) : (
