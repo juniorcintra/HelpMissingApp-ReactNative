@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
-import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Image, Keyboard } from 'react-native';
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
-
-import { handleConvertImage } from '../../utils/functions';
 
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
@@ -12,6 +10,9 @@ import Button from '../../components/Button';
 
 import styles from './styles';
 import Modal from '../../components/Modal';
+import { registerMissingPerson } from '../../store/middleware/missingPerson.middleware';
+import { useDispatch, useSelector } from 'react-redux';
+import Loading from '../../components/loading';
 
 const MissingRegister = ({ navigation }) => {
   const [fullName, setFullName] = useState('');
@@ -19,33 +20,30 @@ const MissingRegister = ({ navigation }) => {
   const [disappearanceDate, setDisappearanceDate] = useState(new Date());
   const [disappearanceLocation, setDisappearanceLocation] = useState('');
   const [contacts, setContacts] = useState([]);
-  const [features, setFeatures] = useState([
-    { id: '1', feature: 'Cabelo preto' },
-    { id: '2', feature: 'Idoso' },
-    { id: '3', feature: 'Pele braca' },
-    { id: '4', feature: 'Olhos marrom escuro' },
-  ]);
-  const [clothingDisappearance, setClothingDisappearance] = useState([
-    { id: '1', clothing: 'Camiseta preta' },
-    { id: '2', clothing: 'Calça jeans' },
-    { id: '3', clothing: 'Tênis preto' },
-    { id: '4', clothing: 'Cordão prata' },
-  ]);
+  const [features, setFeatures] = useState([]);
+  const [clothing, setClothing] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [photos64, setPhotos64] = useState([]);
+  const [actualContact, setActualContact] = useState('');
+  const [actualFeature, setActualFeature] = useState('');
+  const [actualClothing, setActualClothing] = useState('');
+
+  const dispatch = useDispatch();
+  const { loading } = useSelector(state => state.genericReducer);
 
   const handleRegister = async () => {
     const body = {
-      fullName,
-      birthDate: birthDate,
-      disappearanceDate: disappearanceDate,
-      disappearanceLocation,
-      contacts,
-      features,
-      clothingDisappearance,
+      nome: fullName,
+      caracteristicas: features,
+      data_nascimento: format(birthDate, 'dd/MM/yyyy'),
+      data_desaparecimento: format(disappearanceDate, 'dd/MM/yyyy'),
+      local_desaparecimento: disappearanceLocation,
+      contatos: contacts,
+      vestimenta_desaparecimento: clothing,
     };
 
-    console.log('register', body);
+    Keyboard.dismiss();
+    await dispatch(registerMissingPerson(body));
   };
 
   const showBirthCalendar = mode => {
@@ -110,16 +108,25 @@ const MissingRegister = ({ navigation }) => {
   }
 
   async function handleUploadPhotos(data) {
-    console.log('teste', data);
-
     await data?.assets?.map(item => {
       setPhotos64([...photos64, item.base64]);
     });
-
     setShowModal(false);
   }
 
-  console.log(photos64.length);
+  function handleAddInfo(type) {
+    if (type === 'contato') {
+      setContacts([...contacts, actualContact]);
+      
+      setActualContact('');
+    } else if (type === 'feature') {
+      setFeatures([...features, actualFeature]);
+      setActualFeature('');
+    } else {
+      setClothing([...clothing, actualClothing]);
+      setActualClothing('');
+    }
+  }
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -233,26 +240,40 @@ const MissingRegister = ({ navigation }) => {
           />
           <Input
             label='Contatos'
-            value={contacts}
-            keyboardType='number-pad'
-            onChangeText={setContacts}
+            value={actualContact}
+            onChangeText={text => setActualContact(text)}
             icon='check-circle-outline'
-            placeholder='(xx) xxxxx-xxxx'
+            placeholder='Mãe - (24) 99999-9999'
+            onPress={() => handleAddInfo('contato')}
           />
+
+          {contacts.length > 0 && (
+            <ScrollView style={styles.scrollFeatures} showsVerticalScrollIndicator={false}>
+              <View style={styles.wrapperButtomFeatures}>
+                {contacts.map((item, index) => (
+                  <View key={index} style={styles.buttomFeatures}>
+                    <Text style={styles.buttomTextFeatures}>{item}</Text>
+                  </View>
+                ))}
+              </View>
+            </ScrollView>
+          )}
+
           <Input
-            value={features}
+            value={actualFeature}
             label='Características'
-            onChangeText={setFeatures}
+            onChangeText={text => setActualFeature(text)}
             icon='check-circle-outline'
             placeholder='Escreva aqui as características'
+            onPress={() => handleAddInfo('feature')}
           />
 
           {features.length > 0 && (
             <ScrollView style={styles.scrollFeatures} showsVerticalScrollIndicator={false}>
               <View style={styles.wrapperButtomFeatures}>
-                {features.map(item => (
-                  <View key={item.id} style={styles.buttomFeatures}>
-                    <Text style={styles.buttomTextFeatures}>{item.feature}</Text>
+                {features.map((item, index) => (
+                  <View key={index} style={styles.buttomFeatures}>
+                    <Text style={styles.buttomTextFeatures}>{item}</Text>
                   </View>
                 ))}
               </View>
@@ -261,18 +282,19 @@ const MissingRegister = ({ navigation }) => {
 
           <Input
             icon='check-circle-outline'
-            value={clothingDisappearance}
+            value={actualClothing}
             label='Vestimenta do Desaparecimento'
-            onChangeText={setClothingDisappearance}
+            onChangeText={text => setActualClothing(text)}
             placeholder='Escreva aqui os vestimentos'
+            onPress={() => handleAddInfo('clothing')}
           />
 
-          {clothingDisappearance.length > 0 && (
+          {clothing.length > 0 && (
             <View style={styles.wrapperClothing}>
-              {clothingDisappearance.map(item => (
-                <View key={item.id} style={styles.rowClothing}>
+              {clothing.map((item, index) => (
+                <View key={index} style={styles.rowClothing}>
                   <View style={styles.iconClothing} />
-                  <Text style={styles.textClothing}>{item.clothing}</Text>
+                  <Text style={styles.textClothing}>{item}</Text>
                 </View>
               ))}
             </View>
@@ -294,6 +316,7 @@ const MissingRegister = ({ navigation }) => {
           </View>
         </View>
       </Modal>
+      <Loading show={loading} />
     </ScrollView>
   );
 };

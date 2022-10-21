@@ -1,6 +1,5 @@
 import { initLoading, endLoading, setError, setSuccess, unsetSuccess, unsetError } from '../slices/generics.slice';
 import api from '../../services/api';
-import { setUser } from '../slices/user.slice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const registerUser = userData => {

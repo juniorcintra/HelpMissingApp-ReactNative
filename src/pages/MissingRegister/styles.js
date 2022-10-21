@@ -98,9 +98,12 @@ const styles = StyleSheet.create({
   contentModal: {
     width: '80%',
     borderRadius: 15,
+    borderTopRightRadius: 0,
     paddingHorizontal: 20,
     paddingVertical: 32,
     backgroundColor: colors.white,
+    position: 'relative',
+    zIndex: 0
   },
   photoUploaded: {
     width: 90,

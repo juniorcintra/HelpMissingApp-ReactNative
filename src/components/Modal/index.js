@@ -35,7 +35,10 @@ const styles = StyleSheet.create({
   iconClose: {
     height: 35,
     width: 35,
-    marginBottom: -12,
-    marginLeft: 305
+    position: 'absolute',
+    zIndex: 10,
+    // elevation: ,
+    top: -30,
+    left: 130
   },
 });
