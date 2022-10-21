@@ -5,7 +5,7 @@ import Modal from '../components/Modal';
 
 export default ({ show }) => {
   return (
-    <Modal visible={show}>
+    <Modal visible={show} noIcon={true}>
       <ActivityIndicator size='large' color='#FA472B' animating={true} />
     </Modal>
   );

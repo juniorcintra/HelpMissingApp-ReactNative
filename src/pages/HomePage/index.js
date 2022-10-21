@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native';
 import { format } from 'date-fns';
 import PagerView from 'react-native-pager-view';
@@ -11,8 +11,12 @@ import Modal from '../../components/Modal';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import { colors } from '../../styles/theme';
+import Loading from '../../components/loading';
 
 import styles from './styles';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { getMissingPerson } from '../../store/middleware/missingPerson.middleware';
 
 const HomePage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -21,6 +25,10 @@ const HomePage = () => {
   const [description, setDescription] = useState('');
   const [selectedHour, setSelectedHour] = useState('00');
   const [selectedMinute, setSelectedMinute] = useState('00');
+
+  const dispatch = useDispatch();
+  const { loading } = useSelector(state => state.genericReducer);
+  const { missingPersons } = useSelector(state => state.missingPersonReducer);
 
   const AnimatedPager = Animated.createAnimatedComponent(PagerView);
 
@@ -101,40 +109,48 @@ const HomePage = () => {
     });
   };
 
+  const handleGetMissingPersons = async () => {
+    await dispatch(getMissingPerson());
+  };
+
+  useEffect(() => {
+    handleGetMissingPersons();
+  }, []);
+
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.card}>
-          <AnimatedPager style={styles.wrapperPhoto} initialPage={0} onPageScroll={handler}>
-            {photos.map(item => (
-              <View key={item.id} style={styles.wrapperPhoto}>
-                <Image style={styles.photo} source={{ uri: item.url }} />
-              </View>
-            ))}
-          </AnimatedPager>
+          <View style={styles.card}>
+            <AnimatedPager style={styles.wrapperPhoto} initialPage={0} onPageScroll={handler}>
+              {photos.map(item => (
+                <View key={item.id} style={styles.wrapperPhoto}>
+                  <Image style={styles.photo} source={{ uri: item.url }} />
+                </View>
+              ))}
+            </AnimatedPager>
 
-          <View style={styles.wrapperInfo}>
-            <View style={styles.rowInfo}>
-              <View style={styles.rowText}>
-                <Text style={styles.nameUser}>Fabricio</Text>
-                <Text style={styles.ageUser}>26</Text>
-              </View>
+            <View style={styles.wrapperInfo}>
               <View style={styles.rowInfo}>
-                <Text style={styles.rowTextBold}>
-                  Desaparecido em:
-                  <Text style={styles.rowTextRegular}> 10/09/2022 às 19:32</Text>
-                </Text>
-                <Text style={styles.rowTextBold}>
-                  Local:
-                  <Text style={styles.rowTextRegular}> São José - SC</Text>
-                </Text>
+                <View style={styles.rowText}>
+                  <Text style={styles.nameUser}>Fabricio</Text>
+                  <Text style={styles.ageUser}>26</Text>
+                </View>
+                <View style={styles.rowInfo}>
+                  <Text style={styles.rowTextBold}>
+                    Desaparecido em:
+                    <Text style={styles.rowTextRegular}> 10/09/2022 às 19:32</Text>
+                  </Text>
+                  <Text style={styles.rowTextBold}>
+                    Local:
+                    <Text style={styles.rowTextRegular}> São José - SC</Text>
+                  </Text>
+                </View>
               </View>
+              <TouchableOpacity activeOpacity={0.6} style={styles.buttonInfo} onPress={() => {}}>
+                <Icon name='info' color={colors.primary} size={28} />
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity activeOpacity={0.6} style={styles.buttonInfo} onPress={() => {}}>
-              <Icon name='info' color={colors.primary} size={28} />
-            </TouchableOpacity>
           </View>
-        </View>
 
         <View style={styles.wrapperButton}>
           <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.danger]} onPress={handleClose}>
@@ -290,6 +306,7 @@ const HomePage = () => {
           </View>
         </View>
       </Modal>
+      <Loading show={loading} />
     </>
   );
 };

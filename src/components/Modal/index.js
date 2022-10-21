@@ -12,12 +12,13 @@ export default props => {
       transparent={true}
       visible={props.show}
       onRequestClose={() => props.setShowModal(false)}
-      {...props}
-    >
+      {...props}>
       <View style={styles.container}>
-        <TouchableOpacity activeOpacity={0.6} onPress={() => props?.setShowModal(false)}>
-          <Image source={iconClose} style={styles.iconClose} />
-        </TouchableOpacity>
+        {!props.noIcon && (
+          <TouchableOpacity activeOpacity={0.6} onPress={() => props?.setShowModal(false)}>
+            <Image source={iconClose} style={styles.iconClose} />
+          </TouchableOpacity>
+        )}
         {props.children}
       </View>
     </Modal>
@@ -39,6 +40,6 @@ const styles = StyleSheet.create({
     zIndex: 10,
     // elevation: ,
     top: -30,
-    left: 130
+    left: 130,
   },
 });
