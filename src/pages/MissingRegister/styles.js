@@ -48,14 +48,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     marginTop: 5,
+    marginLeft: -12,
   },
   buttomFeatures: {
     height: 36,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 12,
+    marginLeft: 12,
     borderRadius: 30,
     paddingHorizontal: 20,
     backgroundColor: '#FBAD40',
@@ -91,19 +93,24 @@ const styles = StyleSheet.create({
   divButtons: {
     marginTop: 32,
   },
-  wrapperButtonModal: {
-    paddingTop: 18,
-    marginBottom: -20,
-  },
   contentModal: {
     width: '80%',
     borderRadius: 15,
-    borderTopRightRadius: 0,
     paddingHorizontal: 20,
     paddingVertical: 32,
     backgroundColor: colors.white,
     position: 'relative',
     zIndex: 0
+  },
+  titleModal: {
+    fontSize: 20,
+    fontFamily: 'Roboto-Bold',
+    textAlign: 'center',
+    color: '#000',
+  },
+  wrapperButtonModal: {
+    paddingTop: 18,
+    marginBottom: -20,
   },
   photoUploaded: {
     width: 90,

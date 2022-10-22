@@ -1,6 +1,6 @@
-import React, {  useCallback,useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { format } from 'date-fns';
-import { View, Text, TouchableOpacity, ScrollView, Image, Keyboard } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Image, Keyboard, Alert } from 'react-native';
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
@@ -32,6 +32,20 @@ const MissingRegister = ({ navigation }) => {
   const dispatch = useDispatch();
   const { loading } = useSelector(state => state.genericReducer);
 
+  const clearState = () => {
+    setFullName('');
+    setBirthDate(new Date());
+    setDisappearanceDate(new Date());
+    setDisappearanceLocation('');
+    setContacts([]);
+    setFeatures([]);
+    setClothing([]);
+    setPhotos64([]);
+    setActualContact('');
+    setActualFeature('');
+    setActualClothing('');
+  };
+
   const handleRegister = async () => {
     const body = {
       nome: fullName,
@@ -54,17 +68,7 @@ const MissingRegister = ({ navigation }) => {
         }),
       ),
     );
-    setFullName('');
-    setBirthDate(new Date());
-    setDisappearanceDate(new Date());
-    setDisappearanceLocation('');
-    setContacts([]);
-    setFeatures([]);
-    setClothing([]);
-    setPhotos64([]);
-    setActualContact('');
-    setActualFeature('');
-    setActualClothing('');
+    clearState();
   };
 
   const showBirthCalendar = mode => {
@@ -136,31 +140,43 @@ const MissingRegister = ({ navigation }) => {
   }
 
   function handleAddInfo(type) {
-    if (type === 'contato') {
+    if (type === 'contacts') {
+      if(!actualContact) return;
       setContacts([...contacts, actualContact]);
       setActualContact('');
     } else if (type === 'feature') {
+      if(!actualFeature) return;
       setFeatures([...features, actualFeature]);
       setActualFeature('');
     } else {
+      if(!actualClothing) return;
       setClothing([...clothing, actualClothing]);
       setActualClothing('');
     }
   }
 
+  function handleRemoveArray(date, type) {
+    if (type === 'contacts') {
+      Alert.alert('Deseja excluir', 'Tem certeza que deseja excluir?', [
+        { text: 'Cancelar', onPress: () => {} },
+        { text: 'Excluir', onPress: () => setContacts(state => state.filter((_, index) => index !== date)) },
+      ]);
+    } else if (type === 'feature') {
+      Alert.alert('Deseja excluir', 'Tem certeza que deseja excluir?', [
+        { text: 'Cancelar', onPress: () => {} },
+        { text: 'Excluir', onPress: () => setFeatures(state => state.filter((_, index) => index !== date)) },
+      ]);
+    } else {
+      Alert.alert('Deseja excluir', 'Tem certeza que deseja excluir?', [
+        { text: 'Cancelar', onPress: () => {} },
+        { text: 'Excluir', onPress: () => setClothing(state => state.filter((_, index) => index !== date)) },
+      ]);
+    }
+  }
+
   useFocusEffect(
     useCallback(() => {
-      setFullName('');
-      setBirthDate(new Date());
-      setDisappearanceDate(new Date());
-      setDisappearanceLocation('');
-      setContacts([]);
-      setFeatures([]);
-      setClothing([]);
-      setPhotos64([]);
-      setActualContact('');
-      setActualFeature('');
-      setActualClothing('');
+      clearState();
     }, []),
   );
 
@@ -280,16 +296,18 @@ const MissingRegister = ({ navigation }) => {
             onChangeText={text => setActualContact(text)}
             icon='check-circle-outline'
             placeholder='Mãe - (24) 99999-9999'
-            onPress={() => handleAddInfo('contato')}
+            onPress={() => handleAddInfo('contacts')}
           />
 
           {contacts.length > 0 && (
             <ScrollView style={styles.scrollFeatures} showsVerticalScrollIndicator={false}>
               <View style={styles.wrapperButtomFeatures}>
                 {contacts.map((item, index) => (
-                  <View key={index} style={styles.buttomFeatures}>
-                    <Text style={styles.buttomTextFeatures}>{item}</Text>
-                  </View>
+                  <TouchableOpacity key={index} activeOpacity={0.6} onPress={() => handleRemoveArray(index, 'contacts')}>
+                    <View style={styles.buttomFeatures}>
+                      <Text style={styles.buttomTextFeatures}>{item}</Text>
+                    </View>
+                  </TouchableOpacity>
                 ))}
               </View>
             </ScrollView>
@@ -308,9 +326,11 @@ const MissingRegister = ({ navigation }) => {
             <ScrollView style={styles.scrollFeatures} showsVerticalScrollIndicator={false}>
               <View style={styles.wrapperButtomFeatures}>
                 {features.map((item, index) => (
-                  <View key={index} style={styles.buttomFeatures}>
-                    <Text style={styles.buttomTextFeatures}>{item}</Text>
-                  </View>
+                  <TouchableOpacity key={index} activeOpacity={0.6} onPress={() => handleRemoveArray(index, 'feature')}>
+                    <View style={styles.buttomFeatures}>
+                      <Text style={styles.buttomTextFeatures}>{item}</Text>
+                    </View>
+                  </TouchableOpacity>
                 ))}
               </View>
             </ScrollView>
@@ -328,10 +348,12 @@ const MissingRegister = ({ navigation }) => {
           {clothing.length > 0 && (
             <View style={styles.wrapperClothing}>
               {clothing.map((item, index) => (
-                <View key={index} style={styles.rowClothing}>
-                  <View style={styles.iconClothing} />
-                  <Text style={styles.textClothing}>{item}</Text>
-                </View>
+                <TouchableOpacity key={index} activeOpacity={0.6} onPress={() => handleRemoveArray(index)}>
+                  <View style={styles.rowClothing}>
+                    <View style={styles.iconClothing} />
+                    <Text style={styles.textClothing}>{item}</Text>
+                  </View>
+                </TouchableOpacity>
               ))}
             </View>
           )}
@@ -341,8 +363,10 @@ const MissingRegister = ({ navigation }) => {
           </View>
         </View>
       </View>
+
       <Modal show={showModal} setShowModal={setShowModal}>
         <View style={styles.contentModal}>
+          <Text style={styles.titleModal}>Selecione o tipo</Text>
           <View style={styles.wrapperButtonModal}>
             <Button title='Tirar foto' onPress={() => handleSelectImage('camera')} />
           </View>
