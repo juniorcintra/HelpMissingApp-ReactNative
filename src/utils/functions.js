@@ -1,24 +1,17 @@
-import RNFetchBlob from 'rn-fetch-blob';
+export const CalcIdade = data => {
+  var dataSplit = data?.split('-');
+  var d = new Date();
+  var ano_atual = d.getFullYear();
+  var mes_atual = d.getMonth() + 1;
+  var dia_atual = d.getDate();
+  dataSplit[0] = +dataSplit[0];
+  dataSplit[1] = +dataSplit[1];
+  dataSplit[2] = +dataSplit[2];
+  var quantos_anos = ano_atual - dataSplit[0];
 
-export const handleConvertImage = file => {
-  const fs = RNFetchBlob.fs;
-  let imagePath = null;
-  RNFetchBlob.config({
-    fileCache: true,
-  })
-    .fetch('GET', file)
-    // the image is now dowloaded to device's storage
-    .then(resp => {
-      // the image path you can use it directly with Image component
-      imagePath = resp.path();
+  if (mes_atual < dataSplit[1] || (mes_atual == dataSplit[1] && dia_atual < dataSplit[2])) {
+    quantos_anos--;
+  }
 
-      console.log('imagem utf8', resp.readFile('utf8'));
-      return resp.readFile('base64');
-    })
-    .then(base64Data => {
-      // here's base64 encoded image
-      console.log('imagem 64', base64Data);
-      // remove the file from storage
-      return fs.unlink(imagePath);
-    });
+  return quantos_anos < 0 ? 0 : quantos_anos;
 };

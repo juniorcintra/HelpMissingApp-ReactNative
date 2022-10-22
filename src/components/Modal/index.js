@@ -11,7 +11,7 @@ export default props => {
       animationType='fade'
       transparent={true}
       visible={props.show}
-      onRequestClose={() => props.setShowModal(false)}
+      // onRequestClose={() => props.setShowModal(false)}
       {...props}>
       <View style={styles.container}>
         {!props.noIcon && (

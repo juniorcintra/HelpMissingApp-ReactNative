@@ -5,6 +5,7 @@ const missingPersonSlice = createSlice({
   initialState: {
     missingPerson: {},
     missingPersons: [],
+    photosMissingPerson: []
   },
   reducers: {
     setMissingPerson(state, { payload }) {
@@ -13,9 +14,12 @@ const missingPersonSlice = createSlice({
     setMissingPersons(state, { payload }) {
       state.missingPersons = payload;
     },
+    setMissingPersonPhotos(state, { payload }) {
+      state.photosMissingPerson = payload;
+    },
   },
 });
 
-export const { setMissingPerson, setMissingPersons } = missingPersonSlice.actions;
+export const { setMissingPerson, setMissingPersons, setMissingPersonPhotos } = missingPersonSlice.actions;
 
 export default missingPersonSlice.reducer;

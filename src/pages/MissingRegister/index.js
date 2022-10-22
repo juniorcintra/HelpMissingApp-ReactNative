@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useCallback,useState } from 'react';
 import { format } from 'date-fns';
 import { View, Text, TouchableOpacity, ScrollView, Image, Keyboard } from 'react-native';
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
@@ -10,9 +10,10 @@ import Button from '../../components/Button';
 
 import styles from './styles';
 import Modal from '../../components/Modal';
-import { registerMissingPerson } from '../../store/middleware/missingPerson.middleware';
+import { registerMissingPerson, registerUploadPhoto } from '../../store/middleware/missingPerson.middleware';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../../components/loading';
+import { useFocusEffect } from '@react-navigation/native';
 
 const MissingRegister = ({ navigation }) => {
   const [fullName, setFullName] = useState('');
@@ -43,7 +44,27 @@ const MissingRegister = ({ navigation }) => {
     };
 
     Keyboard.dismiss();
-    await dispatch(registerMissingPerson(body));
+    const missingPersonData = await dispatch(registerMissingPerson(body));
+    await photos64.map(photo =>
+      dispatch(
+        registerUploadPhoto({
+          pessoas_desaparecidas_id: missingPersonData.id,
+          tipo: 'image',
+          conteudo: `data:image/jpeg;base64,${photo}`,
+        }),
+      ),
+    );
+    setFullName('');
+    setBirthDate(new Date());
+    setDisappearanceDate(new Date());
+    setDisappearanceLocation('');
+    setContacts([]);
+    setFeatures([]);
+    setClothing([]);
+    setPhotos64([]);
+    setActualContact('');
+    setActualFeature('');
+    setActualClothing('');
   };
 
   const showBirthCalendar = mode => {
@@ -117,7 +138,6 @@ const MissingRegister = ({ navigation }) => {
   function handleAddInfo(type) {
     if (type === 'contato') {
       setContacts([...contacts, actualContact]);
-      
       setActualContact('');
     } else if (type === 'feature') {
       setFeatures([...features, actualFeature]);
@@ -127,6 +147,22 @@ const MissingRegister = ({ navigation }) => {
       setActualClothing('');
     }
   }
+
+  useFocusEffect(
+    useCallback(() => {
+      setFullName('');
+      setBirthDate(new Date());
+      setDisappearanceDate(new Date());
+      setDisappearanceLocation('');
+      setContacts([]);
+      setFeatures([]);
+      setClothing([]);
+      setPhotos64([]);
+      setActualContact('');
+      setActualFeature('');
+      setActualClothing('');
+    }, []),
+  );
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>

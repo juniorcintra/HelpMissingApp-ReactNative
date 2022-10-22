@@ -3,14 +3,18 @@ import { Image, ImageBackground, Text, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from './styles';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../store/slices/user.slice';
 
 const imageBG = require('../../../assets/images/background_login.jpg');
 const imageLogo = require('../../../assets/images/logo_help.png');
 
 const Splash = ({ navigation }) => {
+  const dispatch = useDispatch();
   const getUser = async () => {
     const asyncStrg = await AsyncStorage.getItem('user');
     const data = JSON.parse(asyncStrg);
+    await dispatch(setUser(data.user));
     if (data !== null) {
       setTimeout(() => {
         navigation.navigate('MainDrawer', { screen: 'Home' });
