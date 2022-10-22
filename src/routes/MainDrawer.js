@@ -6,6 +6,7 @@ import { createDrawerNavigator, DrawerItemList, DrawerItem } from '@react-naviga
 
 import Logo from '../components/logo';
 import HomePage from '../pages/HomePage';
+import HelpPage from '../pages/HelpPage';
 import PerfilPage from '../pages/PerfilPage';
 import PeopleFound from '../pages/PeopleFound';
 import MissingRegister from '../pages/MissingRegister';
@@ -83,6 +84,16 @@ const MainDrawer = () => {
           headerTitleAlign: 'center',
           headerTitle: () => <Logo />,
           drawerIcon: ({ _, color, size }) => <Icon name='person' size={size} color={color} />,
+        }}
+      />
+
+      <Screen
+        name='Ajuda'
+        component={HelpPage}
+        options={{
+          headerTitleAlign: 'center',
+          headerTitle: () => <Logo />,
+          drawerIcon: ({ _, color, size }) => <Icon name='accessibility-new' size={size} color={color} />,
         }}
       />
     </Navigator>

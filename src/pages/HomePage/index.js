@@ -19,7 +19,7 @@ import { getMissingPerson, getMissingPersonPhoto, registerHistoricMissingPerson 
 import { useFocusEffect } from '@react-navigation/native';
 import { CalcIdade } from '../../utils/functions';
 
-const HomePage = () => {
+const HomePage = ({ navigation }) => {
   const [showModal, setShowModal] = useState(false);
   const [dateTime, setDateTime] = useState(new Date());
   const [place, setPlace] = useState('');
@@ -157,6 +157,9 @@ const HomePage = () => {
         <View style={styles.wrapperButton}>
           <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.danger]} onPress={handleClose}>
             <Icon name='close' color={colors.danger} size={45} />
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.infor]} onPress={() => navigation.navigate('Ajuda')}>
+            <Text style={styles.inforText}>Ajuda</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.6}
