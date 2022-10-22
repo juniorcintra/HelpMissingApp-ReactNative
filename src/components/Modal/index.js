@@ -7,19 +7,14 @@ const iconClose = require('../../../assets/images/close_icon.png');
 
 export default props => {
   return (
-    <Modal
-      animationType='fade'
-      transparent={true}
-      visible={props.show}
-      // onRequestClose={() => props.setShowModal(false)}
-      {...props}>
+    <Modal animationType='fade' transparent={true} visible={props.show} {...props}>
       <View style={styles.container}>
+        {props.children}
         {!props.noIcon && (
           <TouchableOpacity activeOpacity={0.6} onPress={() => props?.setShowModal(false)}>
             <Image source={iconClose} style={styles.iconClose} />
           </TouchableOpacity>
         )}
-        {props.children}
       </View>
     </Modal>
   );
@@ -34,12 +29,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary_500,
   },
   iconClose: {
-    height: 35,
-    width: 35,
-    position: 'absolute',
-    zIndex: 10,
-    // elevation: ,
-    top: -30,
-    left: 130,
+    height: 50,
+    width: 50,
+    marginTop: 24,
   },
 });
