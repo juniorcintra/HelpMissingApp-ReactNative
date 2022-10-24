@@ -19,7 +19,7 @@ const App = () => {
 
   return (
     <ReduxProvider store={store}>
-      <StatusBar barStyle='light-content' translucent backgroundColor={'transparent'} />
+      <StatusBar barStyle='dark-content' translucent backgroundColor={'transparent'} />
       <NavigationContainer>
         <MainStack />
       </NavigationContainer>
