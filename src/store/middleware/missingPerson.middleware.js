@@ -1,7 +1,7 @@
 import { initLoading, endLoading, setError, setSuccess, unsetSuccess, unsetError } from '../slices/generics.slice';
 import api from '../../services/api';
 import { Alert } from 'react-native';
-import { setMissingPerson, setMissingPersonPhotos, setMissingPersons } from '../slices/missingPerson.slice';
+import { setMissingPerson, setMissingPersonPhotos } from '../slices/missingPerson.slice';
 
 export const registerMissingPerson = userData => {
   return async dispatch => {

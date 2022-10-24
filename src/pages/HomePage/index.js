@@ -60,7 +60,7 @@ const HomePage = ({ navigation }) => {
       pessoas_desaparecidas_id: missingPerson.id,
       tipo_historico: 'não vi',
       descricao: null,
-      usuarios_id: user.id,
+      usuarios_id: user?.id,
     };
 
     await dispatch(registerHistoricMissingPerson(body))
@@ -71,7 +71,7 @@ const HomePage = ({ navigation }) => {
       pessoas_desaparecidas_id: missingPerson.id,
       tipo_historico: 'vi',
       descricao: `Vi no dia ${format(dateTime, 'dd/MM/yyyy')}, local: ${place}, e estava assim: ${description}`,
-      usuarios_id: user.id,
+      usuarios_id: user?.id,
     };
 
     await dispatch(registerHistoricMissingPerson(body))
@@ -100,7 +100,7 @@ const HomePage = ({ navigation }) => {
   };
 
   const handleGetMissingPersons = async () => {
-    await dispatch(getMissingPerson(`?limite=1&tem_historico=0&usuarios_id=${user.id}`));
+    await dispatch(getMissingPerson(`?limite=1&tem_historico=0&usuarios_id=${user?.id}&encontrado=0`));
   };
 
   const handleGetMissingPersonPhotos = async () => {

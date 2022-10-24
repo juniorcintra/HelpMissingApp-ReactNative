@@ -141,15 +141,15 @@ const MissingRegister = ({ navigation }) => {
 
   function handleAddInfo(type) {
     if (type === 'contacts') {
-      if(!actualContact) return;
+      if (!actualContact) return;
       setContacts([...contacts, actualContact]);
       setActualContact('');
     } else if (type === 'feature') {
-      if(!actualFeature) return;
+      if (!actualFeature) return;
       setFeatures([...features, actualFeature]);
       setActualFeature('');
     } else {
-      if(!actualClothing) return;
+      if (!actualClothing) return;
       setClothing([...clothing, actualClothing]);
       setActualClothing('');
     }
@@ -303,7 +303,10 @@ const MissingRegister = ({ navigation }) => {
             <ScrollView style={styles.scrollFeatures} showsVerticalScrollIndicator={false}>
               <View style={styles.wrapperButtomFeatures}>
                 {contacts.map((item, index) => (
-                  <TouchableOpacity key={index} activeOpacity={0.6} onPress={() => handleRemoveArray(index, 'contacts')}>
+                  <TouchableOpacity
+                    key={index}
+                    activeOpacity={0.6}
+                    onPress={() => handleRemoveArray(index, 'contacts')}>
                     <View style={styles.buttomFeatures}>
                       <Text style={styles.buttomTextFeatures}>{item}</Text>
                     </View>
