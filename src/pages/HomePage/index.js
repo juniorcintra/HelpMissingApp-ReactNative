@@ -57,7 +57,7 @@ const HomePage = ({ navigation }) => {
 
   const handleClose = async () => {
     const body = {
-      pessoas_desaparecidas_id: missingPerson.id,
+      pessoas_desaparecidas_id: missingPerson?.id,
       tipo_historico: 'não vi',
       descricao: null,
       usuarios_id: user?.id,
@@ -68,7 +68,7 @@ const HomePage = ({ navigation }) => {
 
   const handleSendModal = async () => {
     const body = {
-      pessoas_desaparecidas_id: missingPerson.id,
+      pessoas_desaparecidas_id: missingPerson?.id,
       tipo_historico: 'vi',
       descricao: `Vi no dia ${format(dateTime, 'dd/MM/yyyy')}, local: ${place}, e estava assim: ${description}`,
       usuarios_id: user?.id,
@@ -104,7 +104,7 @@ const HomePage = ({ navigation }) => {
   };
 
   const handleGetMissingPersonPhotos = async () => {
-    await dispatch(getMissingPersonPhoto(`?pessoas_desaparecidas_id=${missingPerson.id}&tipo=image`));
+    await dispatch(getMissingPersonPhoto(`?pessoas_desaparecidas_id=${missingPerson?.id}&tipo=image`));
   };
 
   useEffect(() => {
