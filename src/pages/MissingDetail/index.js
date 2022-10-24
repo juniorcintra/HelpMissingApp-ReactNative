@@ -19,6 +19,7 @@ const MissingDetail = ({ navigation }) => {
   const [contacts, setContacts] = useState([]);
   const [features, setFeatures] = useState([]);
   const [clothing, setClothing] = useState([]);
+  const [photosSelected, setPhotosSelected] = useState('');
   const [photos64, setPhotos64] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showModalHistory, setShowModalHistory] = useState(false);
@@ -26,8 +27,9 @@ const MissingDetail = ({ navigation }) => {
   const dispatch = useDispatch();
   const { setOptions } = useNavigation();
   const { loading } = useSelector(state => state.genericReducer);
+  const { missingPerson, photosMissingPerson } = useSelector(state => state.missingPersonReducer);
 
-  const dateModal = [
+  const dateModalHistory = [
     {
       id: '1',
       date: '02/10/2021 15:10',
@@ -61,14 +63,19 @@ const MissingDetail = ({ navigation }) => {
   ];
 
   const getDateUser = () => {
-    setFullName('');
-    setBirthDate(new Date());
-    setDisappearanceDate(new Date());
-    setDisappearanceLocation('');
-    setContacts([]);
-    setFeatures([]);
-    setClothing([]);
-    setPhotos64([]);
+    setFullName(missingPerson?.nome);
+    setBirthDate(new Date(missingPerson?.data_nascimento));
+    setDisappearanceDate(new Date(missingPerson?.data_desaparecimento));
+    setDisappearanceLocation(missingPerson?.local_desaparecimento);
+    setContacts(missingPerson?.caracteristicas.split(','));
+    setFeatures(missingPerson?.contatos.split(','));
+    setClothing(missingPerson?.vestimenta_desaparecimento.split(','));
+    setPhotos64(photosMissingPerson);
+  };
+
+  const handleOpenModal = photo => {
+    setPhotosSelected(photo);
+    setShowModal(true);
   };
 
   useLayoutEffect(() => {
@@ -91,78 +98,16 @@ const MissingDetail = ({ navigation }) => {
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         <View style={styles.viewUpload}>
-          {photos64[0] ? (
-            <Image
-              style={styles.photoUploaded}
-              source={{
-                uri: `data:image/jpeg;base64,${photos64[0]}`,
-              }}
-            />
-          ) : (
-            <TouchableOpacity activeOpacity={0.6} style={styles.buttonUpload} onPress={() => setShowModal(!showModal)}>
-              <Text style={styles.textUpload}>+</Text>
+          {photos64.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              activeOpacity={0.6}
+              style={styles.buttonUpload}
+              onPress={() => handleOpenModal(item.conteudo)}
+            >
+              <Image style={styles.photoUploaded} source={{ uri: item.conteudo }} />
             </TouchableOpacity>
-          )}
-          {photos64[1] ? (
-            <Image
-              style={styles.photoUploaded}
-              source={{
-                uri: `data:image/jpeg;base64,${photos64[1]}`,
-              }}
-            />
-          ) : (
-            <TouchableOpacity activeOpacity={0.6} style={styles.buttonUpload} onPress={() => setShowModal(!showModal)}>
-              <Text style={styles.textUpload}>+</Text>
-            </TouchableOpacity>
-          )}
-          {photos64[2] ? (
-            <Image
-              style={styles.photoUploaded}
-              source={{
-                uri: `data:image/jpeg;base64,${photos64[2]}`,
-              }}
-            />
-          ) : (
-            <TouchableOpacity activeOpacity={0.6} style={styles.buttonUpload} onPress={() => setShowModal(!showModal)}>
-              <Text style={styles.textUpload}>+</Text>
-            </TouchableOpacity>
-          )}
-          {photos64[3] ? (
-            <Image
-              style={styles.photoUploaded}
-              source={{
-                uri: `data:image/jpeg;base64,${photos64[3]}`,
-              }}
-            />
-          ) : (
-            <TouchableOpacity activeOpacity={0.6} style={styles.buttonUpload} onPress={() => setShowModal(!showModal)}>
-              <Text style={styles.textUpload}>+</Text>
-            </TouchableOpacity>
-          )}
-          {photos64[4] ? (
-            <Image
-              style={styles.photoUploaded}
-              source={{
-                uri: `data:image/jpeg;base64,${photos64[4]}`,
-              }}
-            />
-          ) : (
-            <TouchableOpacity activeOpacity={0.6} style={styles.buttonUpload} onPress={() => setShowModal(!showModal)}>
-              <Text style={styles.textUpload}>+</Text>
-            </TouchableOpacity>
-          )}
-          {photos64[5] ? (
-            <Image
-              style={styles.photoUploaded}
-              source={{
-                uri: `data:image/jpeg;base64,${photos64[5]}`,
-              }}
-            />
-          ) : (
-            <TouchableOpacity activeOpacity={0.6} style={styles.buttonUpload} onPress={() => setShowModal(!showModal)}>
-              <Text style={styles.textUpload}>+</Text>
-            </TouchableOpacity>
-          )}
+          ))}
         </View>
 
         <View style={styles.form}>
@@ -229,14 +174,14 @@ const MissingDetail = ({ navigation }) => {
           </View>
         </View>
       </View>
-      
-      {/* Modal de histórico do desaparecido */}
+
+      {/* Modal do histórico do desaparecido */}
       <Modal show={showModalHistory} setShowModal={setShowModalHistory}>
-        <View style={styles.contentModalHistory}>
+        <View style={styles.contentModal}>
           <Text style={styles.TitleModalHistory}>Histórico do Desaparecido</Text>
 
           <FlatList
-            data={dateModal}
+            data={dateModalHistory}
             style={styles.flatListHistory}
             keyExtractor={item => item.id}
             showsVerticalScrollIndicator={false}
@@ -253,6 +198,13 @@ const MissingDetail = ({ navigation }) => {
               </View>
             )}
           />
+        </View>
+      </Modal>
+
+      {/* Modal para visualizar foto */}
+      <Modal show={showModal} setShowModal={setShowModal}>
+        <View style={[styles.contentModal, { paddingBottom: 25 }]}>
+          <Image source={{ uri: photosSelected }} style={styles.modalPhoto} />
         </View>
       </Modal>
       <Loading show={loading} />

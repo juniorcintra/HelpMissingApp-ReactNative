@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     color: colors.primary_500,
   },
-  contentModalHistory: {
+  contentModal: {
     width: '80%',
     height: 493,
     borderRadius: 15,
@@ -155,6 +155,12 @@ const styles = StyleSheet.create({
     borderBottomColor: '#8A8A8A',
     marginTop: 6,
     marginBottom: 10
+  },
+  modalPhoto: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 5,
+    resizeMode: 'cover',
   },
 });
 
