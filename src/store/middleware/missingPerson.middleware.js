@@ -70,7 +70,7 @@ export const getMissingPerson = (dataMissingPerson = '', multiple = false, detai
 
       if (response.status === 200 || response.status === 201) {
         dispatch(unsetError());
-        if (!multiple) {
+        if (multiple === false) {
           dispatch(setMissingPerson(response.data.success.data[0]));
         } else {
           dispatch(setMissingPersons(response.data.success.data));

@@ -18,10 +18,8 @@ const PeopleFound = ({ navigation }) => {
   const { missingPersons } = useSelector(state => state.missingPersonReducer);
   const { user } = useSelector(state => state.userReducer);
 
-  const handleInfo = () => {};
-
   const handleGetMissingPersons = async () => {
-    await dispatch(getMissingPerson(`?limite=1&tem_historico=0&usuarios_id=${user?.id}&encontrado=1`, true));
+    await dispatch(getMissingPerson(`?limite=0&tem_historico=0&usuarios_id=${user?.id}&encontrado=1`, true, false));
   };
 
   let listaFiltrada = missingPersons.filter(function (value) {
@@ -74,7 +72,7 @@ const PeopleFound = ({ navigation }) => {
           <Text style={styles.date}>Data: {item?.updatedAt && format(new Date(item?.updatedAt), 'dd/MM/yyyy')}</Text>
         </View>
 
-        <TouchableOpacity activeOpacity={0.6} onPress={handleInfo}>
+        <TouchableOpacity activeOpacity={0.6} onPress={()=>navigation.navigate('MissingDetail', { person: item })}>
           <Icon name='info' color={colors.primary} size={28} />
         </TouchableOpacity>
       </View>
