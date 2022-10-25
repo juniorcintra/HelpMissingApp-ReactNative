@@ -11,6 +11,7 @@ import PerfilPage from '../pages/PerfilPage';
 import PeopleFound from '../pages/PeopleFound';
 import MissingRegister from '../pages/MissingRegister';
 import MissingDetail from '../pages/MissingDetail';
+import HistoricPage from '../pages/HistoricPage';
 
 const { Navigator, Screen } = createDrawerNavigator();
 
@@ -70,7 +71,7 @@ const MainDrawer = () => {
 
       <Screen
         name='Histórico'
-        component={HomePage}
+        component={HistoricPage}
         options={{
           headerTitleAlign: 'center',
           headerTitle: () => <Logo />,

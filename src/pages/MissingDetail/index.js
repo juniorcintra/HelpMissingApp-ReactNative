@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useLayoutEffect } from 'react';
+import React, { useState, useCallback, useLayoutEffect, useEffect } from 'react';
 import { format } from 'date-fns';
 import PagerView from 'react-native-pager-view';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,10 +21,10 @@ const MissingDetail = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const { setOptions } = useNavigation();
   const { loading } = useSelector(state => state.genericReducer);
-  const { missingPersonHistoric } = useSelector(state => state.missingPersonReducer);
+  const { missingPersonHistoric, photosMissingPerson } = useSelector(state => state.missingPersonReducer);
   const { user } = useSelector(state => state.userReducer);
 
-  const { person: missingPerson, photosPerson: photosMissingPerson } = route?.params;
+  const { person: missingPerson } = route?.params;
 
   console.log('detail', missingPerson);
 
@@ -53,6 +53,13 @@ const MissingDetail = ({ navigation, route }) => {
     },
   });
 
+  const handleGetMissingPersonPhotos = async () => {
+    await dispatch(getMissingPersonPhoto(`?pessoas_desaparecidas_id=${missingPerson?.id}&tipo=image`));
+  };
+
+  useEffect(() => {
+    handleGetMissingPersonPhotos();
+  }, [missingPerson]);
 
   useLayoutEffect(() => {
     setOptions({

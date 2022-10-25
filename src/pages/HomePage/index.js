@@ -62,7 +62,7 @@ const HomePage = ({ navigation }) => {
   const handleClose = async () => {
     const body = {
       pessoas_desaparecidas_id: missingPerson?.id,
-      tipo_historico: 'não vi',
+      tipo_historico: 'naovi',
       descricao: null,
       usuarios_id: user?.id,
     };
@@ -161,7 +161,7 @@ const HomePage = ({ navigation }) => {
               activeOpacity={0.6}
               style={styles.buttonInfo}
               onPress={() =>
-                navigation.navigate('MissingDetail', { person: missingPerson, photosPerson: photosMissingPerson })
+                navigation.navigate('MissingDetail', { person: missingPerson })
               }>
               <Icon name='info' color={colors.primary} size={28} />
             </TouchableOpacity>
