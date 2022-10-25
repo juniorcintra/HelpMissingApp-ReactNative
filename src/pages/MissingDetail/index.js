@@ -1,5 +1,4 @@
 import React, { useState, useCallback, useLayoutEffect } from 'react';
-import { format } from 'date-fns';
 import PagerView from 'react-native-pager-view';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -8,27 +7,22 @@ import Animated, { useHandler, useEvent } from 'react-native-reanimated';
 import { View, Text, TouchableOpacity, ScrollView, Image, FlatList } from 'react-native';
 
 import Modal from '../../components/Modal';
-import Input from '../../components/Input';
 import Loading from '../../components/loading';
 import { handleDial } from '../../utils/functions';
 import { getHistoricMissingPerson } from '../../store/middleware/missingPerson.middleware';
 
 import styles from './styles';
 
-const MissingDetail = ({ navigation, route }) => {
+const MissingDetail = ({ route }) => {
   const [showModalHistory, setShowModalHistory] = useState(false);
+  const AnimatedPager = Animated.createAnimatedComponent(PagerView);
 
   const dispatch = useDispatch();
   const { setOptions } = useNavigation();
+  const { user } = useSelector(state => state.userReducer);
   const { loading } = useSelector(state => state.genericReducer);
   const { missingPersonHistoric } = useSelector(state => state.missingPersonReducer);
-  const { user } = useSelector(state => state.userReducer);
-
   const { person: missingPerson, photosPerson: photosMissingPerson } = route?.params;
-
-  console.log('detail', missingPerson);
-
-  const AnimatedPager = Animated.createAnimatedComponent(PagerView);
 
   const usePagerScrollHandler = (handlers, dependencies) => {
     const { context, doDependenciesDiffer } = useHandler(handlers, dependencies);
@@ -53,6 +47,13 @@ const MissingDetail = ({ navigation, route }) => {
     },
   });
 
+  const handleGetHistoricMissingPersons = async () => {
+    await dispatch(
+      getHistoricMissingPerson(
+        `?pessoas_desaparecidas_id=${missingPerson?.id}&tipo_historico=vi&usuarios_id=${user?.id}`,
+      ),
+    );
+  };
 
   useLayoutEffect(() => {
     setOptions({
@@ -64,14 +65,6 @@ const MissingDetail = ({ navigation, route }) => {
         ),
     });
   }, []);
-
-  const handleGetHistoricMissingPersons = async () => {
-    await dispatch(
-      getHistoricMissingPerson(
-        `?pessoas_desaparecidas_id=${missingPerson?.id}&tipo_historico=vi&usuarios_id=${user?.id}`,
-      ),
-    );
-  };
 
   useFocusEffect(
     useCallback(() => {
@@ -91,10 +84,25 @@ const MissingDetail = ({ navigation, route }) => {
         </AnimatedPager>
 
         <View style={styles.form}>
-          <Text>{missingPerson?.nome}</Text>
-          <Text>{missingPerson?.data_nascimento && new Date(missingPerson?.data_nascimento)}</Text>
-          <Text>{missingPerson?.data_desaparecimento && new Date(missingPerson?.data_desaparecimento)}</Text>
-          <Text>{missingPerson?.local_desaparecimento}</Text>
+          <Text style={styles.label}>Nome</Text>
+          <Text style={styles.text}>{missingPerson?.nome}</Text>
+          <View style={styles.separator} />
+
+          <Text style={styles.label}>Data Nascimento</Text>
+          <Text style={styles.text}>
+            {missingPerson?.data_nascimento && missingPerson?.data_nascimento.split('-').reverse().join('/')}
+          </Text>
+          <View style={styles.separator} />
+
+          <Text style={styles.label}>Data Desaparecimento</Text>
+          <Text style={styles.text}>
+            {missingPerson?.data_desaparecimento && missingPerson?.data_desaparecimento.split('-').reverse().join('/')}
+          </Text>
+          <View style={styles.separator} />
+
+          <Text style={styles.label}>Local Desaparecimento</Text>
+          <Text style={styles.text}>{missingPerson?.local_desaparecimento}</Text>
+          <View style={styles.separator} />
 
           <Text style={styles.label}>Contatos</Text>
           <ScrollView style={styles.scrollFeatures} showsVerticalScrollIndicator={false}>

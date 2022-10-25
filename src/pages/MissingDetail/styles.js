@@ -56,6 +56,20 @@ const styles = StyleSheet.create({
     color: '#000',
     marginTop: 16,
   },
+  text: {
+    fontFamily: 'Roboto-Regular',
+    fontSize: 16,
+    color: '#000',
+    marginTop: 10,
+  },
+  separator: {
+    width: '100%',
+    height: 1,
+    borderBottomWidth: 1,
+    borderBottomColor: '#8A8A8A',
+    marginTop: 6,
+    marginBottom: 10,
+  },
   scrollFeatures: {},
   wrapperButtomFeatures: {
     width: '100%',
@@ -170,7 +184,7 @@ const styles = StyleSheet.create({
   },
   photo: {
     flex: 1,
-    width: "90%",
+    width: "95%",
     resizeMode: 'cover',
     borderRadius: 10,
   },
