@@ -147,7 +147,8 @@ const HomePage = ({ navigation }) => {
                   Desaparecido em:
                   <Text style={styles.rowTextRegular}>
                     {' '}
-                    {missingPerson?.data_desaparecimento && format(new Date(missingPerson?.data_desaparecimento), 'dd/MM/yyyy')}
+                    {missingPerson?.data_desaparecimento &&
+                      format(new Date(missingPerson?.data_desaparecimento), 'dd/MM/yyyy')}
                   </Text>
                 </Text>
                 <Text style={styles.rowTextBold}>
@@ -159,7 +160,9 @@ const HomePage = ({ navigation }) => {
             <TouchableOpacity
               activeOpacity={0.6}
               style={styles.buttonInfo}
-              onPress={() => navigation.navigate('MissingDetail')}>
+              onPress={() =>
+                navigation.navigate('MissingDetail', { person: missingPerson, photosPerson: photosMissingPerson })
+              }>
               <Icon name='info' color={colors.primary} size={28} />
             </TouchableOpacity>
           </View>

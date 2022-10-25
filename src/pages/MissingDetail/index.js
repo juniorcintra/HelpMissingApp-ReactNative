@@ -11,11 +11,15 @@ import Modal from '../../components/Modal';
 import Input from '../../components/Input';
 import Loading from '../../components/loading';
 import { handleDial } from '../../utils/functions';
-import { getHistoricMissingPerson, getMissingPersonPhoto } from '../../store/middleware/missingPerson.middleware';
+import {
+  getHistoricMissingPerson,
+  getMissingPerson,
+  getMissingPersonPhoto,
+} from '../../store/middleware/missingPerson.middleware';
 
 import styles from './styles';
 
-const MissingDetail = ({ navigation }) => {
+const MissingDetail = ({ navigation, route }) => {
   const [fullName, setFullName] = useState('');
   const [birthDate, setBirthDate] = useState(new Date());
   const [disappearanceDate, setDisappearanceDate] = useState(new Date());
@@ -23,18 +27,17 @@ const MissingDetail = ({ navigation }) => {
   const [contacts, setContacts] = useState([]);
   const [features, setFeatures] = useState([]);
   const [clothing, setClothing] = useState([]);
-  const [photosSelected, setPhotosSelected] = useState('');
-  const [photos64, setPhotos64] = useState([]);
-  const [showModal, setShowModal] = useState(false);
   const [showModalHistory, setShowModalHistory] = useState(false);
 
   const dispatch = useDispatch();
   const { setOptions } = useNavigation();
   const { loading } = useSelector(state => state.genericReducer);
-  const { missingPerson, photosMissingPerson, missingPersonHistoric } = useSelector(
+  const {  missingPersonHistoric } = useSelector(
     state => state.missingPersonReducer,
   );
   const { user } = useSelector(state => state.userReducer);
+
+  const { person: missingPerson, photosPerson: photosMissingPerson  } = route?.params;
 
   const AnimatedPager = Animated.createAnimatedComponent(PagerView);
 
@@ -69,7 +72,6 @@ const MissingDetail = ({ navigation }) => {
     setContacts(missingPerson?.caracteristicas?.split(','));
     setFeatures(missingPerson?.contatos?.split(','));
     setClothing(missingPerson?.vestimenta_desaparecimento?.split(','));
-    setPhotos64(photosMissingPerson);
   };
 
   useLayoutEffect(() => {
@@ -83,11 +85,7 @@ const MissingDetail = ({ navigation }) => {
     });
   }, []);
 
-  const handleGetMissingPersonPhotos = async () => {
-    await dispatch(getMissingPersonPhoto(`?pessoas_desaparecidas_id=${missingPerson?.id}&tipo=image`));
-  };
-
-  const handleGetMissingPersons = async () => {
+  const handleGetHistoricMissingPersons = async () => {
     await dispatch(
       getHistoricMissingPerson(
         `?pessoas_desaparecidas_id=${missingPerson?.id}&tipo_historico=vi&usuarios_id=${user?.id}`,
@@ -98,8 +96,7 @@ const MissingDetail = ({ navigation }) => {
   useFocusEffect(
     useCallback(() => {
       getDateUser();
-      handleGetMissingPersons();
-      handleGetMissingPersonPhotos();
+      handleGetHistoricMissingPersons();
     }, []),
   );
 
@@ -149,11 +146,7 @@ const MissingDetail = ({ navigation }) => {
           <ScrollView style={styles.scrollFeatures} showsVerticalScrollIndicator={false}>
             <View style={styles.wrapperButtomFeatures}>
               {contacts.map((item, index) => (
-                <TouchableOpacity
-                  key={index}
-                  activeOpacity={0.6}
-                  onPress={() => handleDial(item)}
-                >
+                <TouchableOpacity key={index} activeOpacity={0.6} onPress={() => handleDial(item)}>
                   <View key={index} style={styles.buttomFeatures}>
                     <Text style={styles.buttomTextFeatures}>{item}</Text>
                   </View>
@@ -208,13 +201,6 @@ const MissingDetail = ({ navigation }) => {
               </View>
             )}
           />
-        </View>
-      </Modal>
-
-      {/* Modal para visualizar foto */}
-      <Modal show={showModal} setShowModal={setShowModal}>
-        <View style={[styles.contentModal, { paddingBottom: 25 }]}>
-          <Image source={{ uri: photosSelected }} style={styles.modalPhoto} />
         </View>
       </Modal>
       <Loading show={loading} />

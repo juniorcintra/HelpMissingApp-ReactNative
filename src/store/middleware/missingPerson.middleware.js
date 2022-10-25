@@ -3,6 +3,7 @@ import api from '../../services/api';
 import { Alert } from 'react-native';
 import {
   setMissingPerson,
+  setMissingPersonDetail,
   setMissingPersonHistoric,
   setMissingPersonPhotos,
   setMissingPersons,
@@ -60,7 +61,7 @@ export const registerUploadPhoto = dataPhoto => {
   };
 };
 
-export const getMissingPerson = (dataMissingPerson = '', multiple = false) => {
+export const getMissingPerson = (dataMissingPerson = '', multiple = false, detail = false) => {
   return async dispatch => {
     dispatch(initLoading());
     try {
@@ -73,6 +74,9 @@ export const getMissingPerson = (dataMissingPerson = '', multiple = false) => {
           dispatch(setMissingPerson(response.data.success.data[0]));
         } else {
           dispatch(setMissingPersons(response.data.success.data));
+        }
+        if (detail) {
+          dispatch(setMissingPersonDetail(response.data.success.data[0]));
         }
         dispatch(
           setSuccess({
