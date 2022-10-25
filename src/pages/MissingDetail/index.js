@@ -11,33 +11,22 @@ import Modal from '../../components/Modal';
 import Input from '../../components/Input';
 import Loading from '../../components/loading';
 import { handleDial } from '../../utils/functions';
-import {
-  getHistoricMissingPerson,
-  getMissingPerson,
-  getMissingPersonPhoto,
-} from '../../store/middleware/missingPerson.middleware';
+import { getHistoricMissingPerson } from '../../store/middleware/missingPerson.middleware';
 
 import styles from './styles';
 
 const MissingDetail = ({ navigation, route }) => {
-  const [fullName, setFullName] = useState('');
-  const [birthDate, setBirthDate] = useState(new Date());
-  const [disappearanceDate, setDisappearanceDate] = useState(new Date());
-  const [disappearanceLocation, setDisappearanceLocation] = useState('');
-  const [contacts, setContacts] = useState([]);
-  const [features, setFeatures] = useState([]);
-  const [clothing, setClothing] = useState([]);
   const [showModalHistory, setShowModalHistory] = useState(false);
 
   const dispatch = useDispatch();
   const { setOptions } = useNavigation();
   const { loading } = useSelector(state => state.genericReducer);
-  const {  missingPersonHistoric } = useSelector(
-    state => state.missingPersonReducer,
-  );
+  const { missingPersonHistoric } = useSelector(state => state.missingPersonReducer);
   const { user } = useSelector(state => state.userReducer);
 
-  const { person: missingPerson, photosPerson: photosMissingPerson  } = route?.params;
+  const { person: missingPerson, photosPerson: photosMissingPerson } = route?.params;
+
+  console.log('detail', missingPerson);
 
   const AnimatedPager = Animated.createAnimatedComponent(PagerView);
 
@@ -64,15 +53,6 @@ const MissingDetail = ({ navigation, route }) => {
     },
   });
 
-  const getDateUser = () => {
-    setFullName(missingPerson?.nome);
-    setBirthDate(new Date(missingPerson?.data_nascimento));
-    setDisappearanceDate(new Date(missingPerson?.data_desaparecimento));
-    setDisappearanceLocation(missingPerson?.local_desaparecimento);
-    setContacts(missingPerson?.caracteristicas?.split(','));
-    setFeatures(missingPerson?.contatos?.split(','));
-    setClothing(missingPerson?.vestimenta_desaparecimento?.split(','));
-  };
 
   useLayoutEffect(() => {
     setOptions({
@@ -95,7 +75,6 @@ const MissingDetail = ({ navigation, route }) => {
 
   useFocusEffect(
     useCallback(() => {
-      getDateUser();
       handleGetHistoricMissingPersons();
     }, []),
   );
@@ -112,40 +91,15 @@ const MissingDetail = ({ navigation, route }) => {
         </AnimatedPager>
 
         <View style={styles.form}>
-          <Input
-            editable={false}
-            value={fullName}
-            label='Nome Completo'
-            placeholder='Jhoe Doe'
-            autoCapitalize='words'
-            onChangeText={setFullName}
-          />
-          <Input
-            editable={false}
-            placeholder='xx/xx/xxxx'
-            label='Data de Nascimento'
-            onChangeText={setBirthDate}
-            value={format(birthDate, 'dd/MM/yyyy')}
-          />
-          <Input
-            editable={false}
-            placeholder='xx/xx/xxxx'
-            label='Data de Desaparecimento'
-            onChangeText={setDisappearanceDate}
-            value={format(disappearanceDate, 'dd/MM/yyyy')}
-          />
-          <Input
-            editable={false}
-            placeholder='Endereço'
-            value={disappearanceLocation}
-            label='Local do Desaparecimento'
-            onChangeText={setDisappearanceLocation}
-          />
+          <Text>{missingPerson?.nome}</Text>
+          <Text>{missingPerson?.data_nascimento && new Date(missingPerson?.data_nascimento)}</Text>
+          <Text>{missingPerson?.data_desaparecimento && new Date(missingPerson?.data_desaparecimento)}</Text>
+          <Text>{missingPerson?.local_desaparecimento}</Text>
 
           <Text style={styles.label}>Contatos</Text>
           <ScrollView style={styles.scrollFeatures} showsVerticalScrollIndicator={false}>
             <View style={styles.wrapperButtomFeatures}>
-              {contacts.map((item, index) => (
+              {missingPerson?.contatos?.split(',').map((item, index) => (
                 <TouchableOpacity key={index} activeOpacity={0.6} onPress={() => handleDial(item)}>
                   <View key={index} style={styles.buttomFeatures}>
                     <Text style={styles.buttomTextFeatures}>{item}</Text>
@@ -158,7 +112,7 @@ const MissingDetail = ({ navigation, route }) => {
           <Text style={styles.label}>Características</Text>
           <ScrollView style={styles.scrollFeatures} showsVerticalScrollIndicator={false}>
             <View style={styles.wrapperButtomFeatures}>
-              {features.map((item, index) => (
+              {missingPerson?.caracteristicas?.split(',').map((item, index) => (
                 <View key={index} style={styles.buttomFeatures}>
                   <Text style={styles.buttomTextFeatures}>{item}</Text>
                 </View>
@@ -168,7 +122,7 @@ const MissingDetail = ({ navigation, route }) => {
 
           <Text style={styles.label}>Vestimenta do Desaparecimento</Text>
           <View style={styles.wrapperClothing}>
-            {clothing.map((item, index) => (
+            {missingPerson?.vestimenta_desaparecimento?.split(',').map((item, index) => (
               <View key={index} style={styles.rowClothing}>
                 <View style={styles.iconClothing} />
                 <Text style={styles.textClothing}>{item}</Text>
