@@ -106,7 +106,7 @@ const PerfilPage = () => {
               onChangeText={setContatoUser}
             />
           </View>
-          <View style={styles.divScroll}>
+          {/* <View style={styles.divScroll}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               {dateScroll.map((item, index) => (
                 <TouchableOpacity key={index} activeOpacity={0.6} onPress={() => handleOpenModal(item.uri)}>
@@ -114,7 +114,7 @@ const PerfilPage = () => {
                 </TouchableOpacity>
               ))}
             </ScrollView>
-          </View>
+          </View> */}
         </View>
       </ScrollView>
 

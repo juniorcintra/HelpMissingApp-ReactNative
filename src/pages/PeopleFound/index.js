@@ -63,7 +63,7 @@ const PeopleFound = ({ navigation }) => {
       </View>
 
       <FlatList
-        data={[]}
+        data={missingPersons}
         keyExtractor={item => item.id}
         renderItem={renderCard}
         showsVerticalScrollIndicator={false}
