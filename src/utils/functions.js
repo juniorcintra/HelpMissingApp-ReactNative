@@ -1,3 +1,5 @@
+import { Linking } from "react-native";
+
 export const CalcIdade = data => {
   var dataSplit = data?.split('-');
   var d = new Date();
@@ -14,4 +16,9 @@ export const CalcIdade = data => {
   }
 
   return quantos_anos < 0 ? 0 : quantos_anos;
+};
+
+export const handleDial = (value = '') => {
+  var numsStr = parseInt(value.replace(/[^0-9]/g, ''));
+  Linking.openURL(`tel:${numsStr}`)
 };
