@@ -1,7 +1,8 @@
-import React, { useState, useCallback, useLayoutEffect, useEffect } from 'react';
+import React, { useState, useCallback, useLayoutEffect } from 'react';
 import { format } from 'date-fns';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import PagerView from 'react-native-pager-view';
 import { useDispatch, useSelector } from 'react-redux';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import Animated, { useHandler, useEvent } from 'react-native-reanimated';
 import { View, Text, TouchableOpacity, ScrollView, Image, FlatList } from 'react-native';
@@ -9,10 +10,10 @@ import { View, Text, TouchableOpacity, ScrollView, Image, FlatList } from 'react
 import Modal from '../../components/Modal';
 import Input from '../../components/Input';
 import Loading from '../../components/loading';
+import { handleDial } from '../../utils/functions';
+import { getHistoricMissingPerson, getMissingPersonPhoto } from '../../store/middleware/missingPerson.middleware';
 
 import styles from './styles';
-import PagerView from 'react-native-pager-view';
-import { getHistoricMissingPerson, getMissingPersonPhoto } from '../../store/middleware/missingPerson.middleware';
 
 const MissingDetail = ({ navigation }) => {
   const [fullName, setFullName] = useState('');
@@ -148,9 +149,15 @@ const MissingDetail = ({ navigation }) => {
           <ScrollView style={styles.scrollFeatures} showsVerticalScrollIndicator={false}>
             <View style={styles.wrapperButtomFeatures}>
               {contacts.map((item, index) => (
-                <View key={index} style={styles.buttomFeatures}>
-                  <Text style={styles.buttomTextFeatures}>{item}</Text>
-                </View>
+                <TouchableOpacity
+                  key={index}
+                  activeOpacity={0.6}
+                  onPress={() => handleDial(item)}
+                >
+                  <View key={index} style={styles.buttomFeatures}>
+                    <Text style={styles.buttomTextFeatures}>{item}</Text>
+                  </View>
+                </TouchableOpacity>
               ))}
             </View>
           </ScrollView>
