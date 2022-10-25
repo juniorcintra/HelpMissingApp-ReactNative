@@ -1,4 +1,4 @@
-import { Linking } from "react-native";
+import { Linking } from 'react-native';
 
 export const CalcIdade = data => {
   var dataSplit = data?.split('-');
@@ -20,5 +20,16 @@ export const CalcIdade = data => {
 
 export const handleDial = (value = '') => {
   var numsStr = parseInt(value.replace(/[^0-9]/g, ''));
-  Linking.openURL(`tel:${numsStr}`)
+  Linking.openURL(`tel:${numsStr}`);
+};
+
+export const calcDaysFound = (data1, data2) => {
+  const diffInMs = new Date(data1) - new Date(data2);
+  const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+
+  if (diffInDays === 0 || diffInDays < 2) {
+    return '1 dia';
+  } else {
+    return diffInDays + ' dias';
+  }
 };

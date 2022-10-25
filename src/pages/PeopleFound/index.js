@@ -9,6 +9,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import { getMissingPerson } from '../../store/middleware/missingPerson.middleware';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { calcDaysFound, CalcIdade } from '../../utils/functions';
+import { format } from 'date-fns';
 
 const PeopleFound = ({ navigation }) => {
   const [search, setSearch] = useState('');
@@ -65,10 +67,11 @@ const PeopleFound = ({ navigation }) => {
 
         <View style={styles.description}>
           <Text style={styles.name}>
-            {item?.nome}, <Text style={styles.age}>{item?.idade}</Text>
+            {item?.nome}
+            <Text style={styles.age}>, {item?.data_nascimento && CalcIdade(item.data_nascimento)}</Text>
           </Text>
-          <Text style={styles.foundOn}>Encontrado em: {item?.encontrado}</Text>
-          <Text style={styles.date}>Data: {item?.data}</Text>
+          <Text style={styles.foundOn}>Encontrado em: {calcDaysFound(item.updatedAt, item.createdAt)}</Text>
+          <Text style={styles.date}>Data: {item?.updatedAt && format(new Date(item?.updatedAt), 'dd/MM/yyyy')}</Text>
         </View>
 
         <TouchableOpacity activeOpacity={0.6} onPress={handleInfo}>
