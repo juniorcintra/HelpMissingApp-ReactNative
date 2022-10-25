@@ -145,7 +145,10 @@ const HomePage = ({ navigation }) => {
               <View style={styles.rowInfo}>
                 <Text style={styles.rowTextBold}>
                   Desaparecido em:
-                  <Text style={styles.rowTextRegular}> {missingPerson.data_desaparecimento}</Text>
+                  <Text style={styles.rowTextRegular}>
+                    {' '}
+                    {missingPerson?.data_desaparecimento && format(new Date(missingPerson?.data_desaparecimento), 'dd/MM/yyyy')}
+                  </Text>
                 </Text>
                 <Text style={styles.rowTextBold}>
                   Local:

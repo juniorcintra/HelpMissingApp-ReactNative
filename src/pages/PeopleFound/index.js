@@ -1,30 +1,39 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { View, Text, Image, TouchableOpacity, FlatList, TextInput } from 'react-native';
 
 import { colors } from '../../styles/theme';
 
 import styles from './styles';
+import { useFocusEffect } from '@react-navigation/native';
+import { getMissingPerson } from '../../store/middleware/missingPerson.middleware';
+
+import { useDispatch, useSelector } from 'react-redux';
 
 const PeopleFound = ({ navigation }) => {
   const [search, setSearch] = useState('');
+  const dispatch = useDispatch();
+  const { missingPersons } = useSelector(state => state.missingPersonReducer);
+  const { user } = useSelector(state => state.userReducer);
 
-  const date = [
-    { id: '1', nome: 'Fabricio', idade: '18', encontrado: 'São Paulo, SP ', data: '01/10/2023' },
-    { id: '2', nome: 'Jorge', idade: '56', encontrado: 'São Paulo, SP ', data: '01/10/2023' },
-    { id: '3', nome: 'Jennifer', idade: '25', encontrado: 'São Paulo, SP ', data: '01/10/2023' },
-    { id: '4', nome: 'Marcos', idade: '48', encontrado: 'São Paulo, SP ', data: '01/10/2023' },
-    { id: '5', nome: 'Fabricio', idade: '18', encontrado: 'São Paulo, SP ', data: '01/10/2023' },
-    { id: '6', nome: 'Jorge', idade: '56', encontrado: 'São Paulo, SP ', data: '01/10/2023' },
-    { id: '7', nome: 'Jennifer', idade: '25', encontrado: 'São Paulo, SP ', data: '01/10/2023' },
-    { id: '8', nome: 'Marcos', idade: '48', encontrado: 'São Paulo, SP ', data: '01/10/2023' },
-    { id: '9', nome: 'Fabricio', idade: '18', encontrado: 'São Paulo, SP ', data: '01/10/2023' },
-    { id: '10', nome: 'Jorge', idade: '56', encontrado: 'São Paulo, SP ', data: '01/10/2023' },
-    { id: '11', nome: 'Jennifer', idade: '25', encontrado: 'São Paulo, SP ', data: '01/10/2023' },
-    { id: '12', nome: 'Marcos', idade: '48', encontrado: 'São Paulo, SP ', data: '01/10/2023' },
-  ];
 
   const handleInfo = () => {};
+
+  const handleGetMissingPersons = async name => {
+    if (name.langht > 0) {
+      await dispatch(
+        getMissingPerson(`?limite=1&tem_historico=0&usuarios_id=${user?.id}&encontrado=1&nome=${name}`, true),
+      );
+    } else {
+      await dispatch(getMissingPerson(`?limite=1&tem_historico=0&usuarios_id=${user?.id}&encontrado=1`, true));
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      handleGetMissingPersons(search);
+    }, [search]),
+  );
 
   const renderCard = ({ item }) => {
     return (
@@ -54,7 +63,7 @@ const PeopleFound = ({ navigation }) => {
       </View>
 
       <FlatList
-        data={date}
+        data={[]}
         keyExtractor={item => item.id}
         renderItem={renderCard}
         showsVerticalScrollIndicator={false}

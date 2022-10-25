@@ -1,7 +1,12 @@
 import { initLoading, endLoading, setError, setSuccess, unsetSuccess, unsetError } from '../slices/generics.slice';
 import api from '../../services/api';
 import { Alert } from 'react-native';
-import { setMissingPerson, setMissingPersonPhotos } from '../slices/missingPerson.slice';
+import {
+  setMissingPerson,
+  setMissingPersonHistoric,
+  setMissingPersonPhotos,
+  setMissingPersons,
+} from '../slices/missingPerson.slice';
 
 export const registerMissingPerson = userData => {
   return async dispatch => {
@@ -55,7 +60,7 @@ export const registerUploadPhoto = dataPhoto => {
   };
 };
 
-export const getMissingPerson = (dataMissingPerson = '') => {
+export const getMissingPerson = (dataMissingPerson = '', multiple = false) => {
   return async dispatch => {
     dispatch(initLoading());
     try {
@@ -64,7 +69,11 @@ export const getMissingPerson = (dataMissingPerson = '') => {
 
       if (response.status === 200 || response.status === 201) {
         dispatch(unsetError());
-        dispatch(setMissingPerson(response.data.success.data[0]));
+        if (!multiple) {
+          dispatch(setMissingPerson(response.data.success.data[0]));
+        } else {
+          dispatch(setMissingPersons(response.data.success.data));
+        }
         dispatch(
           setSuccess({
             message: `Histórico cadastrado com sucesso`,
@@ -131,6 +140,40 @@ export const registerHistoricMissingPerson = (dataHistoric, reload = true) => {
         dispatch(setError({ message: 'Houve um ou mais erros ao cadastrar o histórico.' }));
       }
 
+      if (reload) {
+        dispatch(endLoading());
+      }
+    } catch (error) {
+      dispatch(unsetSuccess());
+      Alert.alert('Erro!', error.message);
+      console.log(error);
+
+      if (reload) {
+        dispatch(endLoading());
+      }
+    }
+  };
+};
+
+export const getHistoricMissingPerson = (dataHistoric, reload = true) => {
+  return async dispatch => {
+    if (reload) {
+      dispatch(initLoading());
+    }
+    try {
+      let response = await api.get(`/desaparecidos/get-historico${dataHistoric}`);
+
+      if (response.status === 200 || response.status === 201) {
+        dispatch(unsetError());
+        dispatch(setMissingPersonHistoric(response.data.success.data));
+        dispatch(
+          setSuccess({
+            message: `Histórico cadastrado com sucesso`,
+          }),
+        );
+      } else {
+        dispatch(setError({ message: 'Houve um ou mais erros ao cadastrar o histórico.' }));
+      }
       if (reload) {
         dispatch(endLoading());
       }

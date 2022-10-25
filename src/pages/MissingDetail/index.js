@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useLayoutEffect } from 'react';
+import React, { useState, useCallback, useLayoutEffect, useEffect } from 'react';
 import { format } from 'date-fns';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +12,7 @@ import Loading from '../../components/loading';
 
 import styles from './styles';
 import PagerView from 'react-native-pager-view';
+import { getHistoricMissingPerson, getMissingPersonPhoto } from '../../store/middleware/missingPerson.middleware';
 
 const MissingDetail = ({ navigation }) => {
   const [fullName, setFullName] = useState('');
@@ -29,7 +30,10 @@ const MissingDetail = ({ navigation }) => {
   const dispatch = useDispatch();
   const { setOptions } = useNavigation();
   const { loading } = useSelector(state => state.genericReducer);
-  const { missingPerson, photosMissingPerson } = useSelector(state => state.missingPersonReducer);
+  const { missingPerson, photosMissingPerson, missingPersonHistoric } = useSelector(
+    state => state.missingPersonReducer,
+  );
+  const { user } = useSelector(state => state.userReducer);
 
   const AnimatedPager = Animated.createAnimatedComponent(PagerView);
 
@@ -56,39 +60,6 @@ const MissingDetail = ({ navigation }) => {
     },
   });
 
-  const dateModalHistory = [
-    {
-      id: '1',
-      date: '02/10/2021 15:10',
-      andress: 'Centro, Resende / RJ',
-      description: 'Lorem ipsum dolor sit amet. Ex tenetur omnis non consequuntur dolorem sit nemo consequatur ab',
-    },
-    {
-      id: '2',
-      date: '02/10/2021 15:10',
-      andress: 'Centro, Resende / RJ',
-      description: 'Lorem ipsum dolor sit amet. Ex tenetur omnis non consequuntur dolorem sit nemo consequatur ab',
-    },
-    {
-      id: '3',
-      date: '02/10/2021 15:10',
-      andress: 'Centro, Resende / RJ',
-      description: 'Lorem ipsum dolor sit amet. Ex tenetur omnis non consequuntur dolorem sit nemo consequatur ab',
-    },
-    {
-      id: '5',
-      date: '02/10/2021 15:10',
-      andress: 'Centro, Resende / RJ',
-      description: 'Lorem ipsum dolor sit amet. Ex tenetur omnis non consequuntur dolorem sit nemo consequatur ab',
-    },
-    {
-      id: '6',
-      date: '02/10/2021 15:10',
-      andress: 'Centro, Resende / RJ',
-      description: 'Lorem ipsum dolor sit amet. Ex tenetur omnis non consequuntur dolorem sit nemo consequatur ab',
-    },
-  ];
-
   const getDateUser = () => {
     setFullName(missingPerson?.nome);
     setBirthDate(new Date(missingPerson?.data_nascimento));
@@ -100,24 +71,34 @@ const MissingDetail = ({ navigation }) => {
     setPhotos64(photosMissingPerson);
   };
 
-  const handleOpenModal = photo => {
-    setPhotosSelected(photo);
-    setShowModal(true);
-  };
-
   useLayoutEffect(() => {
     setOptions({
-      headerRight: () => (
-        <TouchableOpacity activeOpacity={0.6} onPress={() => setShowModalHistory(true)} style={{ marginRight: 20 }}>
-          <Icon name='history' size={30} color='#000' />
-        </TouchableOpacity>
-      ),
+      headerRight: () =>
+        missingPersonHistoric.length > 0 && (
+          <TouchableOpacity activeOpacity={0.6} onPress={() => setShowModalHistory(true)} style={{ marginRight: 20 }}>
+            <Icon name='history' size={30} color='#000' />
+          </TouchableOpacity>
+        ),
     });
   }, []);
+
+  const handleGetMissingPersonPhotos = async () => {
+    await dispatch(getMissingPersonPhoto(`?pessoas_desaparecidas_id=${missingPerson?.id}&tipo=image`));
+  };
+
+  const handleGetMissingPersons = async () => {
+    await dispatch(
+      getHistoricMissingPerson(
+        `?pessoas_desaparecidas_id=${missingPerson?.id}&tipo_historico=vi&usuarios_id=${user?.id}`,
+      ),
+    );
+  };
 
   useFocusEffect(
     useCallback(() => {
       getDateUser();
+      handleGetMissingPersons();
+      handleGetMissingPersonPhotos();
     }, []),
   );
 
@@ -203,19 +184,19 @@ const MissingDetail = ({ navigation }) => {
           <Text style={styles.TitleModalHistory}>Histórico do Desaparecido</Text>
 
           <FlatList
-            data={dateModalHistory}
+            data={missingPersonHistoric}
             style={styles.flatListHistory}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item?.id}
             showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={() => <View style={styles.separatorModalHistory} />}
             renderItem={({ item }) => (
               <View>
                 <View style={styles.rowModalHistory}>
-                  <Text style={styles.dateModalHistory}>{item.date}</Text>
-                  <Text style={styles.andressModalHistory}>{item.andress}</Text>
+                  <Text style={styles.dateModalHistory}>{item?.date}</Text>
+                  <Text style={styles.andressModalHistory}>{item?.andress}</Text>
                 </View>
                 <View>
-                  <Text style={styles.descriptionModalHistory}>{item.description}</Text>
+                  <Text style={styles.descriptionModalHistory}>{item?.description}</Text>
                 </View>
               </View>
             )}

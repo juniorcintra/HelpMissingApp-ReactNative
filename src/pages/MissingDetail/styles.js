@@ -164,14 +164,15 @@ const styles = StyleSheet.create({
   },
   wrapperPhoto: {
     height: 450,
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
+    width: "100%",
+    borderRadius: 10,
+    alignItems: 'center',
   },
   photo: {
     flex: 1,
+    width: "90%",
     resizeMode: 'cover',
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
+    borderRadius: 10,
   },
 });
 

@@ -104,7 +104,9 @@ const MainDrawer = () => {
         label=''
         icon={null}
         options={{
-          drawerItemStyle: { height: 0 }
+          drawerItemStyle: { height: 0 },
+          headerTitleAlign: 'center',
+          headerTitle: () => <Logo />,
         }}
       />
     </Navigator>
