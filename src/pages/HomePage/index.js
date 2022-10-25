@@ -148,7 +148,7 @@ const HomePage = ({ navigation }) => {
                 </Text>
               </View>
             </View>
-            <TouchableOpacity activeOpacity={0.6} style={styles.buttonInfo} onPress={() => {}}>
+            <TouchableOpacity activeOpacity={0.6} style={styles.buttonInfo} onPress={() => navigation.navigate('MainStack', { screen: 'MissingDetail' })}>
               <Icon name='info' color={colors.primary} size={28} />
             </TouchableOpacity>
           </View>
