@@ -3,6 +3,7 @@ import { format } from 'date-fns';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import Animated, { useHandler, useEvent } from 'react-native-reanimated';
 import { View, Text, TouchableOpacity, ScrollView, Image, FlatList } from 'react-native';
 
 import Modal from '../../components/Modal';
@@ -10,6 +11,7 @@ import Input from '../../components/Input';
 import Loading from '../../components/loading';
 
 import styles from './styles';
+import PagerView from 'react-native-pager-view';
 
 const MissingDetail = ({ navigation }) => {
   const [fullName, setFullName] = useState('');
@@ -28,6 +30,31 @@ const MissingDetail = ({ navigation }) => {
   const { setOptions } = useNavigation();
   const { loading } = useSelector(state => state.genericReducer);
   const { missingPerson, photosMissingPerson } = useSelector(state => state.missingPersonReducer);
+
+  const AnimatedPager = Animated.createAnimatedComponent(PagerView);
+
+  const usePagerScrollHandler = (handlers, dependencies) => {
+    const { context, doDependenciesDiffer } = useHandler(handlers, dependencies);
+    const subscribeForEvents = ['onPageScroll'];
+
+    return useEvent(
+      event => {
+        'worklet';
+        const { onPageScroll } = handlers;
+        if (onPageScroll && event.eventName.endsWith('onPageScroll')) {
+          onPageScroll(event, context);
+        }
+      },
+      subscribeForEvents,
+      doDependenciesDiffer,
+    );
+  };
+
+  const handler = usePagerScrollHandler({
+    onPageScroll: () => {
+      'worklet';
+    },
+  });
 
   const dateModalHistory = [
     {
@@ -67,9 +94,9 @@ const MissingDetail = ({ navigation }) => {
     setBirthDate(new Date(missingPerson?.data_nascimento));
     setDisappearanceDate(new Date(missingPerson?.data_desaparecimento));
     setDisappearanceLocation(missingPerson?.local_desaparecimento);
-    setContacts(missingPerson?.caracteristicas.split(','));
-    setFeatures(missingPerson?.contatos.split(','));
-    setClothing(missingPerson?.vestimenta_desaparecimento.split(','));
+    setContacts(missingPerson?.caracteristicas?.split(','));
+    setFeatures(missingPerson?.contatos?.split(','));
+    setClothing(missingPerson?.vestimenta_desaparecimento?.split(','));
     setPhotos64(photosMissingPerson);
   };
 
@@ -97,18 +124,13 @@ const MissingDetail = ({ navigation }) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
-        <View style={styles.viewUpload}>
-          {photos64.map((item, index) => (
-            <TouchableOpacity
-              key={index}
-              activeOpacity={0.6}
-              style={styles.buttonUpload}
-              onPress={() => handleOpenModal(item.conteudo)}
-            >
-              <Image style={styles.photoUploaded} source={{ uri: item.conteudo }} />
-            </TouchableOpacity>
+        <AnimatedPager style={styles.wrapperPhoto} initialPage={0} onPageScroll={handler}>
+          {photosMissingPerson.map(item => (
+            <View key={item.id} style={styles.wrapperPhoto}>
+              <Image style={styles.photo} source={{ uri: item.conteudo }} />
+            </View>
           ))}
-        </View>
+        </AnimatedPager>
 
         <View style={styles.form}>
           <Input

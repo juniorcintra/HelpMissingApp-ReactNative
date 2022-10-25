@@ -162,6 +162,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     resizeMode: 'cover',
   },
+  wrapperPhoto: {
+    height: 450,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+  },
+  photo: {
+    flex: 1,
+    resizeMode: 'cover',
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+  },
 });
 
 export default styles;

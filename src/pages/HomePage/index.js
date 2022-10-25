@@ -15,7 +15,11 @@ import Loading from '../../components/loading';
 import styles from './styles';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { getMissingPerson, getMissingPersonPhoto, registerHistoricMissingPerson } from '../../store/middleware/missingPerson.middleware';
+import {
+  getMissingPerson,
+  getMissingPersonPhoto,
+  registerHistoricMissingPerson,
+} from '../../store/middleware/missingPerson.middleware';
 import { useFocusEffect } from '@react-navigation/native';
 import { CalcIdade } from '../../utils/functions';
 
@@ -63,7 +67,8 @@ const HomePage = ({ navigation }) => {
       usuarios_id: user?.id,
     };
 
-    await dispatch(registerHistoricMissingPerson(body))
+    await dispatch(registerHistoricMissingPerson(body, false));
+    handleGetMissingPersons();
   };
 
   const handleSendModal = async () => {
@@ -74,7 +79,7 @@ const HomePage = ({ navigation }) => {
       usuarios_id: user?.id,
     };
 
-    await dispatch(registerHistoricMissingPerson(body))
+    await dispatch(registerHistoricMissingPerson(body));
 
     setShowModal(false);
     setPlace('');
@@ -148,7 +153,10 @@ const HomePage = ({ navigation }) => {
                 </Text>
               </View>
             </View>
-            <TouchableOpacity activeOpacity={0.6} style={styles.buttonInfo} onPress={() => navigation.navigate('MainStack', { screen: 'MissingDetail' })}>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={styles.buttonInfo}
+              onPress={() => navigation.navigate('MissingDetail')}>
               <Icon name='info' color={colors.primary} size={28} />
             </TouchableOpacity>
           </View>
@@ -158,7 +166,10 @@ const HomePage = ({ navigation }) => {
           <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.danger]} onPress={handleClose}>
             <Icon name='close' color={colors.danger} size={45} />
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.infor]} onPress={() => navigation.navigate('Ajuda')}>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={[styles.button, styles.infor]}
+            onPress={() => navigation.navigate('Ajuda')}>
             <Text style={styles.inforText}>Ajuda</Text>
           </TouchableOpacity>
           <TouchableOpacity

@@ -10,6 +10,7 @@ import HelpPage from '../pages/HelpPage';
 import PerfilPage from '../pages/PerfilPage';
 import PeopleFound from '../pages/PeopleFound';
 import MissingRegister from '../pages/MissingRegister';
+import MissingDetail from '../pages/MissingDetail';
 
 const { Navigator, Screen } = createDrawerNavigator();
 
@@ -94,6 +95,16 @@ const MainDrawer = () => {
           headerTitleAlign: 'center',
           headerTitle: () => <Logo />,
           drawerIcon: ({ _, color, size }) => <Icon name='accessibility-new' size={size} color={color} />,
+        }}
+      />
+
+      <Screen
+        name='MissingDetail'
+        component={MissingDetail}
+        label=''
+        icon={null}
+        options={{
+          drawerItemStyle: { height: 0 }
         }}
       />
     </Navigator>

@@ -113,9 +113,11 @@ export const getMissingPersonPhoto = (dataMissingPerson = '') => {
   };
 };
 
-export const registerHistoricMissingPerson = dataHistoric => {
+export const registerHistoricMissingPerson = (dataHistoric, reload = true) => {
   return async dispatch => {
-    dispatch(initLoading());
+    if (reload) {
+      dispatch(initLoading());
+    }
     try {
       let response = await api.post('/desaparecidos/historico', dataHistoric);
       if (response.status === 200 || response.status === 201) {
@@ -129,12 +131,17 @@ export const registerHistoricMissingPerson = dataHistoric => {
         dispatch(setError({ message: 'Houve um ou mais erros ao cadastrar o histórico.' }));
       }
 
-      dispatch(endLoading());
+      if (reload) {
+        dispatch(endLoading());
+      }
     } catch (error) {
       dispatch(unsetSuccess());
       Alert.alert('Erro!', error.message);
       console.log(error);
-      dispatch(endLoading());
+
+      if (reload) {
+        dispatch(endLoading());
+      }
     }
   };
 };

@@ -21,8 +21,8 @@ const MainStack = () => {
       <Screen name='SignUp' component={SignUpPage} />
       <Screen name='Forgot' component={ForgotPage} />
       <Screen name='Splash' component={Splash} />
-      <Screen name='MainDrawer' component={MainDrawer} />
       <Screen name='MissingDetail' component={MissingDetail} />
+      <Screen name='MainDrawer' component={MainDrawer} />
     </Navigator>
   );
 };
