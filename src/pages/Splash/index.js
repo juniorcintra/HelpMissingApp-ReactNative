@@ -14,8 +14,8 @@ const Splash = ({ navigation }) => {
   const getUser = async () => {
     const asyncStrg = await AsyncStorage.getItem('user');
     const data = JSON.parse(asyncStrg);
-    await dispatch(setUser(data.user));
     if (data !== null) {
+      await dispatch(setUser(data?.user));
       setTimeout(() => {
         navigation.navigate('MainDrawer', { screen: 'Home' });
       }, 3000);

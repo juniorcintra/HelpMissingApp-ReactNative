@@ -262,6 +262,12 @@ const styles = StyleSheet.create({
     color: colors.primary,
     fontFamily: 'Roboto-Regular',
   },
+  notFoundView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  notFoundText: { fontFamily: 'Roboto-Regular', fontSize: 16, color: '#000' },
 });
 
 export default styles;

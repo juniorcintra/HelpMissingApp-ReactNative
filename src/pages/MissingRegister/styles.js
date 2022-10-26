@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     paddingVertical: 32,
     backgroundColor: colors.white,
     position: 'relative',
-    zIndex: 0
+    zIndex: 0,
   },
   titleModal: {
     fontSize: 20,

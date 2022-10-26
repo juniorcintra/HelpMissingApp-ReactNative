@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   flatListHistory: {
-    marginTop: 20
+    marginTop: 20,
   },
   rowModalHistory: {
     flexDirection: 'row',
@@ -147,19 +147,19 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Bold',
     fontSize: 13,
     color: colors.primary,
-    textAlign: 'left'
+    textAlign: 'left',
   },
   andressModalHistory: {
     fontFamily: 'Roboto-Bold',
     fontSize: 13,
     color: colors.primary,
-    textAlign: 'right'
+    textAlign: 'right',
   },
   descriptionModalHistory: {
     fontFamily: 'Roboto-Regular',
     fontSize: 13,
     color: colors.primary,
-    textAlign: 'justify'
+    textAlign: 'justify',
   },
   separatorModalHistory: {
     width: '100%',
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     borderStyle: 'dotted',
     borderBottomColor: '#8A8A8A',
     marginTop: 6,
-    marginBottom: 10
+    marginBottom: 10,
   },
   modalPhoto: {
     width: '100%',
@@ -178,13 +178,13 @@ const styles = StyleSheet.create({
   },
   wrapperPhoto: {
     height: 450,
-    width: "100%",
+    width: '100%',
     borderRadius: 10,
     alignItems: 'center',
   },
   photo: {
     flex: 1,
-    width: "95%",
+    width: '95%',
     resizeMode: 'cover',
     borderRadius: 10,
   },

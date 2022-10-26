@@ -36,7 +36,7 @@ const PeopleFound = ({ navigation }) => {
 
       for (var letra in mapaAcentosHex) {
         var expressaoRegular = mapaAcentosHex[letra];
-        string = string.replace(expressaoRegular, letra);
+        string = string?.replace(expressaoRegular, letra);
       }
 
       return string;
@@ -47,7 +47,7 @@ const PeopleFound = ({ navigation }) => {
     if (search.match(/^.*[^a-zA-Z 0-9]+.*$/g)) {
       return value.nome.toUpperCase().includes(search.toUpperCase());
     } else {
-      return semAcento.toUpperCase().includes(search.toUpperCase());
+      return semAcento?.toUpperCase().includes(search.toUpperCase());
     }
   });
 
@@ -60,7 +60,7 @@ const PeopleFound = ({ navigation }) => {
   const renderCard = ({ item }) => {
     return (
       <View style={styles.containerCard}>
-        <Image source={{ uri: 'https://picsum.photos/200/' }} style={styles.photo} />
+        <Image source={{ uri: item?.pessoas_desaparecidas_anexos[0]?.conteudo }} style={styles.photo} />
 
         <View style={styles.description}>
           <Text style={styles.name}>
@@ -71,7 +71,7 @@ const PeopleFound = ({ navigation }) => {
           <Text style={styles.date}>Data: {item?.updatedAt && format(new Date(item?.updatedAt), 'dd/MM/yyyy')}</Text>
         </View>
 
-        <TouchableOpacity activeOpacity={0.6} onPress={()=>navigation.navigate('MissingDetail', { person: item })}>
+        <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('MissingDetail', { person: item })}>
           <Icon name='info' color={colors.primary} size={28} />
         </TouchableOpacity>
       </View>

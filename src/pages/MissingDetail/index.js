@@ -1,16 +1,13 @@
-import React, { useState, useCallback, useLayoutEffect, useEffect } from 'react';
-import { format } from 'date-fns';
+import React, { useState, useEffect } from 'react';
 import PagerView from 'react-native-pager-view';
 import { useDispatch, useSelector } from 'react-redux';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import Animated, { useHandler, useEvent } from 'react-native-reanimated';
 import { View, Text, TouchableOpacity, ScrollView, Image, FlatList } from 'react-native';
 
 import Modal from '../../components/Modal';
 import Loading from '../../components/loading';
 import { handleDial } from '../../utils/functions';
-import { getHistoricMissingPerson, getMissingPersonPhoto } from '../../store/middleware/missingPerson.middleware';
+import {  getMissingPersonPhoto } from '../../store/middleware/missingPerson.middleware';
 
 import styles from './styles';
 
@@ -19,13 +16,10 @@ const MissingDetail = ({ route }) => {
   const AnimatedPager = Animated.createAnimatedComponent(PagerView);
 
   const dispatch = useDispatch();
-  const { setOptions } = useNavigation();
-  const { user } = useSelector(state => state.userReducer);
   const { loading } = useSelector(state => state.genericReducer);
   const { missingPersonHistoric, photosMissingPerson } = useSelector(state => state.missingPersonReducer);
 
   const { person: missingPerson } = route?.params;
-
 
   const usePagerScrollHandler = (handlers, dependencies) => {
     const { context, doDependenciesDiffer } = useHandler(handlers, dependencies);
@@ -50,14 +44,6 @@ const MissingDetail = ({ route }) => {
     },
   });
 
-  const handleGetHistoricMissingPersons = async () => {
-    await dispatch(
-      getHistoricMissingPerson(
-        `?pessoas_desaparecidas_id=${missingPerson?.id}&tipo_historico=vi&usuarios_id=${user?.id}`,
-      ),
-    );
-  };
-
   const handleGetMissingPersonPhotos = async () => {
     await dispatch(getMissingPersonPhoto(`?pessoas_desaparecidas_id=${missingPerson?.id}&tipo=image`));
   };
@@ -65,23 +51,6 @@ const MissingDetail = ({ route }) => {
   useEffect(() => {
     handleGetMissingPersonPhotos();
   }, [missingPerson]);
-
-  useLayoutEffect(() => {
-    setOptions({
-      headerRight: () =>
-        missingPersonHistoric.length > 0 && (
-          <TouchableOpacity activeOpacity={0.6} onPress={() => setShowModalHistory(true)} style={{ marginRight: 20 }}>
-            <Icon name='history' size={30} color='#000' />
-          </TouchableOpacity>
-        ),
-    });
-  }, []);
-
-  useFocusEffect(
-    useCallback(() => {
-      handleGetHistoricMissingPersons();
-    }, []),
-  );
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>

@@ -12,11 +12,7 @@ const Input = props => {
         <TextInput style={styles.input} {...props} />
 
         {props.icon && (
-          <TouchableOpacity
-            onPress={props.onPress} 
-            activeOpacity={0.6}
-            style={styles.ButtonIcon}
-          >
+          <TouchableOpacity onPress={props.onPress} activeOpacity={0.6} style={styles.ButtonIcon}>
             <Icon name={props.icon} size={25} color='#000' />
           </TouchableOpacity>
         )}

@@ -169,13 +169,16 @@ const HelpPage = ({ navigation }) => {
         <View>
           <Text style={styles.title}>Obrigatório</Text>
           <Text style={[styles.description, { marginBottom: 5 }]}>
-          {'  '}Quando  ocorrer a localização da pessoa desaparecida, o comunicante do desaparecimento deverá retornar à delegacia de polícia na qual foi comunicado o desaparecimento, a fim de dar ciência às autoridades policiais, que providenciarão a baixa junto ao sistema informatizado.
+            {'  '}Quando ocorrer a localização da pessoa desaparecida, o comunicante do desaparecimento deverá retornar
+            à delegacia de polícia na qual foi comunicado o desaparecimento, a fim de dar ciência às autoridades
+            policiais, que providenciarão a baixa junto ao sistema informatizado.
           </Text>
         </View>
 
         <View>
           <Text style={[styles.footer, { marginBottom: 22 }]}>
-          O <Text style={styles.title}>Programa SOS Crianças Desaparecidas</Text> fica localizado na Rua Voluntários da Pátria, n°120, Botafogo, CEP: 22270-010 - Tel: (21) 2286-8337 / 2334-8000 / 2334-8008
+            O <Text style={styles.title}>Programa SOS Crianças Desaparecidas</Text> fica localizado na Rua Voluntários
+            da Pátria, n°120, Botafogo, CEP: 22270-010 - Tel: (21) 2286-8337 / 2334-8000 / 2334-8008
           </Text>
         </View>
       </View>

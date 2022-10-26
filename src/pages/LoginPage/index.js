@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Image, ImageBackground, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, ImageBackground, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -26,6 +26,12 @@ const LoginPage = ({ navigation }) => {
 
   const handleLogin = async () => {
     Keyboard.dismiss();
+
+    if (loginUser === '' || senhaUser === '') {
+      Alert.alert('Erro!', 'Preencha os campos!');
+      return;
+    }
+
     const res = await dispatch(
       login({
         senha: senhaUser,

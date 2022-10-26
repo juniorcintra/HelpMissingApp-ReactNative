@@ -11,23 +11,23 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 180,
     alignItems: 'center',
-    marginBottom: 10
+    marginBottom: 10,
   },
   headerAvatar: {
     width: 100,
     height: 100,
-    marginTop: 15
+    marginTop: 15,
   },
   headerTitle: {
     fontFamily: 'Roboto-Regular',
     fontSize: 20,
     lineHeight: 18,
     color: '#000',
-    marginTop: 15
+    marginTop: 15,
   },
-  divInput: { 
-    marginVertical: 10, 
-    width: '80%' 
+  divInput: {
+    marginVertical: 10,
+    width: '80%',
   },
   label: {
     fontFamily: 'Roboto-Bold',
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     marginHorizontal: 4,
-    borderRadius: 10
+    borderRadius: 10,
   },
   contentModal: {
     width: '80%',

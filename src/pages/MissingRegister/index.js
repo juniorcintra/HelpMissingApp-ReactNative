@@ -26,6 +26,7 @@ const MissingRegister = ({ navigation }) => {
   const [showModal, setShowModal] = useState(false);
   const [photos64, setPhotos64] = useState([]);
   const [actualContact, setActualContact] = useState('');
+  const [actualNameContact, setActualNameContact] = useState('');
   const [actualFeature, setActualFeature] = useState('');
   const [actualClothing, setActualClothing] = useState('');
 
@@ -42,6 +43,7 @@ const MissingRegister = ({ navigation }) => {
     setClothing([]);
     setPhotos64([]);
     setActualContact('');
+    setActualNameContact('');
     setActualFeature('');
     setActualClothing('');
   };
@@ -142,8 +144,10 @@ const MissingRegister = ({ navigation }) => {
   function handleAddInfo(type) {
     if (type === 'contacts') {
       if (!actualContact) return;
-      setContacts([...contacts, actualContact]);
+      let completeContact = actualNameContact + ' - ' + actualContact;
+      setContacts([...contacts, completeContact]);
       setActualContact('');
+      setActualNameContact('');
     } else if (type === 'feature') {
       if (!actualFeature) return;
       setFeatures([...features, actualFeature]);
@@ -290,14 +294,27 @@ const MissingRegister = ({ navigation }) => {
             label='Local do Desaparecimento'
             onChangeText={setDisappearanceLocation}
           />
-          <Input
-            label='Contatos'
-            value={actualContact}
-            onChangeText={text => setActualContact(text)}
-            icon='check-circle-outline'
-            placeholder='Mãe - (24) 99999-9999'
-            onPress={() => handleAddInfo('contacts')}
-          />
+          <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
+            <View style={{ width: 100 }}>
+              <Input
+                label='Contatos'
+                value={actualNameContact}
+                onChangeText={text => setActualNameContact(text)}
+                placeholder='Mãe'
+              />
+            </View>
+            <View style={{ width: 230 }}>
+              <Input
+                label=''
+                value={actualContact}
+                onChangeText={text => setActualContact(text)}
+                icon='check-circle-outline'
+                placeholder='(24) 99999-9999'
+                keyboardType='number'
+                onPress={() => handleAddInfo('contacts')}
+              />
+            </View>
+          </View>
 
           {contacts.length > 0 && (
             <ScrollView style={styles.scrollFeatures} showsVerticalScrollIndicator={false}>

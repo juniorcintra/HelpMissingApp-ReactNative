@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, ImageBackground, Keyboard, ScrollView, Text, TextInput, View } from 'react-native';
+import { Alert, Image, ImageBackground, Keyboard, ScrollView, Text, TextInput, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '../../components/Button';
@@ -25,6 +25,19 @@ const SignUpPage = ({ onPress }) => {
 
   const handleRegister = async () => {
     Keyboard.dismiss();
+
+    if (
+      nameUser === '' ||
+      cpfUser === '' ||
+      emailUser === '' ||
+      contatoUser === '' ||
+      loginUser === '' ||
+      senhaUser === ''
+    ) {
+      Alert.alert('Erro!', 'Preencha os campos!');
+      return;
+    }
+
     await dispatch(
       registerUser({
         nome_completo: nameUser,
@@ -125,6 +138,9 @@ const SignUpPage = ({ onPress }) => {
         </ScrollView>
         <View style={styles.divButtons}>
           <Button type='primary' title='Cadastrar' onPress={handleRegister} />
+        </View>
+        <View style={styles.divButtons}>
+          <Button type='secondary' title='Voltar' onPress={() => onPress()} />
         </View>
         <Loading show={loading} />
       </ImageBackground>

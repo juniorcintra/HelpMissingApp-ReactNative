@@ -3,7 +3,7 @@ import api from '../../services/api';
 import { Alert } from 'react-native';
 import {
   setMissingPerson,
-  setMissingPersonDetail,
+  setMissingPersonHistoric,
   setMissingPersonsHistoric,
   setMissingPersonPhotos,
   setMissingPersons,
@@ -61,7 +61,7 @@ export const registerUploadPhoto = dataPhoto => {
   };
 };
 
-export const getMissingPerson = (dataMissingPerson = '', multiple = false, detail = false) => {
+export const getMissingPerson = (dataMissingPerson = '') => {
   return async dispatch => {
     dispatch(initLoading());
     try {
@@ -70,14 +70,8 @@ export const getMissingPerson = (dataMissingPerson = '', multiple = false, detai
 
       if (response.status === 200 || response.status === 201) {
         dispatch(unsetError());
-        if (multiple === false) {
-          dispatch(setMissingPerson(response.data.success.data[0]));
-        } else {
-          dispatch(setMissingPersons(response.data.success.data));
-        }
-        if (detail) {
-          dispatch(setMissingPersonDetail(response.data.success.data[0]));
-        }
+        dispatch(setMissingPerson(response.data.success.data[0]));
+
         dispatch(
           setSuccess({
             message: `Histórico cadastrado com sucesso`,
@@ -90,7 +84,7 @@ export const getMissingPerson = (dataMissingPerson = '', multiple = false, detai
       dispatch(endLoading());
     } catch (error) {
       dispatch(unsetSuccess());
-      Alert.alert('Erro!', error.message);
+      Alert.alert('Erro! Home', error.message);
       console.log(error);
       dispatch(endLoading());
     }
@@ -180,7 +174,7 @@ export const getMissingPersonPhoto = (dataMissingPerson = '') => {
       dispatch(endLoading());
     } catch (error) {
       dispatch(unsetSuccess());
-      Alert.alert('Erro!', error.message);
+      Alert.alert('Erro! Home', error.message);
       console.log(error);
       dispatch(endLoading());
     }

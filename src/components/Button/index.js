@@ -8,8 +8,7 @@ const Button = ({ type = 'primary', title = '', onPress }) => {
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.6}
-      style={type === 'primary' ? styles.buttonPrimary : styles.buttonSecundary}
-    >
+      style={type === 'primary' ? styles.buttonPrimary : styles.buttonSecundary}>
       <Text style={type === 'primary' ? styles.textButtonPrimary : styles.textButtonSecundary}>{title}</Text>
     </TouchableOpacity>
   );

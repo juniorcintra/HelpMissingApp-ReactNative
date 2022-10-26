@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   ButtonIcon: {
     position: 'absolute',
     right: 0,
-    top: 15
+    top: 15,
   },
 });
 

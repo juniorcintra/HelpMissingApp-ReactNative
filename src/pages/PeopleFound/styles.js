@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20
+    marginBottom: 20,
   },
   inputSearch: {
     width: '100%',
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   iconSearch: {
     position: 'absolute',
     color: colors.primary,
-    fontSize: 24
+    fontSize: 24,
   },
   containerCard: {
     width: '100%',

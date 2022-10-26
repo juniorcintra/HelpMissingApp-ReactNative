@@ -19,7 +19,7 @@ export const CalcIdade = data => {
 };
 
 export const handleDial = (value = '') => {
-  var numsStr = parseInt(value.replace(/[^0-9]/g, ''));
+  var numsStr = parseInt(value?.replace(/[^0-9]/g, ''));
   Linking.openURL(`tel:${numsStr}`);
 };
 

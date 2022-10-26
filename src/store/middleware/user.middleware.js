@@ -55,6 +55,7 @@ export const login = userData => {
       return true;
     } catch (error) {
       dispatch(unsetSuccess());
+      console.log(error);
       dispatch(
         setError({
           message: error.message,

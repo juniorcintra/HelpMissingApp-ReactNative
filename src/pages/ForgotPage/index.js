@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Image, ImageBackground, Text, TextInput, View } from 'react-native';
-import { useDispatch } from 'react-redux';
 
-import { registerUser } from '../../store/middleware';
 import Button from '../../components/Button';
 
 import styles from './styles';
@@ -13,14 +11,7 @@ const imageLogo = require('../../../assets/images/logo_help.png');
 const ForgotPage = ({ onPress }) => {
   const [emailUser, setEmailUser] = useState('');
 
-  const dispatch = useDispatch();
-
   const handleRegister = async () => {
-    // await dispatch(
-    //   sendForgot({
-    //     email: emailUser,
-    //   }),
-    // );
     onPress();
   };
 
@@ -46,6 +37,9 @@ const ForgotPage = ({ onPress }) => {
         </View>
         <View style={styles.divButtons}>
           <Button type='primary' title='Enviar' onPress={handleRegister} />
+        </View>
+        <View style={styles.divButtons}>
+          <Button type='secondary' title='Voltar' onPress={() => onPress()} />
         </View>
       </ImageBackground>
     </View>
