@@ -5,8 +5,8 @@ const missingPersonSlice = createSlice({
   initialState: {
     missingPerson: {},
     missingPersons: [],
+    missingPersonsHistoric: [],
     photosMissingPerson: [],
-    missingPersonHistoric: [],
     missingPersonDetail: {},
   },
   reducers: {
@@ -19,8 +19,8 @@ const missingPersonSlice = createSlice({
     setMissingPersonPhotos(state, { payload }) {
       state.photosMissingPerson = payload;
     },
-    setMissingPersonHistoric(state, { payload }) {
-      state.missingPersonHistoric = payload;
+    setMissingPersonsHistoric(state, { payload }) {
+      state.missingPersonsHistoric = payload;
     },
     setMissingPersonDetail(state, { payload }) {
       state.missingPersonDetail = payload;
@@ -32,7 +32,7 @@ export const {
   setMissingPerson,
   setMissingPersons,
   setMissingPersonPhotos,
-  setMissingPersonHistoric,
+  setMissingPersonsHistoric,
   setMissingPersonDetail,
 } = missingPersonSlice.actions;
 

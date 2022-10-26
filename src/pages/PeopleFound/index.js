@@ -6,7 +6,7 @@ import { colors } from '../../styles/theme';
 
 import styles from './styles';
 import { useFocusEffect } from '@react-navigation/native';
-import { getMissingPerson } from '../../store/middleware/missingPerson.middleware';
+import { getMissingPersonFound } from '../../store/middleware/missingPerson.middleware';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { calcDaysFound, CalcIdade } from '../../utils/functions';
@@ -16,10 +16,9 @@ const PeopleFound = ({ navigation }) => {
   const [search, setSearch] = useState('');
   const dispatch = useDispatch();
   const { missingPersons } = useSelector(state => state.missingPersonReducer);
-  const { user } = useSelector(state => state.userReducer);
 
   const handleGetMissingPersons = async () => {
-    await dispatch(getMissingPerson(`?limite=0&tem_historico=0&usuarios_id=${user?.id}&encontrado=1`, true, false));
+    await dispatch(getMissingPersonFound());
   };
 
   let listaFiltrada = missingPersons.filter(function (value) {

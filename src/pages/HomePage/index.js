@@ -124,69 +124,71 @@ const HomePage = ({ navigation }) => {
 
   return (
     <>
-      <View style={styles.container}>
-        <View style={styles.card}>
-          <AnimatedPager style={styles.wrapperPhoto} initialPage={0} onPageScroll={handler}>
-            {photosMissingPerson.map(item => (
-              <View key={item.id} style={styles.wrapperPhoto}>
-                <Image style={styles.photo} source={{ uri: item.conteudo }} />
-              </View>
-            ))}
-          </AnimatedPager>
-
-          <View style={styles.wrapperInfo}>
-            <View style={styles.rowInfo}>
-              <View style={styles.rowText}>
-                <Text style={styles.nameUser}>{missingPerson.nome}</Text>
-                <Text style={styles.ageUser}>
-                  {missingPerson?.data_nascimento && CalcIdade(missingPerson.data_nascimento)}
-                </Text>
-              </View>
+      {missingPerson.length ? (
+        <View style={styles.container}>
+          <View style={styles.card}>
+            <AnimatedPager style={styles.wrapperPhoto} initialPage={0} onPageScroll={handler}>
+              {photosMissingPerson.map(item => (
+                <View key={item.id} style={styles.wrapperPhoto}>
+                  <Image style={styles.photo} source={{ uri: item.conteudo }} />
+                </View>
+              ))}
+            </AnimatedPager>
+            <View style={styles.wrapperInfo}>
               <View style={styles.rowInfo}>
-                <Text style={styles.rowTextBold}>
-                  Desaparecido em:
-                  <Text style={styles.rowTextRegular}>
-                    {' '}
-                    {missingPerson?.data_desaparecimento &&
-                      format(new Date(missingPerson?.data_desaparecimento), 'dd/MM/yyyy')}
+                <View style={styles.rowText}>
+                  <Text style={styles.nameUser}>{missingPerson.nome}</Text>
+                  <Text style={styles.ageUser}>
+                    {missingPerson?.data_nascimento && CalcIdade(missingPerson.data_nascimento)}
                   </Text>
-                </Text>
-                <Text style={styles.rowTextBold}>
-                  Local:
-                  <Text style={styles.rowTextRegular}> {missingPerson.local_desaparecimento}</Text>
-                </Text>
+                </View>
+                <View style={styles.rowInfo}>
+                  <Text style={styles.rowTextBold}>
+                    Desaparecido em:
+                    <Text style={styles.rowTextRegular}>
+                      {' '}
+                      {missingPerson?.data_desaparecimento &&
+                        format(new Date(missingPerson?.data_desaparecimento), 'dd/MM/yyyy')}
+                    </Text>
+                  </Text>
+                  <Text style={styles.rowTextBold}>
+                    Local:
+                    <Text style={styles.rowTextRegular}> {missingPerson.local_desaparecimento}</Text>
+                  </Text>
+                </View>
               </View>
+              <TouchableOpacity
+                activeOpacity={0.6}
+                style={styles.buttonInfo}
+                onPress={() => navigation.navigate('MissingDetail', { person: missingPerson })}>
+                <Icon name='info' color={colors.primary} size={28} />
+              </TouchableOpacity>
             </View>
+          </View>
+          <View style={styles.wrapperButton}>
+            <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.danger]} onPress={handleClose}>
+              <Icon name='close' color={colors.danger} size={45} />
+            </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.6}
-              style={styles.buttonInfo}
-              onPress={() =>
-                navigation.navigate('MissingDetail', { person: missingPerson })
-              }>
-              <Icon name='info' color={colors.primary} size={28} />
+              style={[styles.button, styles.infor]}
+              onPress={() => navigation.navigate('Ajuda')}>
+              <Text style={styles.inforText}>Ajuda</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={[styles.button, styles.sucess]}
+              onPress={() => setShowModal(true)}>
+              <Icon name='done' color={colors.sucess} size={45} />
             </TouchableOpacity>
           </View>
         </View>
-
-        <View style={styles.wrapperButton}>
-          <TouchableOpacity activeOpacity={0.6} style={[styles.button, styles.danger]} onPress={handleClose}>
-            <Icon name='close' color={colors.danger} size={45} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.6}
-            style={[styles.button, styles.infor]}
-            onPress={() => navigation.navigate('Ajuda')}>
-            <Text style={styles.inforText}>Ajuda</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.6}
-            style={[styles.button, styles.sucess]}
-            onPress={() => setShowModal(true)}>
-            <Icon name='done' color={colors.sucess} size={45} />
-          </TouchableOpacity>
+      ) : (
+        <View style={styles.notFoundView}>
+          <Icon name='info' color={colors.primary} size={45} />
+          <Text style={styles.notFoundText}>Nenhum dado encontrado</Text>
         </View>
-      </View>
-
+      )}
       <Modal show={showModal} setShowModal={setShowModal}>
         <View style={styles.contentModal}>
           <Text style={styles.TitleModal}>Descreva aqui o que você viu!</Text>

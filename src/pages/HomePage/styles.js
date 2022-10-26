@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#000',
     marginTop: 16,
-    paddingBottom: 10
+    paddingBottom: 10,
   },
   textInputArea: {
     width: '100%',
@@ -158,23 +158,29 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   rowSelect: {
-    width:"100%",
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
     borderBottomWidth: 1,
     borderColor: 'rgba(0, 0, 0,0.4)',
   },
-  textSelect:{
+  textSelect: {
     fontFamily: 'Roboto-Regular',
     fontSize: 16,
     color: '#000',
-    marginLeft: 5
+    marginLeft: 5,
   },
-  rowItem:{
+  rowItem: {
     flexDirection: 'row',
     alignItems: 'center',
   },
+  notFoundView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  notFoundText: { fontFamily: 'Roboto-Regular', fontSize: 16, color: '#000' },
 });
 
 export default styles;

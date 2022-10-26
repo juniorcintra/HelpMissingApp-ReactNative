@@ -16,7 +16,7 @@ import styles from './styles';
 
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  getMissingPerson,
+  getMissingPersonPerHistoric,
   getMissingPersonPhoto,
   registerHistoricMissingPerson,
 } from '../../store/middleware/missingPerson.middleware';
@@ -29,10 +29,12 @@ const HistoricPage = ({ navigation }) => {
   const [place, setPlace] = useState('');
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('vi');
+  const [search, setSearch] = useState('');
+  const [index, setIndex] = useState(0);
 
   const dispatch = useDispatch();
   const { loading } = useSelector(state => state.genericReducer);
-  const { missingPerson, photosMissingPerson } = useSelector(state => state.missingPersonReducer);
+  const { photosMissingPerson, missingPersonsHistoric } = useSelector(state => state.missingPersonReducer);
   const { user } = useSelector(state => state.userReducer);
 
   const AnimatedPager = Animated.createAnimatedComponent(PagerView);
@@ -61,76 +63,14 @@ const HistoricPage = ({ navigation }) => {
   });
 
   const handleClose = async () => {
-    const body = {
-      pessoas_desaparecidas_id: missingPerson?.id,
-      tipo_historico: 'naovi',
-      descricao: null,
-      usuarios_id: user?.id,
-    };
-
-    await dispatch(registerHistoricMissingPerson(body, false));
-    handleGetMissingPersons();
+    if (missingPersonsHistoric.length === index + 1) {
+      setIndex(0);
+    } else {
+      setIndex(index + 1);
+    }
   };
 
-  const handleSendModal = async () => {
-    const body = {
-      pessoas_desaparecidas_id: missingPerson?.id,
-      tipo_historico: 'vi',
-      descricao: `Vi no dia ${format(dateTime, 'dd/MM/yyyy')}, local: ${place}, e estava assim: ${description}`,
-      usuarios_id: user?.id,
-    };
-
-    await dispatch(registerHistoricMissingPerson(body));
-
-    setShowModal(false);
-    setPlace('');
-    setDescription('');
-    setDateTime(new Date());
-    handleGetMissingPersons();
-  };
-
-  const showCalendar = currentMode => {
-    DateTimePickerAndroid.open({
-      value: dateTime,
-      display: 'default',
-      maximumDate: new Date(),
-      mode: currentMode,
-      onChange: (event, selectedDate) => {
-        if (event?.type === 'dismissed') {
-          setDateTime(dateTime);
-          return;
-        }
-        setDateTime(selectedDate);
-      },
-    });
-  };
-
-  const handleGetMissingPersons = async () => {
-    await dispatch(getMissingPerson(`?limite=1&tem_historico=0&usuarios_id=${user?.id}&encontrado=0`));
-  };
-
-  const handleGetMissingPersonPhotos = async () => {
-    await dispatch(getMissingPersonPhoto(`?pessoas_desaparecidas_id=${missingPerson?.id}&tipo=image`));
-  };
-
-  useEffect(() => {
-    handleGetMissingPersonPhotos();
-  }, [missingPerson]);
-
-  useFocusEffect(
-    useCallback(() => {
-      handleGetMissingPersons();
-    }, []),
-  );
-
-  const [search, setSearch] = useState('');
-  const { missingPersons } = useSelector(state => state.missingPersonReducer);
-
-  const handleGetMissingPersonsMultiple = async () => {
-    await dispatch(getMissingPerson(`?limite=1&tem_historico=1&usuarios_id=${user?.id}&encontrado=0`, true));
-  };
-
-  let listaFiltrada = missingPersons.filter(function (value) {
+  let listaFiltrada = missingPersonsHistoric.filter(function (value) {
     function removerAcentos(newStringComAcento) {
       var string = newStringComAcento;
       var mapaAcentosHex = {
@@ -160,10 +100,60 @@ const HistoricPage = ({ navigation }) => {
     }
   });
 
+  const handleSendModal = async () => {
+    const body = {
+      pessoas_desaparecidas_id: missingPersonsHistoric[index]?.id,
+      tipo_historico: 'vi',
+      descricao: `Vi no dia ${format(dateTime, 'dd/MM/yyyy')}, local: ${place}, e estava assim: ${description}`,
+      usuarios_id: user?.id,
+    };
+
+    await dispatch(registerHistoricMissingPerson(body));
+
+    setShowModal(false);
+    setPlace('');
+    setDescription('');
+    setDateTime(new Date());
+
+    handleGetMissingPersons();
+  };
+
+  const showCalendar = currentMode => {
+    DateTimePickerAndroid.open({
+      value: dateTime,
+      display: 'default',
+      maximumDate: new Date(),
+      mode: currentMode,
+      onChange: (event, selectedDate) => {
+        if (event?.type === 'dismissed') {
+          setDateTime(dateTime);
+          return;
+        }
+        setDateTime(selectedDate);
+      },
+    });
+  };
+
+  const handleGetMissingPersons = async () => {
+    await dispatch(
+      getMissingPersonPerHistoric(
+        `?limite=100&tem_historico=1&usuarios_id=${user?.id}&encontrado=0&tipo_historico=${status}`,
+      ),
+    );
+  };
+
+  const handleGetMissingPersonPhotos = async () => {
+    await dispatch(getMissingPersonPhoto(`?pessoas_desaparecidas_id=${missingPersonsHistoric[index]?.id}&tipo=image`));
+  };
+
+  useEffect(() => {
+    handleGetMissingPersonPhotos();
+  }, [missingPersonsHistoric, index]);
+
   useFocusEffect(
     useCallback(() => {
-      handleGetMissingPersonsMultiple();
-    }, [search]),
+      handleGetMissingPersons();
+    }, [status]),
   );
 
   const renderCard = ({ item }) => {
@@ -177,10 +167,12 @@ const HistoricPage = ({ navigation }) => {
             <Text style={styles.ageFound}>, {item?.data_nascimento && CalcIdade(item.data_nascimento)}</Text>
           </Text>
           <Text style={styles.foundOnFound}>Encontrado em: {calcDaysFound(item.updatedAt, item.createdAt)}</Text>
-          <Text style={styles.dateFound}>Data: {item?.updatedAt && format(new Date(item?.updatedAt), 'dd/MM/yyyy')}</Text>
+          <Text style={styles.dateFound}>
+            Data: {item?.updatedAt && format(new Date(item?.updatedAt), 'dd/MM/yyyy')}
+          </Text>
         </View>
 
-        <TouchableOpacity activeOpacity={0.6} onPress={()=>navigation.navigate('MissingDetail', { person: item })}>
+        <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('MissingDetail', { person: item })}>
           <Icon name='info' color={colors.primary} size={28} />
         </TouchableOpacity>
       </View>
@@ -218,9 +210,10 @@ const HistoricPage = ({ navigation }) => {
               <View style={styles.wrapperInfo}>
                 <View style={styles.rowInfo}>
                   <View style={styles.rowText}>
-                    <Text style={styles.nameUser}>{missingPerson.nome}</Text>
+                    <Text style={styles.nameUser}>{missingPersonsHistoric[index].nome}</Text>
                     <Text style={styles.ageUser}>
-                      {missingPerson?.data_nascimento && CalcIdade(missingPerson.data_nascimento)}
+                      {missingPersonsHistoric[index]?.data_nascimento &&
+                        CalcIdade(missingPersonsHistoric[index]?.data_nascimento)}
                     </Text>
                   </View>
                   <View style={styles.rowInfo}>
@@ -228,13 +221,13 @@ const HistoricPage = ({ navigation }) => {
                       Desaparecido em:
                       <Text style={styles.rowTextRegular}>
                         {' '}
-                        {missingPerson?.data_desaparecimento &&
-                          format(new Date(missingPerson?.data_desaparecimento), 'dd/MM/yyyy')}
+                        {missingPersonsHistoric[index]?.data_desaparecimento &&
+                          format(new Date(missingPersonsHistoric[index]?.data_desaparecimento), 'dd/MM/yyyy')}
                       </Text>
                     </Text>
                     <Text style={styles.rowTextBold}>
                       Local:
-                      <Text style={styles.rowTextRegular}> {missingPerson.local_desaparecimento}</Text>
+                      <Text style={styles.rowTextRegular}> {missingPersonsHistoric[index]?.local_desaparecimento}</Text>
                     </Text>
                   </View>
                 </View>
@@ -242,7 +235,10 @@ const HistoricPage = ({ navigation }) => {
                   activeOpacity={0.6}
                   style={styles.buttonInfo}
                   onPress={() =>
-                    navigation.navigate('MissingDetail', { person: missingPerson, photosPerson: photosMissingPerson })
+                    navigation.navigate('MissingDetail', {
+                      person: missingPersonsHistoric[index],
+                      photosPerson: photosMissingPerson,
+                    })
                   }>
                   <Icon name='info' color={colors.primary} size={28} />
                 </TouchableOpacity>
@@ -300,7 +296,12 @@ const HistoricPage = ({ navigation }) => {
         <View style={styles.containerFound}>
           <View style={styles.wrapperSearchFound}>
             <Icon name='search' style={styles.iconSearchFound} />
-            <TextInput value={search} placeholder='Pesquisar' onChangeText={setSearch} style={styles.inputSearchFound} />
+            <TextInput
+              value={search}
+              placeholder='Pesquisar'
+              onChangeText={setSearch}
+              style={styles.inputSearchFound}
+            />
           </View>
 
           <FlatList

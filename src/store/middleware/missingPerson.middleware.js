@@ -4,7 +4,7 @@ import { Alert } from 'react-native';
 import {
   setMissingPerson,
   setMissingPersonDetail,
-  setMissingPersonHistoric,
+  setMissingPersonsHistoric,
   setMissingPersonPhotos,
   setMissingPersons,
 } from '../slices/missingPerson.slice';
@@ -78,6 +78,67 @@ export const getMissingPerson = (dataMissingPerson = '', multiple = false, detai
         if (detail) {
           dispatch(setMissingPersonDetail(response.data.success.data[0]));
         }
+        dispatch(
+          setSuccess({
+            message: `Histórico cadastrado com sucesso`,
+          }),
+        );
+      } else {
+        dispatch(setError({ message: 'Houve um ou mais erros ao cadastrar o histórico.' }));
+      }
+
+      dispatch(endLoading());
+    } catch (error) {
+      dispatch(unsetSuccess());
+      Alert.alert('Erro!', error.message);
+      console.log(error);
+      dispatch(endLoading());
+    }
+  };
+};
+
+export const getMissingPersonFound = () => {
+  return async dispatch => {
+    dispatch(initLoading());
+    try {
+      let response = null;
+      response = await api.get(`/desaparecidos/get-encontrados`);
+
+      if (response.status === 200 || response.status === 201) {
+        dispatch(unsetError());
+
+        dispatch(setMissingPersons(response.data.success.data));
+
+        dispatch(
+          setSuccess({
+            message: `Histórico cadastrado com sucesso`,
+          }),
+        );
+      } else {
+        dispatch(setError({ message: 'Houve um ou mais erros ao cadastrar o histórico.' }));
+      }
+
+      dispatch(endLoading());
+    } catch (error) {
+      dispatch(unsetSuccess());
+      Alert.alert('Erro!', error.message);
+      console.log(error);
+      dispatch(endLoading());
+    }
+  };
+};
+
+export const getMissingPersonPerHistoric = (dataMissingPerson = '') => {
+  return async dispatch => {
+    dispatch(initLoading());
+    try {
+      let response = null;
+      response = await api.get(`/desaparecidos/get-por-historico${dataMissingPerson}`);
+
+      if (response.status === 200 || response.status === 201) {
+        dispatch(unsetError());
+        dispatch(setMissingPersonsHistoric(response.data.success.data));
+
         dispatch(
           setSuccess({
             message: `Histórico cadastrado com sucesso`,
