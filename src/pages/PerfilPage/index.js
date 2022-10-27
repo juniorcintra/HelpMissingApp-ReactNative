@@ -25,8 +25,7 @@ const PerfilPage = ({ navigation }) => {
   const [contatoUser, setContatoUser] = useState('');
   const [photosSelected, setPhotosSelected] = useState('');
   const [missingPerson, setMissingPerson] = useState({});
-
-  const [editable, setEditable] = useState(false);
+  
   const [showModal, setShowModal] = useState(false);
 
   const dateScroll = [
@@ -89,7 +88,7 @@ const PerfilPage = ({ navigation }) => {
 
           <View style={styles.divInput}>
             <Text style={styles.label}>Nome Completo</Text>
-            <TextInput value={nameUser} editable={editable} style={styles.input} onChangeText={setNameUser} />
+            <TextInput value={nameUser} editable={false} style={styles.input} onChangeText={setNameUser} />
           </View>
           <View style={styles.divInput}>
             <Text style={styles.label}>CPF</Text>
@@ -105,7 +104,7 @@ const PerfilPage = ({ navigation }) => {
             <Text style={styles.label}>E-mail</Text>
             <TextInput
               value={emailUser}
-              editable={editable}
+              editable={false}
               style={styles.input}
               onChangeText={setEmailUser}
               keyboardType='email-address'
@@ -114,7 +113,7 @@ const PerfilPage = ({ navigation }) => {
           <View style={styles.divInput}>
             <Text style={styles.label}>Contato</Text>
             <TextInput
-              editable={editable}
+              editable={false}
               value={contatoUser}
               style={styles.input}
               keyboardType='number-pad'
