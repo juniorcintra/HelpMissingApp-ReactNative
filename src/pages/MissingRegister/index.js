@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../../components/loading';
 import { useFocusEffect } from '@react-navigation/native';
 import axios from 'axios';
+import { endLoading, initLoading } from '../../store/slices/generics.slice';
 
 const MissingRegister = ({ navigation }) => {
   const [fullName, setFullName] = useState('');
@@ -194,12 +195,14 @@ const MissingRegister = ({ navigation }) => {
   }
 
   async function handleGetAddress() {
+    dispatch(initLoading());
     const url = `https://viacep.com.br/ws/${cep}/json/`;
     const response = await axios.get(url);
     setRua(response?.data?.logradouro);
     setBairro(response?.data?.bairro);
     setCidade(response?.data?.localidade);
     setUf(response?.data?.uf);
+    dispatch(endLoading());
   }
 
   useEffect(() => {
