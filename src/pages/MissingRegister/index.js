@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { View, Text, TouchableOpacity, ScrollView, Image, Keyboard, Alert } from 'react-native';
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
@@ -14,6 +14,7 @@ import { registerMissingPerson, registerUploadPhoto } from '../../store/middlewa
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../../components/loading';
 import { useFocusEffect } from '@react-navigation/native';
+import axios from 'axios';
 
 const MissingRegister = ({ navigation }) => {
   const [fullName, setFullName] = useState('');
@@ -29,6 +30,13 @@ const MissingRegister = ({ navigation }) => {
   const [actualNameContact, setActualNameContact] = useState('');
   const [actualFeature, setActualFeature] = useState('');
   const [actualClothing, setActualClothing] = useState('');
+  const [cep, setCep] = useState('');
+  const [numero, setNumero] = useState('');
+  const [rua, setRua] = useState('');
+  const [bairro, setBairro] = useState('');
+  const [cidade, setCidade] = useState('');
+  const [uf, setUf] = useState('');
+  const [complemento, setComplemento] = useState('');
 
   const dispatch = useDispatch();
   const { loading } = useSelector(state => state.genericReducer);
@@ -46,6 +54,13 @@ const MissingRegister = ({ navigation }) => {
     setActualNameContact('');
     setActualFeature('');
     setActualClothing('');
+    setCep('');
+    setNumero('');
+    setRua('');
+    setBairro('');
+    setCidade('');
+    setUf('');
+    setComplemento('');
   };
 
   const handleRegister = async () => {
@@ -178,6 +193,21 @@ const MissingRegister = ({ navigation }) => {
     }
   }
 
+  async function handleGetAddress() {
+    const url = `https://viacep.com.br/ws/${cep}/json/`;
+    const response = await axios.get(url);
+    setRua(response?.data?.logradouro);
+    setBairro(response?.data?.bairro);
+    setCidade(response?.data?.localidade);
+    setUf(response?.data?.uf);
+  }
+
+  useEffect(() => {
+    if (cep.length === 8) {
+      handleGetAddress();
+    }
+  }, [cep]);
+
   useFocusEffect(
     useCallback(() => {
       clearState();
@@ -294,6 +324,31 @@ const MissingRegister = ({ navigation }) => {
             label='Local do Desaparecimento'
             onChangeText={setDisappearanceLocation}
           />
+
+          <Input placeholder='Ex: xxxxx-xxx' value={cep} label='Endereço do Desaparecido - CEP' onChangeText={setCep} />
+
+          <Input placeholder='Rua' value={rua} label='Rua' onChangeText={setRua} />
+
+          <Input placeholder='Bairro' value={bairro} label='Bairro' onChangeText={setBairro} />
+
+          <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
+            <View style={{ width: 230 }}>
+              <Input placeholder='Cidade' value={cidade} label='Cidade' onChangeText={setCidade} />
+            </View>
+            <View style={{ width: 100 }}>
+              <Input placeholder='Estado' value={uf} label='Estado' onChangeText={setUf} />
+            </View>
+          </View>
+
+          <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
+            <View style={{ width: 100 }}>
+              <Input placeholder='Número' value={numero} label='Número' onChangeText={setNumero} />
+            </View>
+            <View style={{ width: 230 }}>
+              <Input placeholder='Complemento' value={complemento} label='Complemento' onChangeText={setComplemento} />
+            </View>
+          </View>
+
           <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
             <View style={{ width: 100 }}>
               <Input
