@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginBottom: 15,
     marginHorizontal: 8,
+    width: '80%'
   },
   photoScroll: {
     width: 120,
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   contentModal: {
-    width: '80%',
+    width: '90%',
     height: 493,
     borderRadius: 15,
     paddingHorizontal: 25,
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
   },
   modalPhoto: {
     width: '100%',
-    height: '80%',
+    height: '100%',
     borderRadius: 5,
     marginBottom: 8,
     resizeMode: 'cover',
