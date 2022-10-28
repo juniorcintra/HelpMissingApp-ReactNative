@@ -21,7 +21,7 @@ import {
   registerHistoricMissingPerson,
 } from '../../store/middleware/missingPerson.middleware';
 import { useFocusEffect } from '@react-navigation/native';
-import { calcDaysFound, CalcIdade } from '../../utils/functions';
+import { CalcIdade } from '../../utils/functions';
 
 const HistoricPage = ({ navigation }) => {
   const [showModal, setShowModal] = useState(false);
@@ -178,6 +178,13 @@ const HistoricPage = ({ navigation }) => {
     );
   };
 
+  const photos = [
+    {
+      id: 1,
+      url: 'https://static.vecteezy.com/ti/vetor-gratis/t2/4607791-cara-de-homem-emotiva-icone-sorridente-personagem-masculino-de-camisa-azul-ilustracao-isolado-no-branco-feliz-humano-psicologico-retrato-emocoes-positivas-usuario-avatar-para-app-web-design-vetor.jpg',
+    },
+  ];
+
   return (
     <>
       <View style={styles.divButtonStatus}>
@@ -201,11 +208,17 @@ const HistoricPage = ({ navigation }) => {
               <View style={styles.container}>
                 <View style={styles.card}>
                   <AnimatedPager style={styles.wrapperPhoto} initialPage={0} onPageScroll={handler}>
-                    {photosMissingPerson.map(item => (
-                      <View key={item.id} style={styles.wrapperPhoto}>
-                        <Image style={styles.photo} source={{ uri: item.conteudo }} />
-                      </View>
-                    ))}
+                    {photosMissingPerson.length > 0
+                      ? photosMissingPerson.map(item => (
+                          <View key={item.id} style={styles.wrapperPhoto}>
+                            <Image style={styles.photo} source={{ uri: item.conteudo }} />
+                          </View>
+                        ))
+                      : photos.map(item => (
+                          <View key={item.id} style={styles.wrapperPhoto}>
+                            <Image style={styles.photo} source={{ uri: item.url }} />
+                          </View>
+                        ))}
                   </AnimatedPager>
 
                   <View style={styles.wrapperInfo}>

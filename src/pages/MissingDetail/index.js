@@ -7,7 +7,7 @@ import { View, Text, TouchableOpacity, ScrollView, Image, FlatList } from 'react
 import Modal from '../../components/Modal';
 import Loading from '../../components/loading';
 import { handleDial } from '../../utils/functions';
-import {  getMissingPersonPhoto } from '../../store/middleware/missingPerson.middleware';
+import { getMissingPersonPhoto } from '../../store/middleware/missingPerson.middleware';
 
 import styles from './styles';
 
@@ -44,6 +44,13 @@ const MissingDetail = ({ route }) => {
     },
   });
 
+  const photos = [
+    {
+      id: 1,
+      url: 'https://static.vecteezy.com/ti/vetor-gratis/t2/4607791-cara-de-homem-emotiva-icone-sorridente-personagem-masculino-de-camisa-azul-ilustracao-isolado-no-branco-feliz-humano-psicologico-retrato-emocoes-positivas-usuario-avatar-para-app-web-design-vetor.jpg',
+    },
+  ];
+
   const handleGetMissingPersonPhotos = async () => {
     await dispatch(getMissingPersonPhoto(`?pessoas_desaparecidas_id=${missingPerson?.id}&tipo=image`));
   };
@@ -56,11 +63,17 @@ const MissingDetail = ({ route }) => {
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         <AnimatedPager style={styles.wrapperPhoto} initialPage={0} onPageScroll={handler}>
-          {photosMissingPerson.map(item => (
-            <View key={item.id} style={styles.wrapperPhoto}>
-              <Image style={styles.photo} source={{ uri: item.conteudo }} />
-            </View>
-          ))}
+          {photosMissingPerson.length > 0
+            ? photosMissingPerson.map(item => (
+                <View key={item.id} style={styles.wrapperPhoto}>
+                  <Image style={styles.photo} source={{ uri: item.conteudo }} />
+                </View>
+              ))
+            : photos.map(item => (
+                <View key={item.id} style={styles.wrapperPhoto}>
+                  <Image style={styles.photo} source={{ uri: item.url }} />
+                </View>
+              ))}
         </AnimatedPager>
 
         <View style={styles.form}>
