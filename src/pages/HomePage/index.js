@@ -124,7 +124,7 @@ const HomePage = ({ navigation }) => {
 
   return (
     <>
-      {missingPerson.length !== {} ? (
+      {missingPerson?.length !== {} ? (
         <View style={styles.container}>
           <View style={styles.card}>
             <AnimatedPager style={styles.wrapperPhoto} initialPage={0} onPageScroll={handler}>

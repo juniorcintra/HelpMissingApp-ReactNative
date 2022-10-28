@@ -63,7 +63,7 @@ const HistoricPage = ({ navigation }) => {
   });
 
   const handleClose = async () => {
-    if (missingPersonsHistoric.length === index + 1) {
+    if (missingPersonsHistoric?.length === index + 1) {
       setIndex(0);
     } else {
       setIndex(index + 1);

@@ -206,7 +206,7 @@ const MissingRegister = ({ navigation }) => {
   }
 
   useEffect(() => {
-    if (cep.length === 8) {
+    if (cep?.length === 8) {
       handleGetAddress();
     }
   }, [cep]);
@@ -374,7 +374,7 @@ const MissingRegister = ({ navigation }) => {
             </View>
           </View>
 
-          {contacts.length > 0 && (
+          {contacts?.length > 0 && (
             <ScrollView style={styles.scrollFeatures} showsVerticalScrollIndicator={false}>
               <View style={styles.wrapperButtomFeatures}>
                 {contacts.map((item, index) => (
@@ -400,7 +400,7 @@ const MissingRegister = ({ navigation }) => {
             onPress={() => handleAddInfo('feature')}
           />
 
-          {features.length > 0 && (
+          {features?.length > 0 && (
             <ScrollView style={styles.scrollFeatures} showsVerticalScrollIndicator={false}>
               <View style={styles.wrapperButtomFeatures}>
                 {features.map((item, index) => (
@@ -423,7 +423,7 @@ const MissingRegister = ({ navigation }) => {
             onPress={() => handleAddInfo('clothing')}
           />
 
-          {clothing.length > 0 && (
+          {clothing?.length > 0 && (
             <View style={styles.wrapperClothing}>
               {clothing.map((item, index) => (
                 <TouchableOpacity key={index} activeOpacity={0.6} onPress={() => handleRemoveArray(index)}>
