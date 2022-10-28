@@ -41,6 +41,7 @@ const MissingRegister = ({ navigation }) => {
 
   const dispatch = useDispatch();
   const { loading } = useSelector(state => state.genericReducer);
+  const { user } = useSelector(state => state.userReducer);
 
   const clearState = () => {
     setFullName('');
@@ -80,6 +81,7 @@ const MissingRegister = ({ navigation }) => {
       uf: uf,
       numero: numero,
       complemento: complemento,
+      usuarios_id: user.id,
     };
 
     Keyboard.dismiss();
@@ -221,7 +223,10 @@ const MissingRegister = ({ navigation }) => {
               }}
             />
           ) : (
-            <TouchableOpacity activeOpacity={0.6} style={styles.buttonUpload} onPress={() => handleSelectImage('galeria')}>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={styles.buttonUpload}
+              onPress={() => handleSelectImage('galeria')}>
               <Text style={styles.textUpload}>+</Text>
             </TouchableOpacity>
           )}
@@ -233,7 +238,10 @@ const MissingRegister = ({ navigation }) => {
               }}
             />
           ) : (
-            <TouchableOpacity activeOpacity={0.6} style={styles.buttonUpload} onPress={() => handleSelectImage('galeria')}>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={styles.buttonUpload}
+              onPress={() => handleSelectImage('galeria')}>
               <Text style={styles.textUpload}>+</Text>
             </TouchableOpacity>
           )}
@@ -245,7 +253,10 @@ const MissingRegister = ({ navigation }) => {
               }}
             />
           ) : (
-            <TouchableOpacity activeOpacity={0.6} style={styles.buttonUpload} onPress={() => handleSelectImage('galeria')}>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={styles.buttonUpload}
+              onPress={() => handleSelectImage('galeria')}>
               <Text style={styles.textUpload}>+</Text>
             </TouchableOpacity>
           )}
@@ -257,7 +268,10 @@ const MissingRegister = ({ navigation }) => {
               }}
             />
           ) : (
-            <TouchableOpacity activeOpacity={0.6} style={styles.buttonUpload} onPress={() => handleSelectImage('galeria')}>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={styles.buttonUpload}
+              onPress={() => handleSelectImage('galeria')}>
               <Text style={styles.textUpload}>+</Text>
             </TouchableOpacity>
           )}
@@ -269,7 +283,10 @@ const MissingRegister = ({ navigation }) => {
               }}
             />
           ) : (
-            <TouchableOpacity activeOpacity={0.6} style={styles.buttonUpload} onPress={() => handleSelectImage('galeria')}>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={styles.buttonUpload}
+              onPress={() => handleSelectImage('galeria')}>
               <Text style={styles.textUpload}>+</Text>
             </TouchableOpacity>
           )}
@@ -281,7 +298,10 @@ const MissingRegister = ({ navigation }) => {
               }}
             />
           ) : (
-            <TouchableOpacity activeOpacity={0.6} style={styles.buttonUpload} onPress={() => handleSelectImage('galeria')}>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={styles.buttonUpload}
+              onPress={() => handleSelectImage('galeria')}>
               <Text style={styles.textUpload}>+</Text>
             </TouchableOpacity>
           )}
