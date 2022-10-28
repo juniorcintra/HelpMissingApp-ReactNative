@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import { View, Text, TouchableOpacity, ScrollView, Image, Keyboard, Alert } from 'react-native';
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -73,6 +73,13 @@ const MissingRegister = ({ navigation }) => {
       local_desaparecimento: disappearanceLocation,
       contatos: contacts,
       vestimenta_desaparecimento: clothing,
+      cep: cep,
+      rua: rua,
+      bairro: bairro,
+      cidade: cidade,
+      uf: uf,
+      numero: numero,
+      complemento: complemento,
     };
 
     Keyboard.dismiss();
@@ -121,21 +128,7 @@ const MissingRegister = ({ navigation }) => {
     });
   };
 
-  async function handleSelectImage(type) {
-    // if (type === 'camera') {
-    //   await launchCamera(
-    //     {
-    //       mediaType: 'photo',
-    //       maxWdth: 300,
-    //       maxHeight: 500,
-    //       quality: 0.2,
-    //       cameraType: 'back',
-    //       includeBase64: true,
-    //       saveToPhotos: true,
-    //     },
-    //     handleUploadPhotos,
-    //   );
-    // } else {
+  async function handleSelectImage() {
     await launchImageLibrary(
       {
         mediaType: 'photo',
@@ -147,7 +140,6 @@ const MissingRegister = ({ navigation }) => {
       },
       handleUploadPhotos,
     );
-    // }
   }
 
   async function handleUploadPhotos(data) {
@@ -194,22 +186,22 @@ const MissingRegister = ({ navigation }) => {
     }
   }
 
-  // async function handleGetAddress() {
-  //   dispatch(initLoading());
-  //   const url = `https://viacep.com.br/ws/${cep}/json/`;
-  //   const response = await axios.get(url);
-  //   setRua(response?.data?.logradouro);
-  //   setBairro(response?.data?.bairro);
-  //   setCidade(response?.data?.localidade);
-  //   setUf(response?.data?.uf);
-  //   dispatch(endLoading());
-  // }
+  async function handleGetAddress() {
+    dispatch(initLoading());
+    const url = `https://viacep.com.br/ws/${cep}/json/`;
+    const response = await axios.get(url);
+    setRua(response?.data?.logradouro);
+    setBairro(response?.data?.bairro);
+    setCidade(response?.data?.localidade);
+    setUf(response?.data?.uf);
+    dispatch(endLoading());
+  }
 
-  // useEffect(() => {
-  //   if (cep?.length === 8) {
-  //     handleGetAddress();
-  //   }
-  // }, [cep]);
+  useEffect(() => {
+    if (cep?.length === 8) {
+      handleGetAddress();
+    }
+  }, [cep]);
 
   useFocusEffect(
     useCallback(() => {
@@ -328,7 +320,7 @@ const MissingRegister = ({ navigation }) => {
             onChangeText={setDisappearanceLocation}
           />
 
-          {/* <Input placeholder='Ex: xxxxx-xxx' value={cep} label='Endereço do Desaparecido - CEP' onChangeText={setCep} />
+          <Input placeholder='Ex: xxxxx-xxx' value={cep} label='Endereço do Desaparecido - CEP' onChangeText={setCep} />
 
           <Input placeholder='Rua' value={rua} label='Rua' onChangeText={setRua} />
 
@@ -350,7 +342,7 @@ const MissingRegister = ({ navigation }) => {
             <View style={{ width: 230 }}>
               <Input placeholder='Complemento' value={complemento} label='Complemento' onChangeText={setComplemento} />
             </View>
-          </View> */}
+          </View>
 
           <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
             <View style={{ width: 100 }}>
