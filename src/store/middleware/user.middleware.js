@@ -1,5 +1,6 @@
 import { initLoading, endLoading, setError, setSuccess, unsetSuccess, unsetError } from '../slices/generics.slice';
 import api from '../../services/api';
+import { setUser } from '../slices/user.slice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const registerUser = userData => {
@@ -41,6 +42,7 @@ export const login = userData => {
       } = await api.post('/usuarios/login', userData);
       if (status === 200 || status === 201) {
         await AsyncStorage.setItem('user', JSON.stringify({ user: success.data }));
+        await dispatch(setUser(success.data));
         dispatch(unsetError());
         dispatch(
           setSuccess({

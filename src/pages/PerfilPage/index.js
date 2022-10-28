@@ -120,7 +120,7 @@ const PerfilPage = ({ navigation }) => {
               onChangeText={setContatoUser}
             />
           </View>
-          <View style={styles.divScroll}>
+          {/* <View style={styles.divScroll}>
             <Text style={[styles.label, { marginBottom: 12 }]}>Desaparecidos cadastrados:</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               {dateScroll.map((item, index) => (
@@ -141,7 +141,7 @@ const PerfilPage = ({ navigation }) => {
                 </TouchableOpacity>
               ))}
             </ScrollView>
-          </View>
+          </View> */}
         </View>
       </ScrollView>
       <Modal show={showModal} setShowModal={setShowModal}>

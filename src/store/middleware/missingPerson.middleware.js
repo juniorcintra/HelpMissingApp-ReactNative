@@ -28,7 +28,7 @@ export const registerMissingPerson = userData => {
       return response.data.success.data;
     } catch (error) {
       dispatch(unsetSuccess());
-      Alert.alert('Erro!', error.message);
+      Alert.alert('Erro! Post Desaparecidos', error.message);
       console.log(error);
       dispatch(endLoading());
     }
@@ -54,7 +54,7 @@ export const registerUploadPhoto = dataPhoto => {
       dispatch(endLoading());
     } catch (error) {
       dispatch(unsetSuccess());
-      Alert.alert('Erro! teste', error.message);
+      Alert.alert('Erro! Post Fotos', error.message);
       console.log(error);
       dispatch(endLoading());
     }
@@ -84,7 +84,7 @@ export const getMissingPerson = (dataMissingPerson = '') => {
       dispatch(endLoading());
     } catch (error) {
       dispatch(unsetSuccess());
-      Alert.alert('Erro! Home', error.message);
+      Alert.alert('Erro! Get desaparecidos', error.message);
       console.log(error);
       dispatch(endLoading());
     }
@@ -115,7 +115,7 @@ export const getMissingPersonFound = () => {
       dispatch(endLoading());
     } catch (error) {
       dispatch(unsetSuccess());
-      Alert.alert('Erro!', error.message);
+      Alert.alert('Erro! Get Encontrados', error.message);
       console.log(error);
       dispatch(endLoading());
     }
@@ -145,7 +145,7 @@ export const getMissingPersonPerHistoric = (dataMissingPerson = '') => {
       dispatch(endLoading());
     } catch (error) {
       dispatch(unsetSuccess());
-      Alert.alert('Erro!', error.message);
+      Alert.alert('Erro! Get por Historico', error.message);
       console.log(error);
       dispatch(endLoading());
     }
@@ -174,7 +174,7 @@ export const getMissingPersonPhoto = (dataMissingPerson = '') => {
       dispatch(endLoading());
     } catch (error) {
       dispatch(unsetSuccess());
-      Alert.alert('Erro! Home', error.message);
+      Alert.alert('Erro! Get Anexos', error.message);
       console.log(error);
       dispatch(endLoading());
     }
@@ -204,7 +204,7 @@ export const registerHistoricMissingPerson = (dataHistoric, reload = true) => {
       }
     } catch (error) {
       dispatch(unsetSuccess());
-      Alert.alert('Erro!', error.message);
+      Alert.alert('Erro! Post Historico', error.message);
       console.log(error);
 
       if (reload) {
@@ -238,7 +238,7 @@ export const getHistoricMissingPerson = (dataHistoric, reload = true) => {
       }
     } catch (error) {
       dispatch(unsetSuccess());
-      Alert.alert('Erro!', error.message);
+      Alert.alert('Erro! Get Historico', error.message);
       console.log(error);
 
       if (reload) {
