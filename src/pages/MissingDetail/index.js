@@ -59,6 +59,8 @@ const MissingDetail = ({ route }) => {
     handleGetMissingPersonPhotos();
   }, [missingPerson]);
 
+  console.log(missingPerson);
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
@@ -95,6 +97,14 @@ const MissingDetail = ({ route }) => {
 
           <Text style={styles.label}>Local Desaparecimento</Text>
           <Text style={styles.text}>{missingPerson?.local_desaparecimento}</Text>
+          <View style={styles.separator} />
+
+          <Text style={styles.label}>Endereço do Desaparecido</Text>
+          <Text style={styles.text}>{`${missingPerson?.rua}, nº ${missingPerson?.numero}, ${
+            missingPerson?.complemento !== '' ? missingPerson?.complemento : ''
+          } `}</Text>
+          <Text
+            style={styles.text}>{`${missingPerson?.cidade} - ${missingPerson?.uf}, CEP: ${missingPerson?.cep} `}</Text>
           <View style={styles.separator} />
 
           <Text style={styles.label}>Contatos</Text>
