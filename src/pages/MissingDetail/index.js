@@ -59,8 +59,6 @@ const MissingDetail = ({ route }) => {
     handleGetMissingPersonPhotos();
   }, [missingPerson]);
 
-  console.log(missingPerson);
-
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
