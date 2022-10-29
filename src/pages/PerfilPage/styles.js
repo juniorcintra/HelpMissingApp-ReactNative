@@ -65,12 +65,14 @@ const styles = StyleSheet.create({
     paddingTop: 32,
     paddingBottom: 13,
     backgroundColor: colors.white,
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   modalPhoto: {
     width: '100%',
     height: '100%',
     borderRadius: 5,
-    marginBottom: 8,
+    marginBottom: 15,
     resizeMode: 'cover',
   },
   itleModalHistory: {

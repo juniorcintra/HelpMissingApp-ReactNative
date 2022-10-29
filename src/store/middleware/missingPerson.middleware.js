@@ -7,6 +7,7 @@ import {
   setMissingPersonsHistoric,
   setMissingPersonPhotos,
   setMissingPersons,
+  setMissingPersonsUser,
 } from '../slices/missingPerson.slice';
 
 export const registerMissingPerson = userData => {
@@ -244,6 +245,60 @@ export const getHistoricMissingPerson = (dataHistoric, reload = true) => {
       if (reload) {
         dispatch(endLoading());
       }
+    }
+  };
+};
+
+export const getMissingPersonsPerUser = (userId = '') => {
+  return async dispatch => {
+    dispatch(initLoading());
+    try {
+      let response = null;
+      response = await api.get(`/desaparecidos/get-por-usuario${userId}`);
+
+      if (response.status === 200 || response.status === 201) {
+        dispatch(unsetError());
+        dispatch(setMissingPersonsUser(response.data.success.data));
+        dispatch(
+          setSuccess({
+            message: `Histórico cadastrado com sucesso`,
+          }),
+        );
+      } else {
+        dispatch(setError({ message: 'Houve um ou mais erros ao cadastrar o histórico.' }));
+      }
+
+      dispatch(endLoading());
+    } catch (error) {
+      dispatch(unsetSuccess());
+      Alert.alert('Erro! Get Anexos', error.message);
+      console.log(error);
+      dispatch(endLoading());
+    }
+  };
+};
+
+export const setMissingPersonFound = dataFound => {
+  return async dispatch => {
+    dispatch(initLoading());
+    try {
+      let response = await api.post('/desaparecidos/set-encontrado', dataFound);
+      if (response.status === 200 || response.status === 201) {
+        dispatch(unsetError());
+        dispatch(
+          setSuccess({
+            message: `Histórico cadastrado com sucesso`,
+          }),
+        );
+      } else {
+        dispatch(setError({ message: 'Houve um ou mais erros ao cadastrar o histórico.' }));
+      }
+      dispatch(endLoading());
+    } catch (error) {
+      dispatch(unsetSuccess());
+      Alert.alert('Erro! Post Historico', error.message);
+      console.log(error);
+      dispatch(endLoading());
     }
   };
 };

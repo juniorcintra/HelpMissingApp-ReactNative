@@ -159,7 +159,7 @@ const HistoricPage = ({ navigation }) => {
   const renderCard = ({ item }) => {
     return (
       <View style={styles.containerCardFound}>
-        <Image source={{ uri: 'https://picsum.photos/200/' }} style={styles.photoFound} />
+        <Image source={{ uri: item?.pessoas_desaparecidas_anexos[0]?.conteudo }} style={styles.photoFound} />
 
         <View style={styles.descriptionFound}>
           <Text style={styles.nameFound}>
